@@ -73,7 +73,7 @@ def animacion():
       
 
 def crear_mapa(x, y):
-
+    # ! list[list][element] para optimizar el código 
     assests= [0, '*', 'H', '>']
     # ! Solo muestra el mapa cuando se crea
     # Crear el tamaño del mapa segun los parametros introducidos
