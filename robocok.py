@@ -74,7 +74,7 @@ def animacion():
 
 def crear_mapa(x, y):
 
-    assests= [' ', '*', 'H', '>']
+    assests= [0, '*', 'H', '>']
     # ! Solo muestra el mapa cuando se crea
     # Crear el tamaño del mapa segun los parametros introducidos
     robot = 0
