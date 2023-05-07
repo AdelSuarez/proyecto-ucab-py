@@ -189,25 +189,7 @@ def mover_robot_derecha(direccion):
                     columna[index] = '>'
 
 
-                
-        # ! No borrar hasta que el movimiento y las colisiones funcionen
-        # for j in map[i]:
-        #     print(j)
-            # if j == '>':
-            #     if d == 'N':
-            #         print(j)
-            #         map[count] = '^'
-            #         count += 1
-            #         print(j)
-            #         print(map)
-
-            # else:
-            #     print(j)
-
-            #     # map[count] = j
-            #     count += 1
-
-def mover_adelante(direccion):
+def mover_adelante(direccion, fila_x):
     # ! arreglar las colisiones del mapa
     # TODO: Implementar de cuando se toque una mina, el robot pierde 
 
@@ -244,9 +226,18 @@ def mover_adelante(direccion):
                 if direccion == 'N':
                     # Se vuelven a iterar los bucles para poder mover al robot de lista, se hace en la lista principal 
                     for i,f in enumerate(mapa):
+                        for j in f:
+                            # El ciclo for verifica si el robot se encuentra en la primera fila condireccion N, y si realiza un movimiento hacia el muro automaticamente el robot explota, pero verifica todo el mapa, aunque no pasa de la primera fila
+                            if j == '^':
+                                fila[index_columna] = '#'
+                                movimiento_realizado = True
+                                break
+
+                        if movimiento_realizado:
+                            break
+
                         if i == index_fila-1:
                             fila[index_columna] = ' '
-                            print(i, f)
                             f[index_columna] = '^'
                             movimiento_realizado = True
                             break
@@ -255,6 +246,19 @@ def mover_adelante(direccion):
                 if direccion == 'S':
                     # Se vuelven a iterar los bucles para poder mover al robot de lista, se hace en la lista principal 
                     for i , f in enumerate(mapa):
+                        for index in range(len(mapa)):
+                            if index == fila_x-1:
+                                for j in mapa[index]:
+                                # El ciclo for verifica si el robot se encuentra en la ultima fila condireccion S, se recorre de nuevo el mapa devido a que se necesita llegar a la ultima fila 
+                                    if j == 'v':
+                                        fila[index_columna] = '#'
+                                        movimiento_realizado = True
+                                        break
+                                if movimiento_realizado:
+                                    break
+
+                        if movimiento_realizado:
+                            break
                         if i == index_fila+1:
                             fila[index_columna] = ' '
                             f[index_columna] = 'v'
@@ -273,7 +277,7 @@ def verificador_colision():
                 return True
 
 def posicion():
-    # TODO: Arreglar la ubicacion del robot ya que muestra es el tamaño  del mapa
+    # * Muestra la ubicacion del robot en tiempo real
     posicion_fila = 0
     posicion_column = 0
 
@@ -294,6 +298,7 @@ def posicion():
 def Manager():
 
     # animacion()
+
     # Variables 
     direccion = 'E'
     contador_ordenes = 0
@@ -403,7 +408,7 @@ O ← {direccion} → E | A >> Avanzar
         elif movimiento == 'a':
 
             contador_ordenes +=1
-            mover_adelante(direccion)
+            mover_adelante(direccion, x)
 
 
 if __name__ == '__main__':
