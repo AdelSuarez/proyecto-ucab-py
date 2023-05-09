@@ -188,6 +188,7 @@ def mover_robot_derecha(direccion):
             elif fila == '^':
                 direccion = 'E'
                 columna[index] = '>'
+
     return direccion
 
 
@@ -203,10 +204,15 @@ def mover_adelante(direccion, fila_x):
                 if direccion == 'E':
                     # Arroja un error que cuando llega al limite derecho de la lista se inserta el robot en una posicion que no existe. es lo que genera la colision
                     try:
-                        fila[index_columna] = ' '
-                        fila[index_columna+1] = '>'
-                        movimiento_realizado = True
-                        break
+                        if fila[index_columna+1] == '*':
+                            # Verifica si al lado derecho se encuentra una mina, si la ahi el robot explota
+                            fila[index_columna] = '#'
+                            break
+                        else:
+                            fila[index_columna] = ' '
+                            fila[index_columna+1] = '>'
+                            movimiento_realizado = True
+                            break
                     except IndexError:
                         fila[index_columna] = '#'
                         break
@@ -217,6 +223,11 @@ def mover_adelante(direccion, fila_x):
                         #Condicion que verifica que si llega a la colision de la izquierda y quiere continuar, el robot explota
                         fila[index_columna] = '#'
                         movimiento_realizado = True
+                        break
+                    elif fila[index_columna-1] == '*':
+                        # Verifica si al lado izquierdo se encuentra una mina, si la ahi el robot explota
+
+                        fila[index_columna] = '#'
                         break
                     else: 
                         # El robot avanza si no encuentra colision    
@@ -239,8 +250,14 @@ def mover_adelante(direccion, fila_x):
                         if movimiento_realizado:
                             # Para cerrar el ciclo y no siga verificando las columnas
                             break
+                        
+                        if f[index_columna] == '*':
+                            # Verifica el lado superior, para saber si ahi un mina, si la ahi el robot explota
+                            fila[index_columna] = '#'
+                            movimiento_realizado = True
+                            break
 
-                        if i == index_fila-1:
+                        elif i == index_fila-1:
                             # Mueve el robot si no encuentra colision en direccion N
                             fila[index_columna] = ' '
                             f[index_columna] = '^'
@@ -266,6 +283,13 @@ def mover_adelante(direccion, fila_x):
 
                         if movimiento_realizado:
                             break
+
+                        if f[index_columna] == '*':
+                            # Verifica el lado inferior, para saber si ahi un mina, si la ahi el robot explota
+                            fila[index_columna] = '#'
+                            movimiento_realizado = True
+                            break
+
 
                         if i == index_fila+1:
                             # Mueve el robot si no se ha encontrado en la ultima fila
