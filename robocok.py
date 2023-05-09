@@ -57,16 +57,38 @@ def crear_mapa(x, y):
 def verificador_mapa(y, x):
     # recorre el mapa para modificar error con la la ubicacion de la meta y las monas, para evitar gener mapas imposibles de pasar
     # TODO Verificar la ubicacion de las minas
-
-
+    a = random.randint(2,(y-2))
+    b = random.randint(0,(x-1))
     for index_fila, fila in enumerate(mapa):
         for index_columna, columna in enumerate(fila):
 
             # Condicional que verifica si la meta se encuantra en las primeras tres filas, si se encuentra la coloca en las ultimas filas del mapa
-            if index_fila ==0 or index_fila == 1 or  index_fila == 2:
+            if index_fila == 0 or index_fila == 1 or  index_fila == 2:
                 if columna == 'H':
                     fila[index_columna] = ' '
-                    mapa[random.randint(2,(y-2))][random.randint(0,(x-1))] = 'H'
+                    mapa[a][b] = 'H'
+
+            # Condicional que verifica la ubicacion de la meta, previamente recolocada, donde se verifica si a sus alrededores se encuantran muchas mina, donde elimina si bloquea la meta
+            if index_fila == a:
+                if columna == 'H':
+                    # Verifica las filas de la parte superior e inferior
+                    if mapa[index_fila-1][index_columna] == '*':
+                        mapa[index_fila-1][index_columna] = 'X'
+                    elif mapa[index_fila+1][index_columna] == '*':
+                        mapa[index_fila+1][index_columna] = 'X'  
+
+                    # Verifica las columnas de la parte derecha e izquierda
+                    if fila[index_columna+1] == '*':
+                        fila[index_columna+1] = 'X'
+                    elif fila[index_columna-1] == '*':
+                        fila[index_columna-1] = 'X'
+
+
+                # if columna[index_columna+1] == '*':
+                #     columna[index_columna+1] = ' '
+                # elif columna[index_columna-1] == '*':
+                #     columna[index_columna-1] = ' '
+
 
 
 # def crear_mapa(x, y):
@@ -354,7 +376,6 @@ def Manager():
     while True:
         (posicion_x_r, posicion_y_r, posicion_x_m, posicion_y_m) = posicion()
         limpiar_consola()
-        posicion()
 
         print(f' C: {y} | F: {x} '.center((y*4)+1,'-'))
         mostrar_mapa(y)
