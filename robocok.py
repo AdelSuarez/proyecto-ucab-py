@@ -4,8 +4,6 @@ import sys
 import os
 import random
 
-
-# ! Recordatorios para saber que voy bien
 # TODO: Arreglar los error de datos, he implementar exception en las variables de entradas para evitar error de tipado
 # ! Preguntar la profesor si se puede hacer el codigo asi
 
@@ -154,43 +152,47 @@ def mover_robot_izquierda(direccion):
     for fila in mapa:
         for index, columna in enumerate(fila):
             if columna == '>':
-                if direccion == 'N':
-                    fila[index] = '^'
+                direccion = 'N'
+                fila[index] = '^'
 
             elif columna == '^':
-                if direccion == 'O':
-                    fila[index] = '<'
+                direccion = 'O'
+                fila[index] = '<'
 
             elif columna == '<':
-                if direccion == 'S':
-                    fila[index] = 'v'
+                direccion = 'S'
+                fila[index] = 'v'
 
             elif columna == 'v':
-                if direccion == 'E':
-                    fila[index] = '>'
+                direccion = 'E'
+                fila[index] = '>'
+
+    return direccion
 
 def mover_robot_derecha(direccion):
     # Cambia la direccion del robot, solo direccion derecha
     for columna in mapa:
         for index, fila in enumerate(columna):
             if fila == '>':
-                if direccion == 'S':
-                    columna[index] = 'v'
+                direccion = 'S'
+                columna[index] = 'v'
+
             elif fila == 'v':
-                if direccion == 'O':
-                    columna[index] = '<'
+                direccion = 'O'
+                columna[index] = '<'
 
             elif fila == '<':
-                if direccion == 'N':
-                    columna[index] = '^'
+                direccion = 'N'
+                columna[index] = '^'
 
             elif fila == '^':
-                if direccion == 'E':
-                    columna[index] = '>'
+                direccion = 'E'
+                columna[index] = '>'
+    return direccion
 
 
 def mover_adelante(direccion, fila_x):
-    # ! arreglar las colisiones del mapa
+    # Ciclo que mueve el robot segun la direccion, verificando si se encuentra con colisiones en el camino
     # TODO: Implementar de cuando se toque una mina, el robot pierde 
 
     movimiento_realizado = False
@@ -199,7 +201,7 @@ def mover_adelante(direccion, fila_x):
         for index_columna, columna in enumerate(fila):
             if columna == '>':
                 if direccion == 'E':
-                    # Arroja un error ya que cuando llega al limite derecho de la lista se inserta el robot en una posicion que no existe. es lo que genera la colision
+                    # Arroja un error que cuando llega al limite derecho de la lista se inserta el robot en una posicion que no existe. es lo que genera la colision
                     try:
                         fila[index_columna] = ' '
                         fila[index_columna+1] = '>'
@@ -216,7 +218,8 @@ def mover_adelante(direccion, fila_x):
                         fila[index_columna] = '#'
                         movimiento_realizado = True
                         break
-                    else:    
+                    else: 
+                        # El robot avanza si no encuentra colision    
                         fila[index_columna] = ' '
                         fila[index_columna-1] = '<'
                         movimiento_realizado = True
@@ -227,16 +230,18 @@ def mover_adelante(direccion, fila_x):
                     # Se vuelven a iterar los bucles para poder mover al robot de lista, se hace en la lista principal 
                     for i,f in enumerate(mapa):
                         for j in f:
-                            # El ciclo for verifica si el robot se encuentra en la primera fila condireccion N, y si realiza un movimiento hacia el muro automaticamente el robot explota, pero verifica todo el mapa, aunque no pasa de la primera fila
+                            # El ciclo for verifica si el robot se encuentra en la primera fila con direccion N, y si realiza un movimiento hacia el muro automaticamente el robot explota, pero verifica todo el mapa, aunque no pasa de la primera fila
                             if j == '^':
                                 fila[index_columna] = '#'
                                 movimiento_realizado = True
                                 break
 
                         if movimiento_realizado:
+                            # Para cerrar el ciclo y no siga verificando las columnas
                             break
 
                         if i == index_fila-1:
+                            # Mueve el robot si no encuentra colision en direccion N
                             fila[index_columna] = ' '
                             f[index_columna] = '^'
                             movimiento_realizado = True
@@ -248,18 +253,22 @@ def mover_adelante(direccion, fila_x):
                     for i , f in enumerate(mapa):
                         for index in range(len(mapa)):
                             if index == fila_x-1:
+                                # La condicion lo que hace es que solo se verifique que se encuentra en la ultima columna de la lista
                                 for j in mapa[index]:
-                                # El ciclo for verifica si el robot se encuentra en la ultima fila condireccion S, se recorre de nuevo el mapa devido a que se necesita llegar a la ultima fila 
+                                    # El ciclo for verifica si el robot se encuentra en la ultima fila con direccion S, se recorre de nuevo el mapa devido a que se necesita llegar a la ultima fila 
                                     if j == 'v':
                                         fila[index_columna] = '#'
                                         movimiento_realizado = True
                                         break
                                 if movimiento_realizado:
+                                    # Cierra el ciclo para que no siga verifcando
                                     break
 
                         if movimiento_realizado:
                             break
+
                         if i == index_fila+1:
+                            # Mueve el robot si no se ha encontrado en la ultima fila
                             fila[index_columna] = ' '
                             f[index_columna] = 'v'
                             movimiento_realizado = True
@@ -270,29 +279,35 @@ def mover_adelante(direccion, fila_x):
             break
 
 def verificador_colision():
-    # Itera el mapa completo para saber si el robot a tocado alguna mira o pared, busca el simbolo # que hace la representacion del robot dañado  
+    # Itera el mapa completo para saber si el robot a tocado alguna mina o pared, busca el simbolo # que hace la representacion del robot dañado  
     for fila in mapa:
         for columna in fila:
             if columna == '#':
                 return True
 
 def posicion():
-    # * Muestra la ubicacion del robot en tiempo real
-    posicion_fila = 0
-    posicion_column = 0
+    # * Muestra la ubicacion del robot en tiempo real y las de la meta 
+    posicion_fila_r = 0
+    posicion_column_r = 0
+    posicion_fila_m = 0
+    posicion_column_m = 0
 
-    posicion  = False
+    posicion_meta  = False
+    posicion_robot  = False
     for  index_fila ,fila in enumerate(mapa):
         for index_columna , value in enumerate(fila):
+            if value == 'H':
+                posicion_fila_m = index_fila+1
+                posicion_column_m = index_columna+1
+                posicion_meta = True
             if value == '>' or value == '<' or value == 'v' or value == '^':
-                posicion_fila = index_fila+1
-                posicion_column = index_columna+1
-                posicion = True                
-                break
-        if posicion:
+                posicion_fila_r = index_fila+1
+                posicion_column_r = index_columna+1
+                posicion_robot = True                
+        if posicion_robot and posicion_meta:
             break
 
-    return (posicion_fila, posicion_column)
+    return (posicion_fila_r, posicion_column_r, posicion_fila_m, posicion_column_m)
 
 
 def Manager():
@@ -306,42 +321,51 @@ def Manager():
     # Varibles para colocar el mensaje sobre el mapa
     mensaje_activo = False
     mensaje = None
+
     while True:
+        # Ciclo que verifica los valores para la creacion del mapa, se cierra luego de comprobar que todos los valores son correctos 
+
         limpiar_consola()
         print('BIENVENIDO'.center(40, '-'))
 
-        # Condicion que imprime el mesaje del mapa si se coloca datos incorrectos 
-        if mensaje_activo:
-            print(mensaje.center(40,' '))
 
-        print('\nTamaño del mapa que deceas crear: ')
-        y = int(input('introduce la cantidad de columnas >> '))
-        x = int(input('Introduce la cantidad de filas >> '))
+        try:
+            if mensaje_activo:
+                # Condicion que imprime el mesaje del mapa si se coloca datos incorrectos 
+                print(mensaje.center(40,' '))
 
-        # Condicional que verifica el tamaño del mapa 
-        if x != y:
-            if (x >= 4  and y >= 3) or (x >= 3  and y >= 4):
-                break
+            print('\nTamaño del mapa que deceas crear: ')
+            y = int(input('introduce la cantidad de columnas >> '))
+            x = int(input('Introduce la cantidad de filas >> '))
+            
+            if x != y:
+                if (x >= 4  and y >= 3) or (x >= 3  and y >= 4):
+                    break
+                else:
+                    mensaje_activo = True
+                    mensaje='*Tamaño del mapa insuficiente*'
             else:
                 mensaje_activo = True
-                mensaje='*Tamaño del mapa insuficiente*'
-        else:
-            mensaje_activo = True
-            mensaje='*Los valores no pueden ser iguales*'
+                mensaje='*Los valores no pueden ser iguales*'
 
+        except Exception:
+            mensaje = '*No se aceptan letras*'
+            mensaje_activo = True
+        # Condicional que verifica el tamaño del mapa 
 
 
     crear_mapa(x, y)
+    
     while True:
-        (posicion_x, posicion_y) = posicion()
+        (posicion_x_r, posicion_y_r, posicion_x_m, posicion_y_m) = posicion()
         limpiar_consola()
         posicion()
 
         print(f' C: {y} | F: {x} '.center((y*4)+1,'-'))
         mostrar_mapa(y)
 
-        print(f'Posicion de robot >> C: {posicion_x} | F: {posicion_y}')
-        print('Posicion de la meta >> X | Y')
+        print(f'Posicion de robot >> C: {posicion_x_r} | F: {posicion_y_r}')
+        print(f'Posicion de la meta >> C: {posicion_x_m} | F: {posicion_y_m}')
 
         print(f'''
     N     | Ordenes: {contador_ordenes}
@@ -361,55 +385,18 @@ O ← {direccion} → E | A >> Avanzar
         movimiento = input('Introduce el movimiento >> ')
 
         # * Condicional que realiza el cambio de la direccion del robot en el mapa 
-        if movimiento == 'i':
+        if movimiento.lower().strip() == 'i':
+            direccion = mover_robot_izquierda(direccion)
 
-            if direccion == 'E':
-                direccion = 'N'
-                mover_robot_izquierda(direccion)
-                contador_ordenes +=1
+        elif movimiento.lower().strip() == 'd':
+            direccion = mover_robot_derecha(direccion)
+            contador_ordenes +=1
 
-            elif direccion == 'N':
-                direccion = 'O'
-                mover_robot_izquierda(direccion)
-                contador_ordenes +=1
-
-            elif direccion == 'O':
-                direccion = 'S'
-                mover_robot_izquierda(direccion)
-                contador_ordenes +=1
-
-            else:
-                direccion = 'E'
-                mover_robot_izquierda(direccion)
-                contador_ordenes +=1
-
-        elif movimiento == 'd':
-
-            if direccion == 'E':
-                direccion = 'S'
-                mover_robot_derecha(direccion)
-                contador_ordenes +=1
-
-            elif direccion == 'S':
-                direccion = 'O'
-                mover_robot_derecha(direccion)
-                contador_ordenes +=1
-
-            elif direccion == 'O':
-                direccion = 'N'
-                mover_robot_derecha(direccion)
-                contador_ordenes +=1
-
-            else:
-                direccion = 'E'
-                mover_robot_derecha(direccion)
-                contador_ordenes +=1
-
-        elif movimiento == 'a':
-
+        elif movimiento.lower().strip() == 'a':
             contador_ordenes +=1
             mover_adelante(direccion, x)
 
 
 if __name__ == '__main__':
     Manager()
+    print('Fin del juego')
