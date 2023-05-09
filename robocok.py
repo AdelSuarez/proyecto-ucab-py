@@ -1,6 +1,4 @@
 # Imports
-import time
-import sys
 import os
 import random
 
@@ -19,52 +17,6 @@ def limpiar_consola():
     # linux
     else:
         os.system("clear")
-
-# ! No documentar...
-def animacion():
-  
-    str_carga = "iniciando juego..."
-    str_len = len(str_carga)
-  
-  
-    carga = "|/-\\"
-    contador = 0
-
-    contador_tiempo = 0        
-      
-    i = 0                     
-  
-    while (contador_tiempo != 20):
-          
-        time.sleep(0.075) 
-                              
-        str_carga_list = list(str_carga) 
-          
-        x = ord(str_carga_list[i])
-          
-        y = 0                             
-  
-        if x != 32 and x != 46:             
-            if x>90:
-                y = x-32
-            else:
-                y = x + 32
-            str_carga_list[i]= chr(y)
-          
-        res =''             
-        for j in range(str_len):
-            res = res + str_carga_list[j]
-              
-        sys.stdout.write("\r"+res + carga[contador])
-        sys.stdout.flush()
-  
-        str_carga = res
-  
-        contador = (contador + 1)% 4
-        i =(i + 1)% str_len
-        contador_tiempo = contador_tiempo + 1
-
-    limpiar_consola()
       
 
 def crear_mapa(x, y):
@@ -72,8 +24,9 @@ def crear_mapa(x, y):
     assests= [' ', '*', 'H', '>']
     # ! Solo muestra el mapa cuando se crea
     # Crear el tamaño del mapa segun los parametros introducidos
-    robot = 0
-    meta = 0
+    contador_minas = 0
+    robot = True
+    meta = True
     # TODO: arreglar, la meta no este cerca de el robot y que no se bloquee el camino con las minas
     for i in range(x):
         # Ciclo que crea las filas
@@ -84,16 +37,36 @@ def crear_mapa(x, y):
                 assest = random.choice(assests)
                 if assest != '>' and assest != 'H':
                     break
-                elif robot == 0:
+                elif robot :
                     if assest == '>':
-                        robot +=1
+                        robot = False
                         break
-                elif meta == 0:
+                elif meta:
                     if assest == 'H':
-                        meta +=1
+                        meta = False
                         break
+
+                elif contador_minas < ((y*x)) - ((y+x)*3) :
+                    if assest == '*':
+                        contador_minas +=1 
+                        break
+
                 
             mapa[i].append(assest)
+
+def verificador_mapa(y, x):
+    # recorre el mapa para modificar error con la la ubicacion de la meta y las monas, para evitar gener mapas imposibles de pasar
+    # TODO Verificar la ubicacion de las minas
+
+
+    for index_fila, fila in enumerate(mapa):
+        for index_columna, columna in enumerate(fila):
+
+            # Condicional que verifica si la meta se encuantra en las primeras tres filas, si se encuentra la coloca en las ultimas filas del mapa
+            if index_fila ==0 or index_fila == 1 or  index_fila == 2:
+                if columna == 'H':
+                    fila[index_columna] = ' '
+                    mapa[random.randint(2,(y-2))][random.randint(0,(x-1))] = 'H'
 
 
 # def crear_mapa(x, y):
@@ -291,7 +264,7 @@ def mover_adelante(direccion, fila_x):
                             break
 
 
-                        if i == index_fila+1:
+                        elif i == index_fila+1:
                             # Mueve el robot si no se ha encontrado en la ultima fila
                             fila[index_columna] = ' '
                             f[index_columna] = 'v'
@@ -336,8 +309,6 @@ def posicion():
 
 def Manager():
 
-    # animacion()
-
     # Variables 
     direccion = 'E'
     contador_ordenes = 0
@@ -377,8 +348,8 @@ def Manager():
             mensaje_activo = True
         # Condicional que verifica el tamaño del mapa 
 
-
     crear_mapa(x, y)
+    verificador_mapa(y, x)
     
     while True:
         (posicion_x_r, posicion_y_r, posicion_x_m, posicion_y_m) = posicion()
