@@ -279,6 +279,13 @@ def mover_adelante(direccion, fila_x):
                         fila[index_columna] = '#'
                         movimiento_realizado = True
                         break
+
+                    elif fila[index_columna-1] == 'H':
+                        # Verifica si al lado izquierdo se encuentra una mina, si la ahi el robot explota
+                        fila[index_columna] = ' '
+                        fila[index_columna-1] = '@'
+                        movimiento_realizado = True
+                        break
                     else: 
                         # El robot avanza si no encuentra colision    
                         fila[index_columna] = ' '
@@ -309,6 +316,13 @@ def mover_adelante(direccion, fila_x):
                         # Verifica el lado superior, para saber si ahi un mina, si la ahi el robot explota
                         fila[index_columna] = ' '
                         mapa[index_fila-1][index_columna] = '#'
+                        movimiento_realizado = True
+                        break
+
+                    elif mapa[index_fila-1][index_columna] == 'H':
+                        # Verifica el lado superior, para saber si ahi un mina, si la ahi el robot explota
+                        fila[index_columna] = ' '
+                        mapa[index_fila-1][index_columna] = '@'
                         movimiento_realizado = True
                         break
 
@@ -345,6 +359,13 @@ def mover_adelante(direccion, fila_x):
                         movimiento_realizado = True
                         break
 
+                    elif mapa[index_fila+1][index_columna] == 'H':
+                        # Verifica el lado inferior, para saber si ahi un mina, si la ahi el robot explota
+                        fila[index_columna] = ' '
+                        mapa[index_fila+1][index_columna] = '@'
+                        movimiento_realizado = True
+                        break
+
                     else:
                         # Mueve el robot si no se ha encontrado en la ultima fila
                         fila[index_columna] = ' '
@@ -361,6 +382,8 @@ def verificador_colision():
     for fila in mapa:
         for columna in fila:
             if columna == '#':
+                return True
+            elif columna == '@':
                 return True
 
 def posicion():
