@@ -45,117 +45,60 @@ def crear_mapa(x, y):
                         meta = False
                         break
 
-                # elif contador_minas < ((y*x)) - ((y+x)*3) :
-                #     if assest == '*':
-                #         contador_minas +=1 
-                #         break
-
                 
             mapa[i].append(assest)
 
 def verificador_mapa(y, x):
     # recorre el mapa para modificar error con la la ubicacion de la meta y las monas, para evitar gener mapas imposibles de pasar
-    # TODO Verificar la ubicacion de las minas
-    # a = random.randint(-1,-3)
+    a = random.randint(1,3)
     b = random.randint(0,(x-1))
-    contador_minas = 0
+
+
     for index_fila, fila in enumerate(mapa):
         for index_columna, columna in enumerate(fila):
+
+            if index_fila == 0:
+                # verifica si el robot esta en la primera fila y en la primera columna, y si se encuentra rodeado de bombas, elimna la que tiene a la derecha
+                if index_columna == 0 and columna == '>':
+                    if fila[index_columna+1] == '*' and mapa[index_fila+1][index_columna] == '*':
+                        fila[index_columna+1] = ' '
 
             if index_fila == 0 or index_fila == 1 or  index_fila == 2:
                 # Condicional que verifica si la meta se encuantra en las primeras tres filas, si se encuentra la coloca en las ultimas filas del mapa
                 if columna == 'H':
                     fila[index_columna] = ' '
                     try:
-                        mapa[-1][b] = 'H'
+                        mapa[-a][b] = 'H'
                     except Exception:
                         pass
-
-            if columna == '*':
-                try:
-                    if mapa[index_fila][index_columna+1] == '*':
-                        mapa[index_fila][index_columna+1] = ' '
-                    
-                    if mapa[index_fila+1][index_columna] == '*':
-                        mapa[index_fila+1][index_columna] = ' '
-                    
-                except Exception:
-                    pass
-
-            # if index_fila == a:
-            #     # Condicional que verifica la ubicacion de la meta, previamente recolocada, donde se verifica si a sus alrededores se encuantran muchas mina, donde elimina si bloquea la meta  
-            #     if columna == 'H':
-            #         # Verifica las filas de la parte superior e inferior
-            #         if mapa[index_fila-1][index_columna] == '*':
-            #             mapa[index_fila-1][index_columna] = 'X'
-            #             contador_minas +=1
-            #         try:    
-            #             if mapa[index_fila+1][index_columna] == '*':
-            #                 mapa[index_fila+1][index_columna] = 'X'
-            #                 contador_minas +=1
-            #         except Exception:
-            #             pass
-
-            #         # Verifica las columnas de la parte derecha e izquierda
-            #         if fila[index_columna+1] == '*':
-            #             fila[index_columna+1] = 'X'
-            #             contador_minas +=1
-
-            #         try:
-            #             if fila[index_columna-1] == '*':
-            #                 fila[index_columna-1] = 'X'
-            #                 contador_minas +=1
-            #         except Exception:
-            #             pass
-
-                # if contador_minas > 2:
-                #         mapa[index_fila-1][index_columna] = 'X'
-                #         mapa[index_fila+1][index_columna] = 'X'
-                #         fila[index_columna+1] = 'X'
-                #         fila[index_columna-1] = 'X'
-
-
-
-
-
-
+            
+            if columna == '>':
+                # verifica si hay dos bombas al lado del robot de derecha e izquierda, elimina la de la parte de la derecha
+                if fila[index_columna+1] == '*' and fila[index_columna-1] == '*':
+                    fila[index_columna+1] = ' '
                 
 
-                # if columna[index_columna+1] == '*':
-                #     columna[index_columna+1] = ' '
-                # elif columna[index_columna-1] == '*':
-                #     columna[index_columna-1] = ' '
+            if columna == '*':
+                # elimina las minas que se encuentres dos juntas en las filas impares tanto horizontal como vertical 
+                if index_fila%2 == 1:
+                    try:
+                        if mapa[index_fila][index_columna+1] == '*':
+                            mapa[index_fila][index_columna+1] = ' '
+                        
+                        if mapa[index_fila+1][index_columna] == '*':
+                            mapa[index_fila+1][index_columna] = ' '
+                           
+                    except Exception:
+                        pass
+                if index_fila%2 == 1:
 
+                    try:
+                        if mapa[index_fila+1][index_columna+1] == '*':
+                           mapa[index_fila+1][index_columna+1] = ' '
+                    except Exception:
+                        pass
+           
 
-
-# def crear_mapa(x, y):
-      # ! No borrar hasta arreglar los mapas aleatorios 
-#     # ! Solo muestra el mapa cuando se crea y es el mapa de ejemplo
-#     # Crear el tamaño del mapa segun los parametros introducidos
-#     for i in range(x):
-#         # Ciclo que crea las filas
-#         map.append([])
-#         for j in range(y):
-#             # Ciclo que crea las columnas
-#             if (j == 1 or j == 2) and i == 0 :
-#                 if j == 1:
-#                     # Colocando las bombas de la primera fila
-#                     map[i].append('*')
-#                 elif j == 2 and i == 0:
-#                     map[i].append('H')
-#             elif (j == 0 or j == 2 or j == 3 or j== 1) and i == 1:
-
-#                 if j==1:
-#                     # Colocando al robot
-#                     map[i].append('>')
-#                 else:
-#                     # Colocando las bombas de la segunda fila
-#                     map[i].append('*')
-#             elif j == 2 and i == 2:
-#                 # Colocando las bombas de la tercera fila
-#                 map[i].append('*')
-#             else:
-#                 map[i].append(0)
 
 
 def mostrar_mapa(y):
@@ -473,10 +416,9 @@ def Manager():
         print(f' C: {y} | F: {x} '.center((y*4)+3,'-'))
         print('')
         mostrar_mapa(y)
-        print('')
-        print(f'Posicion de robot >> C: {posicion_x_r} | F: {posicion_y_r}')
-        print(f'Posicion de la meta >> C: {posicion_x_m} | F: {posicion_y_m}')
-        print('v0.1.9')
+
+        print(f'\nPosicion de robot >> C: {posicion_x_r} | F: {posicion_y_r}\nPosicion de la meta >> C: {posicion_x_m} | F: {posicion_y_m}\nv0.2.2')
+        
         print(f'''
     N     | Ordenes: {contador_ordenes}
     ↑     ---------------------------    
@@ -486,7 +428,7 @@ O ← {direccion} → E | A >> Avanzar
 ''')
         
         # ! Cierra el ciclo principal debido a que supero las ordenes extablecidas
-        if contador_ordenes == 40:
+        if contador_ordenes > 40:
             break
         # ! Cierra el ciclo principal debido a que el robot perdio
         if verificador_colision():
@@ -496,11 +438,12 @@ O ← {direccion} → E | A >> Avanzar
 
         # * Condicional que realiza el cambio de la direccion del robot en el mapa 
         if movimiento.lower().strip() == 'i':
+            contador_ordenes +=1
             direccion = mover_robot_izquierda(direccion)
 
         elif movimiento.lower().strip() == 'd':
-            direccion = mover_robot_derecha(direccion)
             contador_ordenes +=1
+            direccion = mover_robot_derecha(direccion)
 
         elif movimiento.lower().strip() == 'a':
             contador_ordenes +=1
