@@ -20,11 +20,10 @@ def limpiar_consola():
       
 
 def crear_mapa(x, y):
-    # ! list[list][element] -> lo primero es la lista y lo que sigue es el elemento para optimizar luego el codigo
+    # TODO list[list][element] -> lo primero es la lista y lo que sigue es el elemento para optimizar luego el codigo
     assests= [' ', '*', 'H', '>']
     # ! Solo muestra el mapa cuando se crea
     # Crear el tamaño del mapa segun los parametros introducidos
-    # contador_minas = 0
     robot = True
     meta = True
     for i in range(x):
@@ -53,7 +52,8 @@ def verificador_mapa(y, x):
     a = random.randint(1,3)
     b = random.randint(0,(x-1))
 
-
+    # TODO verificar cuando el mapa es pequeño, por ejempo 9x3 que se crean bloqueos, de igual formar, verificar la meta que no se bloquee con minas
+    # ! Seguir mejorando el verificador del mapa
     for index_fila, fila in enumerate(mapa):
         for index_columna, columna in enumerate(fila):
 
@@ -74,30 +74,39 @@ def verificador_mapa(y, x):
             
             if columna == '>':
                 # verifica si hay dos bombas al lado del robot de derecha e izquierda, elimina la de la parte de la derecha
-                if fila[index_columna+1] == '*' and fila[index_columna-1] == '*':
-                    fila[index_columna+1] = ' '
-                
+                try:
+                    if fila[index_columna+1] == '*' and fila[index_columna-1] == '*':
+                        fila[index_columna+1] = ' '
+                except Exception:
+                    pass
+
+            if columna == 'H':
+                # verifica si hay dos bombas al lado del robot de derecha e izquierda, elimina la de la parte de la derecha
+                try:
+                    if fila[index_columna+1] == '*' and fila[index_columna-1] == '*':
+                        fila[index_columna+1] = ' '
+                except Exception:
+                    pass
 
             if columna == '*':
                 # elimina las minas que se encuentres dos juntas en las filas impares tanto horizontal como vertical 
                 if index_fila%2 == 1:
                     try:
-                        if mapa[index_fila][index_columna+1] == '*':
-                            mapa[index_fila][index_columna+1] = ' '
-                        
-                        if mapa[index_fila+1][index_columna] == '*':
-                            mapa[index_fila+1][index_columna] = ' '
-                           
+                        if fila[index_columna+1] == '*':
+                            fila[index_columna+1] = ' '
                     except Exception:
                         pass
-                if index_fila%2 == 1:
+                    try:
+                        if mapa[index_fila+1][index_columna] == '*':
+                            mapa[index_fila+1][index_columna] = ' '
+                    except Exception:
+                        pass
 
                     try:
                         if mapa[index_fila+1][index_columna+1] == '*':
                            mapa[index_fila+1][index_columna+1] = ' '
                     except Exception:
                         pass
-           
 
 
 
@@ -417,7 +426,7 @@ def Manager():
         print('')
         mostrar_mapa(y)
 
-        print(f'\nPosicion de robot >> C: {posicion_x_r} | F: {posicion_y_r}\nPosicion de la meta >> C: {posicion_x_m} | F: {posicion_y_m}\nv0.2.2')
+        print(f'\nPosicion de robot >> C: {posicion_x_r} | F: {posicion_y_r}\nPosicion de la meta >> C: {posicion_x_m} | F: {posicion_y_m}\nv0.2.3')
         
         print(f'''
     N     | Ordenes: {contador_ordenes}
