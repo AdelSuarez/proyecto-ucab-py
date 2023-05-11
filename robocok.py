@@ -56,7 +56,7 @@ def crear_mapa(x, y):
 def verificador_mapa(y, x):
     # recorre el mapa para modificar error con la la ubicacion de la meta y las monas, para evitar gener mapas imposibles de pasar
     # TODO Verificar la ubicacion de las minas
-    # a = random.randint(2,(y-2))
+    # a = random.randint(-1,-3)
     b = random.randint(0,(x-1))
     contador_minas = 0
     for index_fila, fila in enumerate(mapa):
@@ -66,7 +66,10 @@ def verificador_mapa(y, x):
                 # Condicional que verifica si la meta se encuantra en las primeras tres filas, si se encuentra la coloca en las ultimas filas del mapa
                 if columna == 'H':
                     fila[index_columna] = ' '
-                    mapa[y-2][b] = 'H'
+                    try:
+                        mapa[-1][b] = 'H'
+                    except Exception:
+                        pass
 
             if columna == '*':
                 try:
@@ -162,7 +165,11 @@ def mostrar_mapa(y):
     cantidad_caracter = (y*4)+1
     print('  ', end='')
     for i in range(y):
-        print(f'  {i+1} ', end='')
+        if i+1 >= 10:
+            print(f'  {i+1}', end='')
+        else:
+            print(f'  {i+1} ', end='')
+
     
     print('')
     for i in range(len(mapa)):
@@ -173,8 +180,12 @@ def mostrar_mapa(y):
         # Ciclos que imprime el mapa sin los [] de las listas
         for j in mapa[i]:
             if numero:
-                print(f'{posicion} ', end='')
+                if posicion >= 10:
+                    print(f'{posicion}', end='')
+                else:
+                    print(f'{posicion} ', end='')
                 posicion+=1
+
             if count < y:
                 print(f'| {j} ', end='')
                 numero=False
@@ -465,7 +476,7 @@ def Manager():
         print('')
         print(f'Posicion de robot >> C: {posicion_x_r} | F: {posicion_y_r}')
         print(f'Posicion de la meta >> C: {posicion_x_m} | F: {posicion_y_m}')
-
+        print('v0.1.9')
         print(f'''
     N     | Ordenes: {contador_ordenes}
     ↑     ---------------------------    
