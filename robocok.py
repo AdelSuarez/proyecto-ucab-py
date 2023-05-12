@@ -50,12 +50,17 @@ def crear_mapa(x, y):
 def verificador_mapa(y, x):
     # recorre el mapa para modificar error con la la ubicacion de la meta y las monas, para evitar gener mapas imposibles de pasar
     a = random.randint(1,3)
-    b = random.randint(0,(x-1))
+    b = random.randint(1,(x-1))
 
     # TODO verificar cuando el mapa es pequeño, por ejempo 9x3 que se crean bloqueos, de igual formar, verificar la meta que no se bloquee con minas
     # ! Seguir mejorando el verificador del mapa
     for index_fila, fila in enumerate(mapa):
         for index_columna, columna in enumerate(fila):
+
+            if x == 3 or x == 4:
+                # verifica si calumna es de estos tamaños, va revisar sicse encuentran tres minas diaginales
+                # TODO : eliminar la mina del medio, si se encuentran tres minas segunas 
+                pass 
 
             if index_fila == 0:
                 # verifica si el robot esta en la primera fila y en la primera columna, y si se encuentra rodeado de bombas, elimna la que tiene a la derecha
@@ -68,7 +73,7 @@ def verificador_mapa(y, x):
                 if columna == 'H':
                     fila[index_columna] = ' '
                     try:
-                        mapa[-a][b] = 'H'
+                        mapa[-a][-1] = 'H'
                     except Exception:
                         pass
             
@@ -155,186 +160,196 @@ def mostrar_mapa(y):
 
 def mover_robot_izquierda(direccion):
     # Cambia la direccion del robot, solo direccion izquierda
+    movimiento_realizado = False
     for fila in mapa:
         for index, columna in enumerate(fila):
             if columna == '>':
                 direccion = 'N'
                 fila[index] = '^'
+                movimiento_realizado = True
+                break
 
             elif columna == '^':
                 direccion = 'O'
                 fila[index] = '<'
+                movimiento_realizado = True
+                break
 
             elif columna == '<':
                 direccion = 'S'
                 fila[index] = 'v'
+                movimiento_realizado = True
+                break
 
             elif columna == 'v':
                 direccion = 'E'
                 fila[index] = '>'
+                movimiento_realizado = True
+                break
+
+        if movimiento_realizado:
+            break
 
     return direccion
 
 def mover_robot_derecha(direccion):
     # Cambia la direccion del robot, solo direccion derecha
+    movimiento_realizado = False
     for columna in mapa:
         for index, fila in enumerate(columna):
             if fila == '>':
                 direccion = 'S'
                 columna[index] = 'v'
+                movimiento_realizado = True
+                break
 
             elif fila == 'v':
                 direccion = 'O'
                 columna[index] = '<'
+                movimiento_realizado = True
+                break
 
             elif fila == '<':
                 direccion = 'N'
                 columna[index] = '^'
+                movimiento_realizado = True
+                break
 
             elif fila == '^':
                 direccion = 'E'
                 columna[index] = '>'
+                movimiento_realizado = True
+                break
+        if movimiento_realizado:
+            break
 
     return direccion
 
 
 def mover_adelante(direccion, fila_x):
     # Ciclo que mueve el robot segun la direccion, verificando si se encuentra con colisiones en el camino
-    # TODO: Implementar de cuando se toque una mina, el robot pierde 
 
     movimiento_realizado = False
+
     for index_fila, fila in enumerate(mapa):
         for index_columna, columna in enumerate(fila):
 
-            if columna == '>':
-                if direccion == 'E':
-                    # Arroja un error que cuando llega al limite derecho de la lista se inserta el robot en una posicion que no existe. es lo que genera la colision
-                    try:
-                        if fila[index_columna+1] == '*':
-                            # Verifica si al lado derecho se encuentra una mina, si la ahi el robot explota
-                            fila[index_columna] = ' '
-                            fila[index_columna+1] = '#'
-
-                            break
-                        elif fila[index_columna+1] == 'H':
-                            fila[index_columna] = ' '
-                            fila[index_columna+1] = '@'
-                            break
-                        else:
-                            fila[index_columna] = ' '
-                            fila[index_columna+1] = '>'
-                            movimiento_realizado = True
-                            break
-                    except IndexError:
-                        fila[index_columna] = '#'
-                        break
-
-            elif columna == '<':
-                if direccion == 'O':
-                    if index_columna-1 == -1:
-                        #Condicion que verifica que si llega a la colision de la izquierda y quiere continuar, el robot explota
+            if columna == '>' and direccion == 'E':
+                # Arroja un error que cuando llega al limite derecho de la lista se inserta el robot en una posicion que no existe. es lo que genera la colision
+                try:
+                    if fila[index_columna+1] == '*':
+                        # Verifica si al lado derecho se encuentra una mina, si la hay el robot explota
                         fila[index_columna] = ' '
-                        fila[index_columna-1] = '#'
+                        fila[index_columna+1] = '#'
                         movimiento_realizado = True
-                        break
-                    elif fila[index_columna-1] == '*':
-                        # Verifica si al lado izquierdo se encuentra una mina, si la ahi el robot explota
-                        fila[index_columna] = '#'
-                        movimiento_realizado = True
-                        break
 
-                    elif fila[index_columna-1] == 'H':
-                        # Verifica si al lado izquierdo se encuentra una mina, si la ahi el robot explota
+                        break
+                    elif fila[index_columna+1] == 'H':
                         fila[index_columna] = ' '
-                        fila[index_columna-1] = '@'
+                        fila[index_columna+1] = '@'
                         movimiento_realizado = True
-                        break
-                    else: 
-                        # El robot avanza si no encuentra colision    
-                        fila[index_columna] = ' '
-                        fila[index_columna-1] = '<'
-                        movimiento_realizado = True
-                        break
 
-            elif columna == '^':
-                if direccion == 'N':
-                    # Se vuelven a iterar los bucles para poder mover al robot de lista, se hace en la lista principal 
-                    for i,f in enumerate(mapa):
-                        if i == 0:
-                            for j in f:
-                                # El ciclo for verifica si el robot se encuentra en la primera fila con direccion N, y si realiza un movimiento hacia el muro automaticamente el robot explota, pero verifica todo el mapa, aunque no pasa de la primera fila
-                                if j == '^':
-                                    fila[index_columna] = '#'
-                                    movimiento_realizado = True
-                                    break
-
-                        if movimiento_realizado:
-                            # Para cerrar el ciclo y no siga verificando las columnas
-                            break
-                        
-                    if movimiento_realizado:
-                            # Para cerrar el ciclo y no siga verificando las columnas
-                            break
-                    if mapa[index_fila-1][index_columna] == '*':
-                        # Verifica el lado superior, para saber si ahi un mina, si la ahi el robot explota
-                        fila[index_columna] = ' '
-                        mapa[index_fila-1][index_columna] = '#'
-                        movimiento_realizado = True
                         break
-
-                    elif mapa[index_fila-1][index_columna] == 'H':
-                        # Verifica el lado superior, para saber si ahi un mina, si la ahi el robot explota
-                        fila[index_columna] = ' '
-                        mapa[index_fila-1][index_columna] = '@'
-                        movimiento_realizado = True
-                        break
-
                     else:
-                        # Mueve el robot si no encuentra colision en direccion N
                         fila[index_columna] = ' '
-                        mapa[index_fila-1][index_columna] = '^'
+                        fila[index_columna+1] = '>'
+                        movimiento_realizado = True
+                        break
+                except IndexError:
+                    fila[index_columna] = '#'
+                    break
+
+            elif columna == '<' and direccion == 'O':
+                if index_columna-1 == -1:
+                    #Condicion que verifica que si llega a la colision de la izquierda y quiere continuar, el robot explota
+                    fila[index_columna] = ' '
+                    fila[index_columna-1] = '#'
+                    movimiento_realizado = True
+                    break
+                elif fila[index_columna-1] == '*':
+                    # Verifica si al lado izquierdo se encuentra una mina, si la ahi el robot explota
+                    fila[index_columna] = '#'
+                    movimiento_realizado = True
+                    break
+
+                elif fila[index_columna-1] == 'H':
+                    # Verifica si al lado izquierdo se encuentra una mina, si la ahi el robot explota
+                    fila[index_columna] = ' '
+                    fila[index_columna-1] = '@'
+                    movimiento_realizado = True
+                    break
+                else: 
+                    # El robot avanza si no encuentra colision    
+                    fila[index_columna] = ' '
+                    fila[index_columna-1] = '<'
+                    movimiento_realizado = True
+                    break
+
+            elif columna == '^' and  direccion == 'N':
+                # Se vuelven a iterar los bucles para poder mover al robot de lista, se hace en la lista principal 
+                for j in mapa[0]:
+                    # El ciclo for verifica si el robot se encuentra en la primera fila con direccion N, y si realiza un movimiento hacia el muro automaticamente el robot explota, pero verifica todo el mapa, aunque no pasa de la primera fila
+                    if j == '^':
+                        fila[index_columna] = '#'
                         movimiento_realizado = True
                         break
 
-            elif columna == 'v':
-                if direccion == 'S':
-                    # Se vuelven a iterar los bucles para poder mover al robot de lista, se hace en la lista principal 
-                    for i , f in enumerate(mapa):
-                        if i == fila_x-1:
-                            # La condicion lo que hace es que solo se verifique que se encuentra en la ultima columna de la lista
-                            for j in f:
-                                # El ciclo for verifica si el robot se encuentra en la ultima fila con direccion S, se recorre de nuevo el mapa devido a que se necesita llegar a la ultima fila 
-                                if j == 'v':
-                                    fila[index_columna] = '#'
-                                    movimiento_realizado = True
-                                    break
-                            if movimiento_realizado:
-                                # Cierra el ciclo para que no siga verifcando
-                                break
-
-                    if movimiento_realizado:
+                if movimiento_realizado:
+                        # Para cerrar el ciclo y no siga verificando las columnas
                         break
+                if mapa[index_fila-1][index_columna] == '*':
+                    # Verifica el lado superior, para saber si ahi un mina, si la ahi el robot explota
+                    fila[index_columna] = ' '
+                    mapa[index_fila-1][index_columna] = '#'
+                    movimiento_realizado = True
+                    break
 
-                    if mapa[index_fila+1][index_columna] == '*':
-                        # Verifica el lado inferior, para saber si ahi un mina, si la ahi el robot explota
-                        fila[index_columna] = ' '
-                        mapa[index_fila+1][index_columna] = '#'
+                elif mapa[index_fila-1][index_columna] == 'H':
+                    # Verifica el lado superior, para saber si ahi un mina, si la ahi el robot explota
+                    fila[index_columna] = ' '
+                    mapa[index_fila-1][index_columna] = '@'
+                    movimiento_realizado = True
+                    break
+
+                else:
+                    # Mueve el robot si no encuentra colision en direccion N
+                    fila[index_columna] = ' '
+                    mapa[index_fila-1][index_columna] = '^'
+                    movimiento_realizado = True
+                    break
+
+            elif columna == 'v'and direccion == 'S':
+                # Se vuelven a iterar los bucles para poder mover al robot de lista, se hace en la lista principal 
+                for j in mapa[fila_x-1]:
+                    # El ciclo for verifica si el robot se encuentra en la ultima fila con direccion S, se recorre de nuevo el mapa devido a que se necesita llegar a la ultima fila 
+                    if j == 'v':
+                        fila[index_columna] = '#'
                         movimiento_realizado = True
                         break
 
-                    elif mapa[index_fila+1][index_columna] == 'H':
-                        # Verifica el lado inferior, para saber si ahi un mina, si la ahi el robot explota
-                        fila[index_columna] = ' '
-                        mapa[index_fila+1][index_columna] = '@'
-                        movimiento_realizado = True
-                        break
+                if movimiento_realizado:
+                    break
 
-                    else:
-                        # Mueve el robot si no se ha encontrado en la ultima fila
-                        fila[index_columna] = ' '
-                        mapa[index_fila+1][index_columna] = 'v'
-                        movimiento_realizado = True
-                        break
+                if mapa[index_fila+1][index_columna] == '*':
+                    # Verifica el lado inferior, para saber si ahi un mina, si la ahi el robot explota
+                    fila[index_columna] = ' '
+                    mapa[index_fila+1][index_columna] = '#'
+                    movimiento_realizado = True
+                    break
+
+                elif mapa[index_fila+1][index_columna] == 'H':
+                    # Verifica el lado inferior, para saber si ahi un mina, si la ahi el robot explota
+                    fila[index_columna] = ' '
+                    mapa[index_fila+1][index_columna] = '@'
+                    movimiento_realizado = True
+                    break
+
+                else:
+                    # Mueve el robot si no se ha encontrado en la ultima fila
+                    fila[index_columna] = ' '
+                    mapa[index_fila+1][index_columna] = 'v'
+                    movimiento_realizado = True
+                    break
 
         if movimiento_realizado:
         # * Este bucle esta para que los movimineto en N y S no se hagan de manera infinita por los bucles internos 
@@ -349,37 +364,43 @@ def verificador_colision():
             elif columna == '@':
                 return True
 
-def posicion():
-    # * Muestra la ubicacion del robot en tiempo real y la de la meta 
+def posicion_robot():
+    # * Muestra la ubicacion del robot en tiempo real 
     posicion_fila_r = 0
     posicion_column_r = 0
+
+    posicion_robot  = False
+    for  index_fila ,fila in enumerate(mapa):
+        for index_columna , value in enumerate(fila):
+            if value == '>' or value == '<' or value == 'v' or value == '^':
+                posicion_fila_r = index_fila+1
+                posicion_column_r = index_columna+1
+                posicion_robot = True
+                break              
+        if posicion_robot:
+            break
+
+    return (posicion_fila_r, posicion_column_r)
+
+def posicion_meta():
+    # se busca la ubicacion de la meta de forma ondependiente debido a que esta funcion solo se va llamar una vez
     posicion_fila_m = 0
     posicion_column_m = 0
-
     posicion_meta  = False
-    posicion_robot  = False
     for  index_fila ,fila in enumerate(mapa):
         for index_columna , value in enumerate(fila):
             if value == 'H':
                 posicion_fila_m = index_fila+1
                 posicion_column_m = index_columna+1
                 posicion_meta = True
-            if value == '>' or value == '<' or value == 'v' or value == '^':
-                posicion_fila_r = index_fila+1
-                posicion_column_r = index_columna+1
-                posicion_robot = True                
-        if posicion_robot and posicion_meta:
+                break                    
+        if posicion_meta:
             break
 
-    return (posicion_fila_r, posicion_column_r, posicion_fila_m, posicion_column_m)
+    return ( posicion_fila_m, posicion_column_m)
 
 
-def Manager():
-
-    # Variables 
-    direccion = 'E'
-    contador_ordenes = 0
-    
+def datos_mapa():
     # Varibles para colocar el mensaje sobre el mapa
     mensaje_activo = False
     mensaje = None
@@ -390,8 +411,9 @@ def Manager():
         limpiar_consola()
         print('BIENVENIDO'.center(40, '-'))
 
+        try: 
+            # Excepcion que validad si los valores que se han introducidos son validos para poder continuar, verifica si en la creacion del tamaño del mapa, si los parametros son letras y no numeros va arrojar mensajes, y solo continuara la ejecucion de programa solo hasta que se introduzcan numeros
 
-        try:
             if mensaje_activo:
                 # Condicion que imprime el mesaje del mapa si se coloca datos incorrectos 
                 print(mensaje.center(40,' '))
@@ -401,6 +423,7 @@ def Manager():
             x = int(input('Introduce la cantidad de filas >> '))
             
             if x != y:
+                # Verifica que no se cree un cuadrado
                 if (x >= 4  and y >= 3) or (x >= 3  and y >= 4):
                     break
                 else:
@@ -413,20 +436,31 @@ def Manager():
         except Exception:
             mensaje = '*No se aceptan letras*'
             mensaje_activo = True
-        # Condicional que verifica el tamaño del mapa 
+    
+    return (y, x)
 
+def Manager():
+
+    # Variables 
+    direccion = 'E'
+    contador_ordenes = 0
+
+    (y, x) =  datos_mapa()
     crear_mapa(x, y)
     verificador_mapa(y, x)
+    (posicion_y_m, posicion_x_m) = posicion_meta()
     
     while True:
-        (posicion_x_r, posicion_y_r, posicion_x_m, posicion_y_m) = posicion()
+
+
+        (posicion_x_r, posicion_y_r) = posicion_robot()
         limpiar_consola()
 
         print(f' C: {y} | F: {x} '.center((y*4)+3,'-'))
         print('')
         mostrar_mapa(y)
 
-        print(f'\nPosicion de robot >> C: {posicion_x_r} | F: {posicion_y_r}\nPosicion de la meta >> C: {posicion_x_m} | F: {posicion_y_m}\nv0.2.3')
+        print(f'\nPosicion de robot >> C: {posicion_x_r} | F: {posicion_y_r}\nPosicion de la meta >> C: {posicion_x_m} | F: {posicion_y_m} \nv0.2.3')
         
         print(f'''
     N     | Ordenes: {contador_ordenes}
