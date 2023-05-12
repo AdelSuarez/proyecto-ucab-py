@@ -59,7 +59,7 @@ def verificador_mapa(y, x):
 
             if x == 3 or x == 4:
                 # verifica si calumna es de estos tamaños, va revisar sicse encuentran tres minas diaginales
-                # TODO : eliminar la mina del medio, si se encuentran tres minas segunas 
+                # TODO : eliminar la mina del medio, si se encuentran tres minas seguidas 
                 pass 
 
             if index_fila == 0:
@@ -68,14 +68,14 @@ def verificador_mapa(y, x):
                     if fila[index_columna+1] == '*' and mapa[index_fila+1][index_columna] == '*':
                         fila[index_columna+1] = ' '
 
-            if index_fila == 0 or index_fila == 1 or  index_fila == 2:
+            if (index_fila == 0 or index_fila == 1 or  index_fila == 2) and columna == 'H':
                 # Condicional que verifica si la meta se encuantra en las primeras tres filas, si se encuentra la coloca en las ultimas filas del mapa
-                if columna == 'H':
-                    fila[index_columna] = ' '
-                    try:
-                        mapa[-a][-1] = 'H'
-                    except Exception:
-                        pass
+                fila[index_columna] = ' '
+                try:
+                    mapa[-a][b] = 'H'
+                except Exception:
+                    mapa[-a][-1] = 'H'
+                        
             
             if columna == '>':
                 # verifica si hay dos bombas al lado del robot de derecha e izquierda, elimina la de la parte de la derecha
@@ -242,26 +242,27 @@ def mover_adelante(direccion, fila_x):
                         fila[index_columna] = ' '
                         fila[index_columna+1] = '#'
                         movimiento_realizado = True
-
                         break
                     elif fila[index_columna+1] == 'H':
+                        # Verifica si al lado derecho se encuentra la meta
                         fila[index_columna] = ' '
                         fila[index_columna+1] = '@'
                         movimiento_realizado = True
-
                         break
                     else:
+                        # Si no se encnuetra niguna mina o la meta, mueve al robot una casilla a la derecha
                         fila[index_columna] = ' '
                         fila[index_columna+1] = '>'
                         movimiento_realizado = True
                         break
                 except IndexError:
+                    # Si se intenta mover una casilla mas de la que se puede en la lista, va generar un error que esta fuera de rango, que es lo que se usa para detectar la colision 
                     fila[index_columna] = '#'
                     break
 
             elif columna == '<' and direccion == 'O':
                 if index_columna-1 == -1:
-                    #Condicion que verifica que si llega a la colision de la izquierda y quiere continuar, el robot explota
+                    # Verifica que si llega a la colision de la izquierda y quiere continuar, el robot explota
                     fila[index_columna] = ' '
                     fila[index_columna-1] = '#'
                     movimiento_realizado = True
@@ -383,10 +384,11 @@ def posicion_robot():
     return (posicion_fila_r, posicion_column_r)
 
 def posicion_meta():
-    # se busca la ubicacion de la meta de forma ondependiente debido a que esta funcion solo se va llamar una vez
+    # se busca la ubicacion de la meta de forma independiente debido a que esta funcion solo se va llamar una vez
     posicion_fila_m = 0
     posicion_column_m = 0
     posicion_meta  = False
+
     for  index_fila ,fila in enumerate(mapa):
         for index_columna , value in enumerate(fila):
             if value == 'H':
@@ -460,7 +462,7 @@ def Manager():
         print('')
         mostrar_mapa(y)
 
-        print(f'\nPosicion de robot >> C: {posicion_x_r} | F: {posicion_y_r}\nPosicion de la meta >> C: {posicion_x_m} | F: {posicion_y_m} \nv0.2.3')
+        print(f'\nPosicion de robot >> C: {posicion_x_r} | F: {posicion_y_r}\nPosicion de la meta >> C: {posicion_x_m} | F: {posicion_y_m} \nv0.2.5')
         
         print(f'''
     N     | Ordenes: {contador_ordenes}
