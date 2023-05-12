@@ -1,0 +1,66 @@
+Se pide comprobar la trayectoria de un robot en un espacio de forma rectangular definido por cuatro murallas, cada una de ellas orientada en sentido horario a uno de los puntos cardinales.
+
+El robot está programado para moverse en una matriz rectangular que cubre el lugar, de modo que puede moverse en cada paso desde una casilla hasta cualquiera de las que tenga un lado en común con ella. Así, se puede considerar el espacio por el que puede moverse el robot dividido en n filas (numeradas de 1 a n, yendo de N a S) y m columnas (numeradas de 1 a m, yendo de O a E).
+
+Roboted tiene programado desplazarse únicamente con tres órdenes:
+
+(I): movimiento a la izquierda: la orden I gira a roboted 90º sin avanzar.
+
+(D): movimiento a la derecha: la orden D gira a roboted 90º sin avanzar.
+
+(A): avanzar: la orden de avanzar se realiza de casilla en casilla (una cada vez), pudiendo sólo pasar desde la casilla en la que se encuentre roboted a cada una de las cuatro (o menos) que tienen un lado en común con esta. En todo momento roboted está orientado directamente hacia uno de los cuatro lados de la casilla en la que se encuentra (distinguidos por los puntos cardinales). La orden de avance se aplica siempre en la orientación que tenga en ese momento el robot y ha de tenerse en cuenta que un intento de avanzar contra los límites del recinto provocaría la destrucción del robot.
+
+Ejemplo: si roboted tiene orientación N, con la orden I, quedaría en la misma casilla pero con orientación O (pues el giro hacia la izquierda corresponde al giro antihorario); y con la orden D quedaría orientado al E (pues el giro a la derecha es el que se realiza en sentido horario).
+
+El problema es que el lugar por el que ha de desplazarse roboted se encuentra lleno de bombas, de forma que si roboted pasa por alguna de las casillas que tiene una bomba será destruido. Lo mismo sucede si el robot se estrella contra alguna de las paredes del recinto al recibir una orden de avance incorrecta.
+
+Objetivo
+Ud. como programador de roboted se encargará de generar la secuencia de órdenes que le harán llegar de su posición inicial a un destino sin que sea destruido.
+
+En el siguiente ejemplo puede verse el camino que tendría que recorrer roboted desde la posición inicial (identificada por la flecha) hasta su destino (identificado por el circulo), donde se encuentran las bombas (identificadas por las calaveras) a lo largo de la matriz.
+
+
+Entrada
+La entrada del proyecto consiste en una secuencia de líneas, que se encuentran en un archivo de texto (ASCII) denominado roboted.in, que tiene el siguiente formato:
+
+1. La línea número 1 contiene el número de filas (n) y columnas (m) del espacio separados por una coma y sin espacios en blanco. Se puede asumir que n y m son menores que 25.
+
+2. Las n líneas siguientes (de la 2 a la n+1) contienen una fila de la matriz. Cada línea tendrá m ceros o unos separados por comas y sin espacios en blanco entre ellos. Un cero (0) corresponde a una casilla que puede ser pisada por roboted sin peligro y un uno (1) corresponde a una casilla con bomba.
+
+3. La siguiente línea (la n+2) contiene las coordenadas (i1, 1), 1 ≤ i1 ≤ n, 1 ≤ j1 ≤ m, de la posición inicial de roboted, separadas con una coma y sin espacios en blanco.
+
+4. La siguiente línea (la n+3) contiene las coordenadas (i2, j2), 1 ≤ i2 <= n, 1 ≤ j2 ≤ m, del destino de roboted, separadas con una coma y sin espacios en blanco.
+
+5. La siguiente línea (la n+4) contiene un carácter que indica la orientación inicial de roboted (N, E, S o O).
+
+6. La siguiente línea (la n+5) contiene el número de órdenes dadas al robot (entre 1 y 40).
+
+7. La última línea (la n+6) contiene la secuencia de órdenes, es decir, letras "A", "D" e "I", separadas por un único blanco y sin blancos al inicio ni al final de la línea.
+
+Una vez cargado el archivo, el programa debe permitir al usuario buscar la solución de roboted de algunas de las dos maneras:
+
+1º: desde el archivo (con los comandos introducidos en la última línea)
+
+2º: de forma interactiva, permitiendo al usuario introducir las órdenes entre 1 y 40.
+
+Salida
+La salida del proyecto deberá mostrarse en un archivo de texto (ASCII) con nombre sal.out y constará de una única letra: una "Y", si la secuencia de órdenes lleva de la posición inicial al destino sin destruir el robot, o una "N" en caso contrario.
+
+El archivo de salida que corresponde a la solución dibujada arriba puede verse en el siguiente ejemplo.
+
+Ejemplo de entrada roboted.in
+
+4,5
+0,1,0,0,0
+1,0,1,1,0
+0,0,1,0,0
+0,0,0,0,0
+2,2
+1,3
+E
+16
+D A A I A A I A D A I A A I A A
+
+Ejemplo de salida sal.out
+
+Y
