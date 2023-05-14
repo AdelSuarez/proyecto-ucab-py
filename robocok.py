@@ -361,9 +361,9 @@ def verificador_colision():
     for fila in mapa:
         for columna in fila:
             if columna == '#':
-                return True
+                return '#'
             elif columna == '@':
-                return True
+                return '@'
 
 def posicion_robot():
     # * Muestra la ubicacion del robot en tiempo real 
@@ -441,6 +441,19 @@ def datos_mapa():
     
     return (y, x)
 
+def fin_juego(contador, verificador, y):
+    limpiar_consola()
+    mostrar_mapa(y)
+    print('')
+    print('FIN DEL JUEGO'.center((y*4)+3, '-'))
+    if contador > 40:
+        print('\n>> Perdiste\n>> Movientos agotados\n')
+    elif verificador == '#':
+        print('\n>> Perdiste\n>> El robot a colisionado o tocado una mina\n')
+    elif verificador == '@':
+        print(f'\n>> Ganaste\n>> Realizaste {contador} movimientos para llegar a la meta\n')
+
+
 def Manager():
 
     # Variables 
@@ -474,9 +487,11 @@ O ← {direccion} → E | A >> Avanzar
         
         # ! Cierra el ciclo principal debido a que supero las ordenes extablecidas
         if contador_ordenes > 40:
+            fin_juego(contador_ordenes, verificador_colision(), y)
             break
         # ! Cierra el ciclo principal debido a que el robot perdio
-        if verificador_colision():
+        if verificador_colision() == '#' or verificador_colision() == '@' :
+            fin_juego(contador_ordenes, verificador_colision(), y)
             break
 
         movimiento = input('Introduce el movimiento >> ')
@@ -497,4 +512,3 @@ O ← {direccion} → E | A >> Avanzar
 
 if __name__ == '__main__':
     Manager()
-    print('Fin del juego')
