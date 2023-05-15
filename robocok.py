@@ -423,16 +423,11 @@ def datos_mapa():
             y = int(input('introduce la cantidad de columnas >> '))
             x = int(input('Introduce la cantidad de filas >> '))
             
-            if x != y:
-                # Verifica que no se cree un cuadrado
-                if (x >= 4  and y >= 3) or (x >= 3  and y >= 4):
-                    break
-                else:
-                    mensaje_activo = True
-                    mensaje='*Tamaño del mapa insuficiente*'
+            if (x >= 4  and y >= 3) or (x >= 3  and y >= 4):
+                break
             else:
                 mensaje_activo = True
-                mensaje='*Los valores no pueden ser iguales*'
+                mensaje='*Tamaño del mapa insuficiente*'
 
         except Exception:
             mensaje = '*No se aceptan letras*'
