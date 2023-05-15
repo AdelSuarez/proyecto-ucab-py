@@ -56,10 +56,13 @@ def verificador_mapa(y, x):
     for index_fila, fila in enumerate(mapa):
         for index_columna, columna in enumerate(fila):
 
-            if x == 3 or x == 4:
+            # if:
                 # verifica si calumna es de estos tamaños, va revisar sicse encuentran tres minas diaginales
                 # TODO : eliminar la mina del medio, si se encuentran tres minas seguidas 
-                pass 
+               
+
+
+                
 
             if index_fila == 0:
                 # verifica si el robot esta en la primera fila y en la primera columna, y si se encuentra rodeado de bombas, elimna la que tiene a la derecha
@@ -93,6 +96,11 @@ def verificador_mapa(y, x):
                     pass
 
             if columna == '*':
+                # try:
+                #     if mapa[index_fila+1][index_columna-1] == '*' and mapa[index_fila+2][index_columna-2] == '*':
+                #         mapa[index_fila+1][index_columna-1] == 'X'
+                # except Exception:
+                #     pass
                 # elimina las minas que se encuentres dos juntas en las filas impares tanto horizontal como vertical 
                 if index_fila%2 == 1:
                     try:
@@ -111,6 +119,13 @@ def verificador_mapa(y, x):
                            mapa[index_fila+1][index_columna+1] = ' '
                     except Exception:
                         pass
+                if index_fila%2 == 0 or index_fila%2 == 1:
+                    try:
+                        if mapa[index_fila+1][index_columna-1] == '*':
+                           mapa[index_fila+1][index_columna-1] = ' '
+                    except Exception:
+                        pass
+                
 
 
 
@@ -469,7 +484,7 @@ def Manager():
         print('')
         mostrar_mapa(y)
 
-        print(f'\nPosicion de robot >> C: {posicion_x_r} | F: {posicion_y_r}\nPosicion de la meta >> C: {posicion_x_m} | F: {posicion_y_m} \nv1.0.1')
+        print(f'\nPosicion de robot >> C: {posicion_x_r} | F: {posicion_y_r}\nPosicion de la meta >> C: {posicion_x_m} | F: {posicion_y_m} \nv1.0.3')
         
         print(f'''
     N     | Ordenes: {contador_ordenes}
