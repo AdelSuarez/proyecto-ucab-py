@@ -2,7 +2,6 @@
 import os
 import random
 
-# TODO: Arreglar los error de datos, he implementar exception en las variables de entradas para evitar error de tipado
 # ! Preguntar la profesor si se puede hacer el codigo asi
 
 # Variable que almacena el tamaño del mapa, establecida al pricipio para tener acceso global
@@ -319,7 +318,7 @@ def mover_adelante(direccion, fila_x):
                     movimiento_realizado = True
                     break
 
-            elif columna == 'v'and direccion == 'S':
+            elif columna == 'v' and direccion == 'S':
                 # Se vuelven a iterar los bucles para poder mover al robot de lista, se hace en la lista principal 
                 for j in mapa[fila_x-1]:
                     # El ciclo for verifica si el robot se encuentra en la ultima fila con direccion S, se recorre de nuevo el mapa devido a que se necesita llegar a la ultima fila 
@@ -475,7 +474,7 @@ def Manager():
         print('')
         mostrar_mapa(y)
 
-        print(f'\nPosicion de robot >> C: {posicion_x_r} | F: {posicion_y_r}\nPosicion de la meta >> C: {posicion_x_m} | F: {posicion_y_m} \nv0.2.5')
+        print(f'\nPosicion de robot >> C: {posicion_x_r} | F: {posicion_y_r}\nPosicion de la meta >> C: {posicion_x_m} | F: {posicion_y_m} \nv1.0.1')
         
         print(f'''
     N     | Ordenes: {contador_ordenes}
