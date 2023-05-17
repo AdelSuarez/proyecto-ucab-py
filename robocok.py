@@ -2,6 +2,13 @@
 import os
 import random
 
+# Colores
+verde = '\033[32m'
+resetear_color = '\033[0m'
+rojo = '\033[31m'
+azul = '\033[34m'
+cian = '\033[36m'
+
 # ! Preguntar la profesor si se puede hacer el codigo asi
 
 # Variable que almacena el tamaño del mapa, establecida al pricipio para tener acceso global
@@ -137,9 +144,9 @@ def mostrar_mapa(y):
     print('  ', end='')
     for i in range(y):
         if i+1 >= 10:
-            print(f'  {i+1}', end='')
+            print(f'  {azul}{i+1}{resetear_color}', end='')
         else:
-            print(f'  {i+1} ', end='')
+            print(f'  {azul}{i+1}{resetear_color} ', end='')
 
     
     print('')
@@ -150,20 +157,45 @@ def mostrar_mapa(y):
         numero = True
         # Ciclos que imprime el mapa sin los [] de las listas
         for j in mapa[i]:
+            # TODO: optimizar el codigo
             if numero:
                 if posicion >= 10:
-                    print(f'{posicion}', end='')
+                    print(f'{azul}{posicion}{resetear_color}', end='')
                 else:
-                    print(f'{posicion} ', end='')
+                    print(f'{azul}{posicion}{resetear_color} ', end='')
                 posicion+=1
 
             if count < y:
-                print(f'| {j} ', end='')
-                numero=False
-                count+=1
+                if j ==  '>' or j ==  '<' or j ==  '^' or j ==  'v': 
+                    print(f'| {verde}{j}{resetear_color} ', end='')
+                    numero=False
+                    count+=1
+                elif j == '*' or j=='#':
+                    print(f'| {rojo}{j}{resetear_color} ', end='')
+                    numero=False
+                    count+=1
+
+                elif j == 'H':
+                    print(f'| {azul}{j}{resetear_color} ', end='')
+                    numero=False
+                    count+=1
+                else:
+                    print(f'| {j} ', end='')
+                    numero=False
+                    count+=1
             elif count == y:
-                print(f'| {j} |', end='')
-                count = 1
+                if j ==  '>' or j ==  '<' or j ==  '^' or j ==  'v': 
+                    print(f'| {verde}{j}{resetear_color} |', end='')
+                    count = 1
+                elif j == '*' or j=='#':
+                    print(f'| {rojo}{j}{resetear_color} |', end='')
+                    count = 1
+                elif j == 'H':
+                    print(f'| {azul}{j}{resetear_color} |', end='')
+                    count = 1
+                else:
+                    print(f'| {j} |', end='')
+                    count = 1
 
 
         print('')
@@ -435,14 +467,14 @@ def datos_mapa():
                 print(mensaje.center(40,' '))
 
             print('\nTamaño del mapa que deceas crear: ')
-            y = int(input('introduce la cantidad de columnas >> '))
-            x = int(input('Introduce la cantidad de filas >> '))
+            y = int(input(f'introduce la cantidad de columnas {verde}>>{resetear_color} '))
+            x = int(input(f'Introduce la cantidad de filas {verde}>>{resetear_color} '))
             
             if (x >= 4  and y >= 3) or (x >= 3  and y >= 4):
                 break
             else:
                 mensaje_activo = True
-                mensaje='*Tamaño del mapa insuficiente*'
+                mensaje=f'*Tamaño del mapa insuficiente*'
 
         except Exception:
             mensaje = '*No se aceptan letras*'
@@ -483,15 +515,16 @@ def Manager():
         print(f' C: {y} | F: {x} '.center((y*4)+3,'-'))
         print('')
         mostrar_mapa(y)
-
-        print(f'\nPosicion de robot >> C: {posicion_x_r} | F: {posicion_y_r}\nPosicion de la meta >> C: {posicion_x_m} | F: {posicion_y_m} \nv1.0.3')
+        print('')
+        print('Posiciones'.center((y*4)+3, '-'))
+        print(f'° Robot {verde}>>{resetear_color} C: {azul}{posicion_x_r}{resetear_color} | F: {azul}{posicion_y_r}{resetear_color}\n° Meta  {verde}>>{resetear_color} C: {azul}{posicion_x_m}{resetear_color} | F: {azul}{posicion_y_m}{resetear_color} \n{cian}v1.0.5{resetear_color}')
         
         print(f'''
-    N     | Ordenes: {contador_ordenes}
+    N     | Ordenes: {azul}{contador_ordenes}{resetear_color}
     ↑     ---------------------------    
-O ← {direccion} → E | A >> Avanzar
-    ↓     | I >> Mover a la Izquierda
-    S     | D >> Mover a la Derecha
+O ← {verde}{direccion}{resetear_color} → E | A {verde}>>{resetear_color} Avanzar
+    ↓     | I {verde}>>{resetear_color} Mover a la Izquierda
+    S     | D {verde}>>{resetear_color} Mover a la Derecha
 ''')
         
         # ! Cierra el ciclo principal debido a que supero las ordenes extablecidas
@@ -503,7 +536,7 @@ O ← {direccion} → E | A >> Avanzar
             fin_juego(contador_ordenes, verificador_colision(), y)
             break
 
-        movimiento = input('Introduce el movimiento >> ')
+        movimiento = input(f'Introduce el movimiento {verde}>>{resetear_color} ')
 
         # * Condicional que realiza el cambio de la direccion del robot en el mapa 
         if movimiento.lower().strip() == 'i':
