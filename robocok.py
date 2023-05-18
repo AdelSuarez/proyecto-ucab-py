@@ -541,7 +541,7 @@ def Manager():
         mostrar_mapa(y)
         print('')
         print('Posiciones'.center((y*4)+3, '-'))
-        print(f'° Robot {verde}>>{resetear} C: {azul}{posicion_x_r}{resetear} | F: {azul}{posicion_y_r}{resetear}\n° Meta  {verde}>>{resetear} C: {azul}{posicion_x_m}{resetear} | F: {azul}{posicion_y_m}{resetear} \n{cian}v1.0.6{resetear}')
+        print(f'° Robot {verde}>>{resetear} C: {azul}{posicion_x_r}{resetear} | F: {azul}{posicion_y_r}{resetear}\n° Meta  {verde}>>{resetear} C: {azul}{posicion_x_m}{resetear} | F: {azul}{posicion_y_m}{resetear} \n{cian}v1.0.7{resetear}')
         
         print(f'''
     N     | Ordenes: {azul}{contador_ordenes}{resetear}
