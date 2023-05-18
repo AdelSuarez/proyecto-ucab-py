@@ -10,7 +10,33 @@ azul = '\033[34m'
 cian = '\033[36m'
 amarillo = '\033[33m'
 
-# ! Preguntar la profesor si se puede hacer el codigo asi
+def crear_archivo(x, y, mapa):
+    archivo = open('robotcok.txt', 'w')
+    archivo.write(f'{x},{y}\n')
+    for i in range(len(mapa)):
+        count = 1
+        for j in mapa[i]:
+            if count < y:
+                if j == ' ':
+                    archivo.write('0,')
+                    count+=1
+                elif j == '*':
+                    archivo.write('1,')
+                    count+=1
+                else:
+                    archivo.write(f'{j},')
+                    count+=1
+            elif count == y:
+                if j == ' ':
+                    archivo.write('0\n')
+                elif j == '*':
+                    archivo.write('1\n')
+                else:
+                    archivo.write(f'{j}\n')
+                # archivo.write(f'{j}\n')
+    archivo.close()
+
+
 
 # Variable que almacena el tamaño del mapa, establecida al pricipio para tener acceso global
 mapa = []
@@ -500,6 +526,8 @@ def Manager():
     (y, x) =  datos_mapa()
     crear_mapa(x, y)
     verificador_mapa(y, x)
+    crear_archivo(x, y, mapa)
+
     (posicion_y_m, posicion_x_m) = posicion_meta()
     
     while True:
