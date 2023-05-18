@@ -4,10 +4,11 @@ import random
 
 # Colores
 verde = '\033[32m'
-resetear_color = '\033[0m'
+resetear = '\033[0m'
 rojo = '\033[31m'
 azul = '\033[34m'
 cian = '\033[36m'
+amarillo = '\033[33m'
 
 # ! Preguntar la profesor si se puede hacer el codigo asi
 
@@ -62,15 +63,7 @@ def verificador_mapa(y, x):
     # ! Seguir mejorando el verificador del mapa
     for index_fila, fila in enumerate(mapa):
         for index_columna, columna in enumerate(fila):
-
-            # if:
-                # verifica si calumna es de estos tamaños, va revisar sicse encuentran tres minas diaginales
-                # TODO : eliminar la mina del medio, si se encuentran tres minas seguidas 
                
-
-
-                
-
             if index_fila == 0:
                 # verifica si el robot esta en la primera fila y en la primera columna, y si se encuentra rodeado de bombas, elimna la que tiene a la derecha
                 if index_columna == 0 and columna == '>':
@@ -95,7 +88,7 @@ def verificador_mapa(y, x):
                     pass
 
             if columna == 'H':
-                # verifica si hay dos bombas al lado del robot de derecha e izquierda, elimina la de la parte de la derecha
+                # verifica si hay dos bombas al lado del robot de derecha e izquierda, eliminpassa la de la parte de la derecha
                 try:
                     if fila[index_columna+1] == '*' and fila[index_columna-1] == '*':
                         fila[index_columna+1] = ' '
@@ -103,35 +96,38 @@ def verificador_mapa(y, x):
                     pass
 
             if columna == '*':
-                # try:
-                #     if mapa[index_fila+1][index_columna-1] == '*' and mapa[index_fila+2][index_columna-2] == '*':
-                #         mapa[index_fila+1][index_columna-1] == 'X'
-                # except Exception:
-                #     pass
-                # elimina las minas que se encuentres dos juntas en las filas impares tanto horizontal como vertical 
+                   
+                try:
+                    # Elimana mina si se encuentras dos seguidas
+                    if fila[index_columna+1] == '*':
+                        fila[index_columna+1] = ' '
+                except Exception:
+                    pass
+
                 if index_fila%2 == 1:
                     try:
-                        if fila[index_columna+1] == '*':
-                            fila[index_columna+1] = ' '
-                    except Exception:
-                        pass
-                    try:
+                        # elimina minas que se encuentra seguidas de forma vertical
                         if mapa[index_fila+1][index_columna] == '*':
                             mapa[index_fila+1][index_columna] = ' '
                     except Exception:
                         pass
 
                     try:
+                        # elimina minas si se encuentran dos diagonales direccion derecha
                         if mapa[index_fila+1][index_columna+1] == '*':
                            mapa[index_fila+1][index_columna+1] = ' '
                     except Exception:
                         pass
+
                 if index_fila%2 == 0 or index_fila%2 == 1:
                     try:
+                        # elimina minas si se encuentran dos diagonales direccion izquierda
+
                         if mapa[index_fila+1][index_columna-1] == '*':
                            mapa[index_fila+1][index_columna-1] = ' '
                     except Exception:
                         pass
+
                 
 
 
@@ -144,9 +140,9 @@ def mostrar_mapa(y):
     print('  ', end='')
     for i in range(y):
         if i+1 >= 10:
-            print(f'  {azul}{i+1}{resetear_color}', end='')
+            print(f'  {azul}{i+1}{resetear}', end='')
         else:
-            print(f'  {azul}{i+1}{resetear_color} ', end='')
+            print(f'  {azul}{i+1}{resetear} ', end='')
 
     
     print('')
@@ -160,23 +156,23 @@ def mostrar_mapa(y):
             # TODO: optimizar el codigo
             if numero:
                 if posicion >= 10:
-                    print(f'{azul}{posicion}{resetear_color}', end='')
+                    print(f'{azul}{posicion}{resetear}', end='')
                 else:
-                    print(f'{azul}{posicion}{resetear_color} ', end='')
+                    print(f'{azul}{posicion}{resetear} ', end='')
                 posicion+=1
 
             if count < y:
                 if j ==  '>' or j ==  '<' or j ==  '^' or j ==  'v': 
-                    print(f'| {verde}{j}{resetear_color} ', end='')
+                    print(f'| {verde}{j}{resetear} ', end='')
                     numero=False
                     count+=1
                 elif j == '*' or j=='#':
-                    print(f'| {rojo}{j}{resetear_color} ', end='')
+                    print(f'| {rojo}{j}{resetear} ', end='')
                     numero=False
                     count+=1
 
                 elif j == 'H':
-                    print(f'| {azul}{j}{resetear_color} ', end='')
+                    print(f'| {amarillo}{j}{resetear} ', end='')
                     numero=False
                     count+=1
                 else:
@@ -185,13 +181,13 @@ def mostrar_mapa(y):
                     count+=1
             elif count == y:
                 if j ==  '>' or j ==  '<' or j ==  '^' or j ==  'v': 
-                    print(f'| {verde}{j}{resetear_color} |', end='')
+                    print(f'| {verde}{j}{resetear} |', end='')
                     count = 1
                 elif j == '*' or j=='#':
-                    print(f'| {rojo}{j}{resetear_color} |', end='')
+                    print(f'| {rojo}{j}{resetear} |', end='')
                     count = 1
                 elif j == 'H':
-                    print(f'| {azul}{j}{resetear_color} |', end='')
+                    print(f'| {amarillo}{j}{resetear} |', end='')
                     count = 1
                 else:
                     print(f'| {j} |', end='')
@@ -310,7 +306,7 @@ def mover_adelante(direccion, fila_x):
                 if index_columna-1 == -1:
                     # Verifica que si llega a la colision de la izquierda y quiere continuar, el robot explota
                     fila[index_columna] = ' '
-                    fila[index_columna-1] = '#'
+                    fila[index_columna] = '#'
                     movimiento_realizado = True
                     break
                 elif fila[index_columna-1] == '*':
@@ -467,8 +463,8 @@ def datos_mapa():
                 print(mensaje.center(40,' '))
 
             print('\nTamaño del mapa que deceas crear: ')
-            y = int(input(f'introduce la cantidad de columnas {verde}>>{resetear_color} '))
-            x = int(input(f'Introduce la cantidad de filas {verde}>>{resetear_color} '))
+            y = int(input(f'introduce la cantidad de columnas {verde}>>{resetear} '))
+            x = int(input(f'Introduce la cantidad de filas {verde}>>{resetear} '))
             
             if (x >= 4  and y >= 3) or (x >= 3  and y >= 4):
                 break
@@ -488,11 +484,11 @@ def fin_juego(contador, verificador, y):
     print('')
     print('FIN DEL JUEGO'.center((y*4)+3, '-'))
     if contador > 40:
-        print('\n>> Perdiste\n>> Movientos agotados\n')
+        print(f'\n{verde}>>{resetear} Perdiste\n{verde}>>{resetear} Movientos agotados\n')
     elif verificador == '#':
-        print('\n>> Perdiste\n>> El robot a colisionado o tocado una mina\n')
+        print(f'\n{verde}>>{resetear} Perdiste\n{verde}>>{resetear} El robot a colisionado o tocado una mina\n')
     elif verificador == '@':
-        print(f'\n>> Ganaste\n>> Realizaste {contador} movimientos para llegar a la meta\n')
+        print(f'\n{verde}>>{resetear} Ganaste\n{verde}>>{resetear} Realizaste {contador} movimientos para llegar a la meta\n')
 
 
 def Manager():
@@ -517,14 +513,14 @@ def Manager():
         mostrar_mapa(y)
         print('')
         print('Posiciones'.center((y*4)+3, '-'))
-        print(f'° Robot {verde}>>{resetear_color} C: {azul}{posicion_x_r}{resetear_color} | F: {azul}{posicion_y_r}{resetear_color}\n° Meta  {verde}>>{resetear_color} C: {azul}{posicion_x_m}{resetear_color} | F: {azul}{posicion_y_m}{resetear_color} \n{cian}v1.0.5{resetear_color}')
+        print(f'° Robot {verde}>>{resetear} C: {azul}{posicion_x_r}{resetear} | F: {azul}{posicion_y_r}{resetear}\n° Meta  {verde}>>{resetear} C: {azul}{posicion_x_m}{resetear} | F: {azul}{posicion_y_m}{resetear} \n{cian}v1.0.6{resetear}')
         
         print(f'''
-    N     | Ordenes: {azul}{contador_ordenes}{resetear_color}
+    N     | Ordenes: {azul}{contador_ordenes}{resetear}
     ↑     ---------------------------    
-O ← {verde}{direccion}{resetear_color} → E | A {verde}>>{resetear_color} Avanzar
-    ↓     | I {verde}>>{resetear_color} Mover a la Izquierda
-    S     | D {verde}>>{resetear_color} Mover a la Derecha
+O ← {verde}{direccion}{resetear} → E | A {verde}>>{resetear} Avanzar
+    ↓     | I {verde}>>{resetear} Mover a la Izquierda
+    S     | D {verde}>>{resetear} Mover a la Derecha
 ''')
         
         # ! Cierra el ciclo principal debido a que supero las ordenes extablecidas
@@ -536,7 +532,7 @@ O ← {verde}{direccion}{resetear_color} → E | A {verde}>>{resetear_color} Ava
             fin_juego(contador_ordenes, verificador_colision(), y)
             break
 
-        movimiento = input(f'Introduce el movimiento {verde}>>{resetear_color} ')
+        movimiento = input(f'Introduce el movimiento {verde}>>{resetear} ')
 
         # * Condicional que realiza el cambio de la direccion del robot en el mapa 
         if movimiento.lower().strip() == 'i':
