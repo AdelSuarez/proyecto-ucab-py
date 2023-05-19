@@ -488,7 +488,7 @@ def datos_mapa():
                 # Condicion que imprime el mesaje del mapa si se coloca datos incorrectos 
                 print(mensaje.center(40,' '))
 
-            print('\nTamaño del mapa que deceas crear: ')
+            print('\nTamaño del mapa que deseas crear: ')
             y = int(input(f'introduce la cantidad de columnas {verde}>>{resetear} '))
             x = int(input(f'Introduce la cantidad de filas {verde}>>{resetear} '))
             
