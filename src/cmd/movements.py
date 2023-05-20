@@ -40,33 +40,33 @@ class Movements:
 
     def right(self):
         # Cambia la direccion del robot, solo direccion derecha
-        movimiento_realizado = False
+        movement_made = False
         for row in self.map_game:
             for index_column, column in enumerate(row):
                 if column == '>':
-                    direccion = 'S'
+                    self.address = 'S'
                     row[index_column] = 'v'
-                    movimiento_realizado = True
+                    movement_made = True
                     break
 
                 elif column == 'v':
-                    direccion = 'O'
+                    self.address = 'O'
                     row[index_column] = '<'
-                    movimiento_realizado = True
+                    movement_made = True
                     break
 
                 elif column == '<':
-                    direccion = 'N'
+                    self.address = 'N'
                     row[index_column] = '^'
-                    movimiento_realizado = True
+                    movement_made = True
                     break
 
                 elif column == '^':
-                    direccion = 'E'
+                    self.address = 'E'
                     row[index_column] = '>'
-                    movimiento_realizado = True
+                    movement_made = True
                     break
-            if movimiento_realizado:
+            if movement_made:
                 break
 
         return self.address

@@ -2,8 +2,8 @@ import style.style as st
 
 class View_map:
     
-    def __init__(self,row, map_game) -> None:
-        self._row = row
+    def __init__(self,column, map_game) -> None:
+        self._row = column
         self.map_game = map_game
 
 
@@ -53,7 +53,6 @@ class View_map:
                         count+=1
                 elif count == self._row:
                     if j ==  '>' or j ==  '<' or j ==  '^' or j ==  'v':
-                        # self._view_assest_r(j, st.GREEN, count)
                         print(f'| {st.GREEN}{j}{st.RESET} |', end='')
                         count+=1
 
