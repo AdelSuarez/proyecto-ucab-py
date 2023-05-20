@@ -3,7 +3,7 @@ import style.style as st
 class View_map:
     
     def __init__(self,column, map_game) -> None:
-        self._row = column
+        self._column = column
         self.map_game = map_game
 
 
@@ -31,7 +31,7 @@ class View_map:
                         print(f'{st.BLUE}{position}{st.RESET} ', end='')
                     position+=1
 
-                if count < self._row:
+                if count < self._column:
                     if j ==  '>' or j ==  '<' or j ==  '^' or j ==  'v': 
                         print(f'| {st.GREEN}{j}{st.RESET} ', end='')
                         view_number=False
@@ -51,7 +51,7 @@ class View_map:
                         print(f'| {j} ', end='')
                         view_number=False
                         count+=1
-                elif count == self._row:
+                elif count == self._column:
                     if j ==  '>' or j ==  '<' or j ==  '^' or j ==  'v':
                         print(f'| {st.GREEN}{j}{st.RESET} |', end='')
                         count+=1
@@ -76,7 +76,7 @@ class View_map:
 
     def _number_up(self):
         print('  ', end='')
-        for i in range(self._row):
+        for i in range(self._column):
             if i+1 >= 10:
                 print(f'  {st.BLUE}{i+1}{st.RESET}', end='')
             else:
@@ -85,4 +85,4 @@ class View_map:
 
     def _separator_line(self):
         print('  ', end='')
-        print(''.center((self._row*4)+1,'-'))
+        print(''.center((self._column*4)+1,'-'))

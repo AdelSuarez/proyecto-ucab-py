@@ -4,9 +4,9 @@ from src.cmd.view_map import View_map
 import style.style as st
 from src.cmd.clear_terminal import clear
 from src.cmd.positions import Positions
-from src.cmd.movements import Movements
-from src.cmd.advance import Advance
-from src.cmd.collision_checker import Collision_checher
+from src.cmd.robot_rotation import Robot_rotation
+from src.cmd.move import Move
+from src.cmd.collision_checker import Collision_checker
 from src.cmd.end_game import End_game
 
 class Main_menu:
@@ -46,24 +46,24 @@ O ← {st.GREEN}{self.address}{st.RESET} → E | A {st.GREEN}>>{st.RESET} Avanza
 ''')
             
             if Main_menu.order_counter > 40:
-                End_game(Main_menu.order_counter, Collision_checher(self.map_game).checker(), self._column, self.map_game)
+                End_game(Main_menu.order_counter, Collision_checker(self.map_game).checker(), self._column, self.map_game)
                 break
 
-            if Collision_checher(self.map_game).checker() == '#' or Collision_checher(self.map_game).checker() == '@':
-                End_game(Main_menu.order_counter, Collision_checher(self.map_game).checker(), self._column, self.map_game)
+            if Collision_checker(self.map_game).checker() == '#' or Collision_checker(self.map_game).checker() == '@':
+                End_game(Main_menu.order_counter, Collision_checker(self.map_game).checker(), self._column, self.map_game)
                 break
             
             motion = input(f'Introduce el movimiento {st.GREEN}>>{st.RESET} ')
 
             if motion.lower().strip() == 'i':
                 Main_menu.order_counter +=1
-                self.address = Movements(self.address, self.map_game).left()
+                self.address = Robot_rotation(self.address, self.map_game).left()
 
             elif motion.lower().strip() == 'd':
                 Main_menu.order_counter +=1
-                self.address = Movements(self.address, self.map_game).right()
+                self.address = Robot_rotation(self.address, self.map_game).right()
 
 
             elif motion.lower().strip() == 'a':
                 Main_menu.order_counter +=1
-                Advance(self.address, self.map_game).advance()
+                Move(self.address, self.map_game).advance()

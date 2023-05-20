@@ -1,4 +1,4 @@
-class Movements:
+class Robot_rotation:
     def __init__(self, address, map_game):
         self.address = address
         self.map_game = map_game
