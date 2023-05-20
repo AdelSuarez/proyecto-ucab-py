@@ -4,6 +4,7 @@ from src.cmd.view_map import View_map
 import style.style as st
 from src.cmd.clear_terminal import clear
 from src.cmd.positions import Positions
+from src.cmd.movements import Movements
 
 class Main_menu:
     order_counter = 0
@@ -13,6 +14,7 @@ class Main_menu:
         self._row, self._column = Data_map().welcome()
         self.map_game = Create_map(self._row, self._column).maker()
         self._position_row_g, self._position_column_g = Positions(self.map_game).position_goal()
+        self.address = 'E'
         self.menu()
         
 
@@ -35,11 +37,21 @@ class Main_menu:
             print(f'''
     N     | Ordenes: {st.BLUE}{Main_menu.order_counter}{st.RESET}
     ↑     ---------------------------    
-O ← {st.GREEN}{'e'}{st.RESET} → E | A {st.GREEN}>>{st.RESET} Avanzar
+O ← {st.GREEN}{self.address}{st.RESET} → E | A {st.GREEN}>>{st.RESET} Avanzar
     ↓     | I {st.GREEN}>>{st.RESET} Mover a la Izquierda
     S     | D {st.GREEN}>>{st.RESET} Mover a la Derecha
 ''')
-            movimiento = input(f'Introduce el movimiento {st.GREEN}>>{st.RESET} ')
+            motion = input(f'Introduce el movimiento {st.GREEN}>>{st.RESET} ')
+
+
+            if motion.lower().strip() == 'i':
+                Main_menu.order_counter +=1
+                self.address = Movements(self.address, self.map_game).left()
+
+            elif motion.lower().strip() == 'd':
+                Main_menu.order_counter +=1
+                self.address = Movements(self.address, self.map_game).right()
+            
 
 
 
