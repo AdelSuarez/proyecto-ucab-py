@@ -1,5 +1,4 @@
-from src.data_map import Data_map 
-from src.create_map import Create_map
+from src.cmd.main_menu import Main_menu
 class Manager:
 
     def __init__(self):
@@ -7,6 +6,4 @@ class Manager:
     
 
     def views(self):
-        row, column = Data_map().welcome()
-        print(row, column)
-        Create_map(row, column).maker()
+        Main_menu()

@@ -1,6 +1,5 @@
 import random
-from src.map_checker import Map_checker
-from src.view_map import View_map
+from src.cmd.map_checker import Map_checker
 
 class Create_map():
     robot = True
@@ -15,8 +14,6 @@ class Create_map():
 
 
     def maker(self):
-        # TODO list[list][element] -> lo primero es la lista y lo que sigue es el elemento para optimizar luego el codigo
-        # ! Solo muestra el mapa cuando se crea
         # Crear el tamaño del mapa segun los parametros introducidos
         for i in range(self._row):
             # Ciclo que crea las filas
@@ -40,5 +37,5 @@ class Create_map():
                 self.map_game[i].append(assest)
 
         Map_checker(self._column, self.map_game).checker()
-        View_map(self._column, self.map_game).view()
+        return self.map_game
                 

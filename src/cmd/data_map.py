@@ -1,5 +1,5 @@
 import style.style as st
-from src.clear_terminal import clear
+from src.cmd.clear_terminal import clear
 
 class Data_map:
     is_message = False
