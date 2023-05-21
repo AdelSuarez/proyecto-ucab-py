@@ -1,5 +1,5 @@
 from src.cmd.main_menu import Main_menu
-# from src.screen.main_screen import main
+from src.screen.main_screen import Main_screen
 class Manager:
 
     def __init__(self):
@@ -13,7 +13,7 @@ class Manager:
 
         # option = int(input('Introduce la opcion >> '))
         # if option == 1:
-        Main_menu()
+        # Main_menu()
         # elif option == 2:
-            # main()
+        Main_screen()
             # print('grafica')
