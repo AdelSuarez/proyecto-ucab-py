@@ -1,3 +1,4 @@
+from getch import getche
 from cmd.welcome import Data_map
 from src.create_map import Create_map
 from cmd.view_map import View_map
@@ -52,8 +53,9 @@ O ← {st.GREEN}{self.address}{st.RESET} → E | A {st.GREEN}>>{st.RESET} Avanza
             if Collision_checker(self.map_game).checker() == '#' or Collision_checker(self.map_game).checker() == '@':
                 End_game(Main_menu.order_counter, Collision_checker(self.map_game).checker(), self._column, self.map_game)
                 break
-            
-            motion = input(f'Introduce el movimiento {st.GREEN}>>{st.RESET} ')
+            # motion = input(f'Introduce el movimiento {st.GREEN}>>{st.RESET} ')
+            print(f'Introduce el movimiento {st.GREEN}>>{st.RESET} ', end='')
+            motion = getche()
 
             if motion.lower().strip() == 'i':
                 Main_menu.order_counter +=1
