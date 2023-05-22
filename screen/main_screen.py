@@ -1,3 +1,4 @@
+# from src.create_map import Create_map
 from src.create_map import Create_map
 import style.style as st
 import pygame
@@ -36,30 +37,37 @@ class Main_screen:
 
 
     def create_map(self):
-        for fila in range(len(self._map_game)):
-            for columna in range(len(self._map_game[fila])):
+        for row in range(len(self._map_game)):
+            for index_column, column in enumerate(self._map_game[row]):
                 pygame.draw.rect(self._screen,
                                 st.WHITE,
-                                [(st.MARGIN+st.HIGH) * columna + st.MARGIN,
-                                (st.MARGIN+st.LONG) * fila + st.MARGIN+2,
+                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                (st.MARGIN+st.LONG) * row + st.MARGIN,
                                 st.HIGH,
                                 st.LONG])
                 
-                if self._map_game[fila][columna] == '>':
-                    self._screen.blit(self._robot, [(st.MARGIN+st.HIGH) * columna + st.MARGIN,
-                                (st.MARGIN+st.LONG) * fila + st.MARGIN,
+                if column == '>':   
+                    pygame.draw.rect(self._screen,
+                                st.GREEN_SCREEN,
+                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                (st.MARGIN+st.LONG) * row + st.MARGIN,
+                                st.HIGH,
+                                st.LONG])
+                    self._screen.blit(self._robot, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                (st.MARGIN+st.LONG) * row + st.MARGIN-2,
                                 st.HIGH,
                                 st.LONG])
                     
-                elif self._map_game[fila][columna] == '*':
-                    self._screen.blit(self._bomb, [(st.MARGIN+st.HIGH) * columna + st.MARGIN+2,
-                                (st.MARGIN+st.LONG) * fila + st.MARGIN+5,
+                elif column == '*':
+                    
+                    self._screen.blit(self._bomb, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN+2,
+                                (st.MARGIN+st.LONG) * row + st.MARGIN+5,
                                 st.HIGH,
                                 st.LONG])
                     
-                elif self._map_game[fila][columna] == 'H':
-                    self._screen.blit(self._goal, [(st.MARGIN+st.HIGH) * columna + st.MARGIN+2,
-                                (st.MARGIN+st.LONG) * fila + st.MARGIN+5,
+                elif column == 'H':
+                    self._screen.blit(self._goal, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN+2,
+                                (st.MARGIN+st.LONG) * row + st.MARGIN+2,
                                 st.HIGH,
                                 st.LONG])
 
