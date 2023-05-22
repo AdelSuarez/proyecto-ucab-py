@@ -12,5 +12,7 @@ HIGH = 40
 
 WHITE = (225,225,225)
 BLACK = (0,0,0)
+GREEN_SCREEN = ( 0, 255, 0)
+
 
 MARGIN = 5
