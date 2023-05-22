@@ -2,6 +2,8 @@ try:
     from getch import getche
 except ModuleNotFoundError:
     pass
+
+from src.archivo import Archivo
 from cmd.welcome import Data_map
 from src.create_map import Create_map
 from cmd.view_map import View_map
@@ -30,6 +32,7 @@ class Main_menu:
         while True:
             clear()
             position_row_r, position_column_r = Positions(self.map_game).position_robot()
+            Archivo(self._row, self._column, self.map_game).save()
 
 
             print(f' C: {self._column} | F: {self._row} '.center((self._column*4)+3,'-'))   
