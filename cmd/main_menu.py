@@ -1,13 +1,13 @@
-from src.cmd.data_map import Data_map
-from src.cmd.create_map import Create_map
-from src.cmd.view_map import View_map
+from cmd.welcome import Data_map
+from src.create_map import Create_map
+from cmd.view_map import View_map
 import style.style as st
-from src.cmd.clear_terminal import clear
-from src.cmd.positions import Positions
-from src.cmd.robot_rotation import Robot_rotation
-from src.cmd.move import Move
-from src.cmd.collision_checker import Collision_checker
-from src.cmd.end_game import End_game
+from src.clear_terminal import clear
+from cmd.positions import Positions
+from cmd.robot_rotation import Robot_rotation
+from cmd.move import Move
+from cmd.collision_checker import Collision_checker
+from cmd.end_game import End_game
 
 class Main_menu:
     order_counter = 0
@@ -67,3 +67,4 @@ O ← {st.GREEN}{self.address}{st.RESET} → E | A {st.GREEN}>>{st.RESET} Avanza
             elif motion.lower().strip() == 'a':
                 Main_menu.order_counter +=1
                 Move(self.address, self.map_game).advance()
+

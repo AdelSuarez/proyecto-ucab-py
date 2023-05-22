@@ -1,5 +1,5 @@
 import random
-from src.cmd.map_checker import Map_checker
+from src.map_checker import Map_checker
 
 class Create_map():
     robot = True

@@ -1,6 +1,6 @@
 import style.style as st
-from src.cmd.clear_terminal import clear
-from src.cmd.view_map import View_map
+from src.clear_terminal import clear
+from cmd.view_map import View_map
 
 class End_game:
     def __init__(self, count, checker, column, map_game):
