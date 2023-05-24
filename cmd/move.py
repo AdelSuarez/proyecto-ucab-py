@@ -1,5 +1,5 @@
 class Move:
-    movement_made = False
+    _movement_made = False
 
     def __init__(self, address, map_game):
         self.address = address
@@ -7,7 +7,7 @@ class Move:
 
     def advance(self):
         # Ciclo que mueve el robot segun la direccion, verificando si se encuentra con colisiones en el camino
-        Move.movement_made = False
+        Move._movement_made = False
 
         for index_row, row in enumerate(self.map_game):
             for index_column, column in enumerate(row):
@@ -17,17 +17,17 @@ class Move:
                     try:
                         if row[index_column+1] == '*':
                             # Verifica si al lado derecho se encuentra una mina, si la hay el robot explota
-                            self.movement_to_the_right(row, index_column, '#')
+                            self._movement_to_the_right(row, index_column, '#')
                             break
 
                         elif row[index_column+1] == 'H':
                             # Verifica si al lado derecho se encuentra la meta
-                            self.movement_to_the_right(row, index_column, '@')
+                            self._movement_to_the_right(row, index_column, '@')
                             break
 
                         else:
                             # Si no se encnuetra niguna mina o la meta, mueve al robot una casilla a la derecha
-                            self.movement_to_the_right(row, index_column, '>')
+                            self._movement_to_the_right(row, index_column, '>')
                             break
 
                     except IndexError:
@@ -40,95 +40,95 @@ class Move:
                         # Verifica que si llega a la colision de la izquierda y quiere continuar, el robot explota
                         row[index_column] = ' '
                         row[index_column] = '#'
-                        Move.movement_made = True
+                        Move._movement_made = True
                         break
                     elif row[index_column-1] == '*':
                         # Verifica si al lado izquierdo se encuentra una mina, si la ahi el robot explota
-                        self.movement_to_the_left(row, index_column, '#')   
+                        self._movement_to_the_left(row, index_column, '#')   
                         break
 
                     elif row[index_column-1] == 'H':
                         # Verifica si al lado izquierdo se encuentra una mina, si la ahi el robot explota
-                        self.movement_to_the_left(row, index_column, '@')   
+                        self._movement_to_the_left(row, index_column, '@')   
                         break
 
                     else: 
                         # El robot avanza si no encuentra colision 
-                        self.movement_to_the_left(row, index_column, '<')   
+                        self._movement_to_the_left(row, index_column, '<')   
                         break
 
                 elif column == '^' and  self.address == 'N':
                    
-                    self.collision(0, row, index_column, '^')
+                    self._collision(0, row, index_column, '^')
 
-                    if Move.movement_made:
+                    if Move._movement_made:
                             # Para cerrar el ciclo y no siga verificando las columnas
                             break
                     
                     if self.map_game[index_row-1][index_column] == '*':
                         # Verifica el lado superior, para saber si ahi un mina, si la ahi el robot explota
-                        self.upward_movement(row, index_column, index_row,  '#')
+                        self._upward_movement(row, index_column, index_row,  '#')
                         break
 
                     elif self.map_game[index_row-1][index_column] == 'H':
                         # Verifica el lado superior, para saber si ahi un mina, si la ahi el robot explota
-                        self.upward_movement(row, index_column, index_row,  '@')
+                        self._upward_movement(row, index_column, index_row,  '@')
                         break
 
                     else:
                         # Mueve el robot si no encuentra colision en direccion N
-                        self.upward_movement(row, index_column, index_row,  '^')
+                        self._upward_movement(row, index_column, index_row,  '^')
                         break
 
                 elif column == 'v' and self.address == 'S':
-                    self.collision(-1, row, index_column, 'v')
+                    self._collision(-1, row, index_column, 'v')
 
-                    if Move.movement_made:
+                    if Move._movement_made:
                         break
 
                     if self.map_game[index_row+1][index_column] == '*':
                         # Verifica el lado inferior, para saber si ahi un mina, si la ahi el robot explota
-                        self.movement_down( row, index_column, index_row,  '#')
+                        self._movement_down( row, index_column, index_row,  '#')
                         break
 
                     elif self.map_game[index_row+1][index_column] == 'H':
                         # Verifica el lado inferior, para saber si ahi un mina, si la ahi el robot explota
-                        self.movement_down( row, index_column, index_row,  '@')
+                        self._movement_down( row, index_column, index_row,  '@')
                         break
 
                     else:
                         # Mueve el robot si no se ha encontrado en la ultima fila
-                        self.movement_down( row, index_column, index_row,  'v')
+                        self._movement_down( row, index_column, index_row,  'v')
                         break
 
-            if Move.movement_made:
+            if Move._movement_made:
             # * Este bucle esta para que los movimineto en N y S no se hagan de manera infinita por los bucles internos 
                 break
 
-    def collision(self, fila, row, index_column, robot ):
+    def _collision(self, fila, row, index_column, robot ):
 
         for j in self.map_game[fila]:
             if j == robot:
                 row[index_column] = '#'
-                Move.movement_made = True
+                Move._movement_made = True
                 break
 
-    def movement_to_the_right(self, row, index_column, asset):
+    def _movement_to_the_right(self, row, index_column, asset):
         row[index_column] = ' '
         row[index_column+1] = asset
-        Move.movement_made = True
+        Move._movement_made = True
 
-    def movement_to_the_left(self, row, index_column, asset):
+    def _movement_to_the_left(self, row, index_column, asset):
         row[index_column] = ' '
         row[index_column-1] = asset
-        Move.movement_made = True
+        Move._movement_made = True
     
-    def upward_movement(self, row, index_column, index_row,  asset):
+    def _upward_movement(self, row, index_column, index_row,  asset):
         row[index_column] = ' '
         self.map_game[index_row-1][index_column] = asset
-        Move.movement_made = True
+        Move._movement_made = True
 
-    def movement_down(self, row, index_column, index_row,  asset):
+    def _movement_down(self, row, index_column, index_row,  asset):
         row[index_column] = ' '
         self.map_game[index_row+1][index_column] = asset
-        Move.movement_made = True
+        Move._movement_made = True

@@ -7,7 +7,7 @@ class Map_checker:
         self.map_game = map_game
 
     def checker(self):
-    # recorre el mapa para modificar error con la la ubicacion de la meta y las monas, para evitar gener mapas imposibles de pasar
+    # recorre el mapa para modificar error con la ubicacion de la meta y las minas, para evitar generar mapas imposibles de pasar
         list = random.randint(1,3)
         value = random.randint(1,(self._column-1))
 
@@ -23,7 +23,7 @@ class Map_checker:
                             row[index_column+1] = ' '
 
                 if (index_row == 0 or index_row == 1 or  index_row == 2) and column == 'H':
-                    # Condicional que verifica si la meta se encuantra en las primeras tres filas, si se encuentra la coloca en las ultimas filas del mapa
+                    # Condicional que verifica si la meta se encuentra en las primeras tres filas, si se encuentra la coloca en las ultimas filas del mapa
                     row[index_column] = ' '
                     try:
                         self.map_game[-list][value] = 'H'
@@ -40,7 +40,7 @@ class Map_checker:
                         pass
 
                 if column == 'H':
-                    # verifica si hay dos bombas al lado del robot de derecha e izquierda, eliminpassa la de la parte de la derecha
+                    # verifica si hay dos bombas al lado de la meta de derecha e izquierda, elimina la de la parte de la derecha
                     try:
                         if row[index_column+1] == '*' and row[index_column-1] == '*':
                             row[index_column+1] = ' '
@@ -50,7 +50,7 @@ class Map_checker:
                 if column == '*':
                     
                     try:
-                        # Elimana mina si se encuentras dos seguidas
+                        # Elimina una mina si se encuentran dos seguidas
                         if row[index_column+1] == '*':
                             row[index_column+1] = ' '
                     except Exception:
@@ -58,14 +58,14 @@ class Map_checker:
 
                     if index_row%2 == 1:
                         try:
-                            # elimina minas que se encuentra seguidas de forma vertical
+                            # Elimina minas que se encuentran seguidas de forma vertical
                             if self.map_game[index_row+1][index_column] == '*':
                                 self.map_game[index_row+1][index_column] = ' '
                         except Exception:
                             pass
 
                         try:
-                            # elimina minas si se encuentran dos diagonales direccion derecha
+                            # Elimina minas si se encuentran dos diagonales (direccion derecha)
                             if self.map_game[index_row+1][index_column+1] == '*':
                                 self.map_game[index_row+1][index_column+1] = ' '
                         except Exception:
@@ -73,7 +73,7 @@ class Map_checker:
 
                     if index_row%2 == 0 or index_row%2 == 1:
                         try:
-                            # elimina minas si se encuentran dos diagonales direccion izquierda
+                            # Elimina minas si se encuentran dos diagonales (direccion izquierda)
 
                             if self.map_game[index_row+1][index_column-1] == '*':
                                 self.map_game[index_row+1][index_column-1] = ' '

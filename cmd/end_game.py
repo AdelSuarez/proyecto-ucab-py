@@ -18,7 +18,7 @@ class End_game:
         if self.count > 40:
             print(f'\n{st.GREEN}>>{st.RESET} Perdiste\n{st.GREEN}>>{st.RESET} Movientos agotados\n')
         elif self.checker == '#':
-            print(f'\n{st.GREEN}>>{st.RESET} Perdiste\n{st.GREEN}>>{st.RESET} El robot a colisionado o tocado una mina\n')
+            print(f'\n{st.GREEN}>>{st.RESET} Perdiste\n{st.GREEN}>>{st.RESET} El robot ha colisionado o tocado una mina\n')
         elif self.checker == '@':
             print(f'\n{st.GREEN}>>{st.RESET} Ganaste\n{st.GREEN}>>{st.RESET} Realizaste {self.count} movimientos para llegar a la meta\n')
 
