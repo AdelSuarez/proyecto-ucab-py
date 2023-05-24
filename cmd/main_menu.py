@@ -42,7 +42,7 @@ class Main_menu:
             print('')
             print('Posiciones'.center((self._column*4)+3, '-'))
 
-            print(f'° Robot {st.GREEN}>>{st.RESET} C: {st.BLUE}{position_column_r}{st.RESET} | F: {st.BLUE}{position_row_r}{st.RESET}\n° Meta  {st.GREEN}>>{st.RESET} C: {st.BLUE}{self._position_column_g}{st.RESET} | F: {st.BLUE}{self._position_row_g}{st.RESET} \n{st.CYAN}v1.1.0.5{st.RESET}')
+            print(f'° Robot {st.GREEN}>>{st.RESET} C: {st.BLUE}{position_column_r}{st.RESET} | F: {st.BLUE}{position_row_r}{st.RESET}\n° Meta  {st.GREEN}>>{st.RESET} C: {st.BLUE}{self._position_column_g}{st.RESET} | F: {st.BLUE}{self._position_row_g}{st.RESET} \n{st.CYAN}v1.2.6.9{st.RESET}')
 
             print(f'''
     N     | Ordenes: {st.BLUE}{Main_menu.order_counter}{st.RESET}
@@ -60,8 +60,8 @@ O ← {st.GREEN}{self.address}{st.RESET} → E | A {st.GREEN}>>{st.RESET} Avanza
                 End_game(Main_menu.order_counter, Collision_checker(self.map_game).checker(), self._column, self.map_game)
                 break
             try:
-                print(f'Introduce el movimiento {st.GREEN}>>{st.RESET} ', end='')
                 motion = getche()
+                print(f'Introduce el movimiento {st.GREEN}>>{st.RESET} ', end='')
             except Exception:
                 motion = input(f'Introduce el movimiento {st.GREEN}>>{st.RESET} ')
 
@@ -78,4 +78,3 @@ O ← {st.GREEN}{self.address}{st.RESET} → E | A {st.GREEN}>>{st.RESET} Avanza
             elif motion.lower().strip() == 'a':
                 Main_menu.order_counter +=1
                 Move(self.address, self.map_game).advance()
-
