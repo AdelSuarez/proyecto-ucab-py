@@ -14,7 +14,7 @@ class Manager:
 
         # option = int(input('Introduce la opcion >> '))
         # if option == 1:
-        Main_menu()
+        # Main_menu()
         # elif option == 2:
-        # Main_screen()
+        Main_screen()
             # print('grafica')

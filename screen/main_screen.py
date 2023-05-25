@@ -13,6 +13,8 @@ class Main_screen:
         self._bomb= pygame.transform.scale(pygame.image.load("screen/assets/bomba.png"), (35, 35))
         self._goal= pygame.transform.scale(pygame.image.load("screen/assets/meta.png"), (35, 35))
         self._over= pygame.transform.scale(pygame.image.load("screen/assets/explosion.png"), (45, 45))
+        self._victory= pygame.transform.scale(pygame.image.load("screen/assets/victory.png"), (50, 50))
+
         self.settings()
         self.wiget_main()
 
@@ -59,6 +61,30 @@ class Main_screen:
                                 st.HIGH,
                                 st.LONG])
                 
+                try:
+                    if self.map_game[row][index_column+1] == '<' and column == ' ' and self.address == 'O':
+
+                        pygame.draw.rect(self._screen,
+                                st.GREEN_SCREEN,
+                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                (st.MARGIN+st.LONG) * row + st.MARGIN,
+                                st.HIGH,
+                                st.LONG]) 
+                except Exception:
+                    pass
+
+                try:
+                    if self.map_game[row+1][index_column] == '^' and column == ' ' and self.address == 'N':
+
+                        pygame.draw.rect(self._screen,
+                                st.GREEN_SCREEN,
+                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                (st.MARGIN+st.LONG) * row + st.MARGIN,
+                                st.HIGH,
+                                st.LONG])
+                except Exception:
+                    pass
+
                 if column == '>' or column == '<' or column == 'v' or column == '^':   
                     pygame.draw.rect(self._screen,
                                 st.GREEN_SCREEN,
@@ -70,7 +96,36 @@ class Main_screen:
                                 (st.MARGIN+st.LONG) * row + st.MARGIN-2,
                                 st.HIGH,
                                 st.LONG])
+# -----------------------------------------------------------------------------------------------------
+                elif self.map_game[row][index_column-1] == '>' and column == ' ' and self.address == 'E':
+                    pygame.draw.rect(self._screen,
+                                st.GREEN_SCREEN,
+                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                (st.MARGIN+st.LONG) * row + st.MARGIN,
+                                st.HIGH,
+                                st.LONG])
                     
+                elif self.map_game[row-1][index_column] == 'v' and column == ' ' and self.address == 'S':
+                    pygame.draw.rect(self._screen,
+                                st.GREEN_SCREEN,
+                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                (st.MARGIN+st.LONG) * row + st.MARGIN,
+                                st.HIGH,
+                                st.LONG])
+                   
+                
+                      
+                # elif self.map_game[row+1][index_column] == '^' and column == ' ':
+
+                #     pygame.draw.rect(self._screen,
+                #                 st.GREEN_SCREEN,
+                #                 [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                #                 (st.MARGIN+st.LONG) * row + st.MARGIN,
+                #                 st.HIGH,
+                                # st.LONG]) 
+# -----------------------------------------------------------------------------------------------------
+                    
+
                 elif column == '*':
                     
                     self._screen.blit(self._bomb, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN+2,
@@ -85,14 +140,14 @@ class Main_screen:
                                 st.LONG])
                     
                 elif column == '#':
-                    pygame.draw.rect(self._screen,
-                                st.RED_SCREEN,
-                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                (st.MARGIN+st.LONG) * row + st.MARGIN,
+                    self._screen.blit(self._over, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                (st.MARGIN+st.LONG) * row + st.MARGIN-3,
                                 st.HIGH,
                                 st.LONG])
-                    self._screen.blit(self._over, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                (st.MARGIN+st.LONG) * row + st.MARGIN,
+                    
+                elif column == '@':
+                    self._screen.blit(self._victory, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN-7,
+                                (st.MARGIN+st.LONG) * row + st.MARGIN-5,
                                 st.HIGH,
                                 st.LONG])
                 
