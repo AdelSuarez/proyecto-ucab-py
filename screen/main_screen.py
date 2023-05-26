@@ -6,10 +6,13 @@ from cmd.move import Move
 from cmd.robot_rotation import Robot_rotation
 
 class Main_screen:
+
     def __init__(self):
         self.address = 'E'
         self.map_game = Create_map(17,23).maker()
-        self._robot= pygame.transform.scale(pygame.image.load("screen/assets/robot.png"), (40, 40))
+        # self._robot= pygame.transform.scale(pygame.image.load("screen/assets/robot.png"), (40, 40))
+        self._robot= pygame.transform.scale(pygame.image.load("screen/assets/robot1.png"), (50, 50))
+
         self._bomb= pygame.transform.scale(pygame.image.load("screen/assets/bomba.png"), (35, 35))
         self._goal= pygame.transform.scale(pygame.image.load("screen/assets/meta.png"), (35, 35))
         self._over= pygame.transform.scale(pygame.image.load("screen/assets/explosion.png"), (45, 45))
@@ -55,7 +58,7 @@ class Main_screen:
         for row in range(len(self.map_game)):
             for index_column, column in enumerate(self.map_game[row]):
                 pygame.draw.rect(self._screen,
-                                st.WHITE,
+                                st.GREY,
                                 [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
                                 (st.MARGIN+st.LONG) * row + st.MARGIN,
                                 st.HIGH,
@@ -65,7 +68,15 @@ class Main_screen:
                     if self.map_game[row][index_column+1] == '<' and column == ' ' and self.address == 'O':
 
                         pygame.draw.rect(self._screen,
-                                st.GREEN_SCREEN,
+                                st.GREEN_ROBOT,
+                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                (st.MARGIN+st.LONG) * row + st.MARGIN,
+                                st.HIGH,
+                                st.LONG]) 
+                        
+                    elif self.map_game[row][index_column+1] == '<' and column == '*' and self.address == 'O':
+                        pygame.draw.rect(self._screen,
+                                st.RED_SCREEN,
                                 [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
                                 (st.MARGIN+st.LONG) * row + st.MARGIN,
                                 st.HIGH,
@@ -77,41 +88,70 @@ class Main_screen:
                     if self.map_game[row+1][index_column] == '^' and column == ' ' and self.address == 'N':
 
                         pygame.draw.rect(self._screen,
-                                st.GREEN_SCREEN,
+                                st.GREEN_ROBOT,
                                 [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
                                 (st.MARGIN+st.LONG) * row + st.MARGIN,
                                 st.HIGH,
                                 st.LONG])
+                    elif self.map_game[row+1][index_column] == '^' and column == '*' and self.address == 'N':
+                        pygame.draw.rect(self._screen,
+                                st.RED_SCREEN,
+                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                (st.MARGIN+st.LONG) * row + st.MARGIN,
+                                st.HIGH,
+                                st.LONG]) 
                 except Exception:
                     pass
-
-                if column == '>' or column == '<' or column == 'v' or column == '^':   
+                if self.map_game[row][index_column-1] == '>' and column == ' ' and self.address == 'E':
                     pygame.draw.rect(self._screen,
-                                st.GREEN_SCREEN,
+                                st.GREEN_ROBOT,
                                 [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
                                 (st.MARGIN+st.LONG) * row + st.MARGIN,
                                 st.HIGH,
                                 st.LONG])
-                    self._screen.blit(self._robot, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                (st.MARGIN+st.LONG) * row + st.MARGIN-2,
-                                st.HIGH,
-                                st.LONG])
-# -----------------------------------------------------------------------------------------------------
-                elif self.map_game[row][index_column-1] == '>' and column == ' ' and self.address == 'E':
+                elif self.map_game[row][index_column-1] == '>' and column == '*' and self.address == 'E':
                     pygame.draw.rect(self._screen,
-                                st.GREEN_SCREEN,
+                                st.RED_SCREEN,
                                 [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
                                 (st.MARGIN+st.LONG) * row + st.MARGIN,
                                 st.HIGH,
                                 st.LONG])
                     
-                elif self.map_game[row-1][index_column] == 'v' and column == ' ' and self.address == 'S':
+                if self.map_game[row-1][index_column] == 'v' and column == ' ' and self.address == 'S':
                     pygame.draw.rect(self._screen,
-                                st.GREEN_SCREEN,
+                                st.GREEN_ROBOT,
                                 [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
                                 (st.MARGIN+st.LONG) * row + st.MARGIN,
                                 st.HIGH,
                                 st.LONG])
+                elif self.map_game[row-1][index_column] == 'v' and column == '*' and self.address == 'S':
+                    pygame.draw.rect(self._screen,
+                                st.RED_SCREEN,
+                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                (st.MARGIN+st.LONG) * row + st.MARGIN,
+                                st.HIGH,
+                                st.LONG])
+                    
+
+
+
+
+
+
+
+                if column == '>' or column == '<' or column == 'v' or column == '^':   
+                    pygame.draw.rect(self._screen,
+                                st.GREEN_ROBOT,
+                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                (st.MARGIN+st.LONG) * row + st.MARGIN,
+                                st.HIGH,
+                                st.LONG])
+                    self._screen.blit(self._robot, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN-5,
+                                (st.MARGIN+st.LONG) * row + st.MARGIN-8,
+                                st.HIGH,
+                                st.LONG])
+# -----------------------------------------------------------------------------------------------------
+                
                    
                 
                       
@@ -132,7 +172,9 @@ class Main_screen:
                                 (st.MARGIN+st.LONG) * row + st.MARGIN+5,
                                 st.HIGH,
                                 st.LONG])
-                    
+                
+
+
                 elif column == 'H':
                     self._screen.blit(self._goal, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN+2,
                                 (st.MARGIN+st.LONG) * row + st.MARGIN+2,
@@ -150,4 +192,5 @@ class Main_screen:
                                 (st.MARGIN+st.LONG) * row + st.MARGIN-5,
                                 st.HIGH,
                                 st.LONG])
+
                 
