@@ -56,48 +56,26 @@ class Main_screen:
     def create_map(self):
         for row in range(len(self.map_game)):
             for index_column, column in enumerate(self.map_game[row]):
-                pygame.draw.rect(self._screen,
-                                st.GREY,
-                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                (st.MARGIN+st.LONG) * row + st.MARGIN,
-                                st.HIGH,
-                                st.LONG])
+                self._color_position(st.GREY, index_column, row)
                 
                 try:
                     if self.map_game[row][index_column+1] == '<' and column == ' ' and self.address == 'O':
+                        self._color_position(st.GREEN_ROBOT, index_column, row)
 
-                        pygame.draw.rect(self._screen,
-                                st.GREEN_ROBOT,
-                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                (st.MARGIN+st.LONG) * row + st.MARGIN,
-                                st.HIGH,
-                                st.LONG]) 
-                        
                     elif self.map_game[row][index_column+1] == '<' and column == '*' and self.address == 'O':
-                        pygame.draw.rect(self._screen,
-                                st.RED_SCREEN,
-                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                (st.MARGIN+st.LONG) * row + st.MARGIN,
-                                st.HIGH,
-                                st.LONG]) 
+                        self._color_position(st.RED_SCREEN, index_column, row)
+
                     elif self.map_game[row][index_column+1] == '<' and column == 'H' and self.address == 'O':
-                        pygame.draw.rect(self._screen,
-                                st.GOAL,
-                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                (st.MARGIN+st.LONG) * row + st.MARGIN,
-                                st.HIGH,
-                                st.LONG])
+                        self._color_position(st.GOAL, index_column, row)
+
                 except Exception:
                     pass
+
+
                 try:
                     if self.map_game[row+1][index_column] == '^' and column == ' ' and self.address == 'N':
+                        self._color_position(st.GREEN_ROBOT, index_column, row)
 
-                        pygame.draw.rect(self._screen,
-                                st.GREEN_ROBOT,
-                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                (st.MARGIN+st.LONG) * row + st.MARGIN,
-                                st.HIGH,
-                                st.LONG])
                     elif self.map_game[row+1][index_column] == '^' and column == '*' and self.address == 'N':
                         pygame.draw.rect(self._screen,
                                 st.RED_SCREEN,
@@ -123,6 +101,15 @@ class Main_screen:
                                 (st.MARGIN+st.LONG) * row + st.MARGIN,
                                 st.HIGH,
                                 st.LONG])
+                    for j in self.map_game[row][-1]:
+                        if j =='>':
+                            pygame.draw.rect(self._screen,
+                                st.GREY,
+                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                (st.MARGIN+st.LONG) * row + st.MARGIN,
+                                st.HIGH,
+                                st.LONG])
+                            break
                     
                 elif self.map_game[row][index_column-1] == '>' and column == '*' and self.address == 'E':
                     pygame.draw.rect(self._screen,
@@ -146,15 +133,7 @@ class Main_screen:
                                 (st.MARGIN+st.LONG) * row + st.MARGIN,
                                 st.HIGH,
                                 st.LONG])
-                    for j in self.map_game[-1]:
-                        if j == 'v':
-                            pygame.draw.rect(self._screen,
-                                st.GREY,
-                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                (st.MARGIN+st.LONG) * row + st.MARGIN,
-                                st.HIGH,
-                                st.LONG])
-                            break
+                    self._collesion('v', index_column, row, -1)
 
                 elif self.map_game[row-1][index_column] == 'v' and column == '*' and self.address == 'S':
                     pygame.draw.rect(self._screen,
@@ -163,15 +142,8 @@ class Main_screen:
                                 (st.MARGIN+st.LONG) * row + st.MARGIN,
                                 st.HIGH,
                                 st.LONG])
-                    for j in self.map_game[-1]:
-                        if j == 'v':
-                            pygame.draw.rect(self._screen,
-                                st.GREY,
-                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                (st.MARGIN+st.LONG) * row + st.MARGIN,
-                                st.HIGH,
-                                st.LONG])
-                            break
+                    self._collesion('v', index_column, row, -1)
+                    
                 elif self.map_game[row-1][index_column] == 'v' and column == 'H' and self.address == 'S':
                     pygame.draw.rect(self._screen,
                                 st.GOAL,
@@ -182,31 +154,81 @@ class Main_screen:
 
 
                 if column == '>' or column == '<' or column == 'v' or column == '^':
-                    pygame.draw.rect(self._screen,
+                        
+                    if column == '^' and self.map_game[row-1][index_column] == '*':
+                        pygame.draw.rect(self._screen,
+                                    st.RED_SCREEN,
+                                    [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                    (st.MARGIN+st.LONG) * row + st.MARGIN,
+                                    st.HIGH,
+                                    st.LONG])
+                        
+                    else:
+                        pygame.draw.rect(self._screen,
                                 st.GREEN_ROBOT,
                                 [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
                                 (st.MARGIN+st.LONG) * row + st.MARGIN,
                                 st.HIGH,
                                 st.LONG])
+                        
+                    if row == 0 and column == '^' and self.address == 'N':
+                        pygame.draw.rect(self._screen,
+                                    st.RED_SCREEN,
+                                    [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                    (st.MARGIN+st.LONG) * row + st.MARGIN,
+                                    st.HIGH,
+                                    st.LONG])
+                        
+                    if index_column-1 == -1 and self.address == 'O':
+                        pygame.draw.rect(self._screen,
+                                    st.RED_SCREEN,
+                                    [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                    (st.MARGIN+st.LONG) * row + st.MARGIN,
+                                    st.HIGH,
+                                    st.LONG])
+                    elif column == '<' and self.map_game[row][index_column-1] == '*' :
+                        pygame.draw.rect(self._screen,
+                                    st.RED_SCREEN,
+                                    [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                    (st.MARGIN+st.LONG) * row + st.MARGIN,
+                                    st.HIGH,
+                                    st.LONG])
+                    try:
+                        if column == '>' and self.map_game[row][index_column+1] == '*':
+                            pygame.draw.rect(self._screen,
+                                    st.RED_SCREEN,
+                                    [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                    (st.MARGIN+st.LONG) * row + st.MARGIN,
+                                    st.HIGH,
+                                    st.LONG])
+                    except  IndexError:
+                        pygame.draw.rect(self._screen,
+                                    st.RED_SCREEN,
+                                    [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                    (st.MARGIN+st.LONG) * row + st.MARGIN,
+                                    st.HIGH,
+                                    st.LONG])
+                    try:
+                        if column == 'v' and self.map_game[row+1][index_column] == '*':
+                            pygame.draw.rect(self._screen,
+                                    st.RED_SCREEN,
+                                    [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                    (st.MARGIN+st.LONG) * row + st.MARGIN,
+                                    st.HIGH,
+                                    st.LONG])
+                    except  IndexError:
+                        pygame.draw.rect(self._screen,
+                                    st.RED_SCREEN,
+                                    [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                    (st.MARGIN+st.LONG) * row + st.MARGIN,
+                                    st.HIGH,
+                                    st.LONG])
+
                   
                     self._screen.blit(self._robot, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN-5,
                                 (st.MARGIN+st.LONG) * row + st.MARGIN-8,
                                 st.HIGH,
                                 st.LONG])
-# -----------------------------------------------------------------------------------------------------
-                
-                   
-                
-                      
-                # elif self.map_game[row+1][index_column] == '^' and column == ' ':
-
-                #     pygame.draw.rect(self._screen,
-                #                 st.GREEN_SCREEN,
-                #                 [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                #                 (st.MARGIN+st.LONG) * row + st.MARGIN,
-                #                 st.HIGH,
-                                # st.LONG]) 
-# -----------------------------------------------------------------------------------------------------
                     
 
                 elif column == '*':
@@ -231,9 +253,28 @@ class Main_screen:
                                 st.LONG])
                     
                 elif column == '@':
+                    self._color_position(st.GOAL, index_column, row)
                     self._screen.blit(self._victory, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN-7,
                                 (st.MARGIN+st.LONG) * row + st.MARGIN-5,
                                 st.HIGH,
                                 st.LONG])
 
-                
+    def _color_position(self, color, index_column, row):
+        pygame.draw.rect(self._screen,
+                                color,
+                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                (st.MARGIN+st.LONG) * row + st.MARGIN,
+                                st.HIGH,
+                                st.LONG])
+
+
+    def _collesion(self, robot, index_column, row, fila):
+        for j in self.map_game[fila]:
+            if j == robot:
+                pygame.draw.rect(self._screen,
+                    st.GREY,
+                    [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                    (st.MARGIN+st.LONG) * row + st.MARGIN,
+                    st.HIGH,
+                    st.LONG])
+                break
