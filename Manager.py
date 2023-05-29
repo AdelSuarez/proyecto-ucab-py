@@ -21,3 +21,5 @@ class Manager:
         # Main_screen()
             # print('grafica')
             #ksjdhgf
+
+        # scoot deja de ser tan awueboniado por dios
