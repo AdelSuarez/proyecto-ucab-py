@@ -14,6 +14,8 @@ class Manager:
 
         # option = int(input('Introduce la opcion >> '))
         # if option == 1:
+        # hola mufno
+        
         Main_menu()
         # elif option == 2:
         # Main_screen()
