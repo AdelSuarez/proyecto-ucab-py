@@ -17,22 +17,22 @@ from cmd.end_game import End_game
 
 class Main_menu:
     order_counter = 0
-
+    movement = ''
 
     def __init__(self):
         self._row, self._column = Data_map().welcome()
         self.map_game = Create_map(self._row, self._column).maker()
         self._position_row_g, self._position_column_g = Positions(self.map_game).position_goal()
         self.address = 'E'
-        self.menu()
+        self._menu()
         
 
 
-    def menu(self):
+    def _menu(self):
         while True:
             clear()
             position_row_r, position_column_r = Positions(self.map_game).position_robot()
-            Archivo(self._row, self._column, self.map_game).save()
+            Archivo(self._row, self._column, self.map_game, position_row_r, position_column_r, self._position_row_g, self._position_column_g, self.address, Main_menu.order_counter, Main_menu.movement, Collision_checker(self.map_game).checker()).save()
 
 
             print(f' C: {self._column} | F: {self._row} '.center((self._column*4)+3,'-'))   
@@ -42,7 +42,7 @@ class Main_menu:
             print('')
             print('Posiciones'.center((self._column*4)+3, '-'))
 
-            print(f'° Robot {st.GREEN}>>{st.RESET} C: {st.BLUE}{position_column_r}{st.RESET} | F: {st.BLUE}{position_row_r}{st.RESET}\n° Meta  {st.GREEN}>>{st.RESET} C: {st.BLUE}{self._position_column_g}{st.RESET} | F: {st.BLUE}{self._position_row_g}{st.RESET} \n{st.CYAN}v1.2.6.9{st.RESET}')
+            print(f'° Robot {st.GREEN}>>{st.RESET} C: {st.BLUE}{position_column_r}{st.RESET} | F: {st.BLUE}{position_row_r}{st.RESET}\n° Meta  {st.GREEN}>>{st.RESET} C: {st.BLUE}{self._position_column_g}{st.RESET} | F: {st.BLUE}{self._position_row_g}{st.RESET} \n{st.CYAN}v1.8.5.9{st.RESET}')
 
             print(f'''
     N     | Ordenes: {st.BLUE}{Main_menu.order_counter}{st.RESET}
@@ -68,13 +68,18 @@ O ← {st.GREEN}{self.address}{st.RESET} → E | A {st.GREEN}>>{st.RESET} Avanza
 
             if motion.lower().strip() == 'i':
                 Main_menu.order_counter +=1
+                Main_menu.movement += 'I'
                 self.address = Robot_rotation(self.address, self.map_game).left()
 
             elif motion.lower().strip() == 'd':
                 Main_menu.order_counter +=1
+                Main_menu.movement += 'D'
+
                 self.address = Robot_rotation(self.address, self.map_game).right()
 
 
             elif motion.lower().strip() == 'a':
                 Main_menu.order_counter +=1
+                Main_menu.movement += 'A'
+
                 Move(self.address, self.map_game).advance()
