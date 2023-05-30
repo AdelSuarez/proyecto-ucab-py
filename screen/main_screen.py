@@ -89,7 +89,7 @@ class Main_screen:
                                 [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
                                 (st.MARGIN+st.LONG) * row + st.MARGIN,
                                 st.HIGH,
-                                st.LONG]) 
+                                st.LONG])
                         
                 except Exception:
                     pass
@@ -162,6 +162,13 @@ class Main_screen:
                                     (st.MARGIN+st.LONG) * row + st.MARGIN,
                                     st.HIGH,
                                     st.LONG])
+                    elif column == '^' and self.map_game[row-1][index_column] == 'H':
+                        pygame.draw.rect(self._screen,
+                                    st.GOAL,
+                                    [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                    (st.MARGIN+st.LONG) * row + st.MARGIN,
+                                    st.HIGH,
+                                    st.LONG])
                         
                     else:
                         pygame.draw.rect(self._screen,
@@ -193,10 +200,24 @@ class Main_screen:
                                     (st.MARGIN+st.LONG) * row + st.MARGIN,
                                     st.HIGH,
                                     st.LONG])
+                    elif column == '<' and self.map_game[row][index_column-1] == 'H' :
+                        pygame.draw.rect(self._screen,
+                                    st.GOAL,
+                                    [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                    (st.MARGIN+st.LONG) * row + st.MARGIN,
+                                    st.HIGH,
+                                    st.LONG])
                     try:
                         if column == '>' and self.map_game[row][index_column+1] == '*':
                             pygame.draw.rect(self._screen,
                                     st.RED_SCREEN,
+                                    [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                    (st.MARGIN+st.LONG) * row + st.MARGIN,
+                                    st.HIGH,
+                                    st.LONG])
+                        elif column == '>' and self.map_game[row][index_column+1] == 'H':
+                            pygame.draw.rect(self._screen,
+                                    st.GOAL,
                                     [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
                                     (st.MARGIN+st.LONG) * row + st.MARGIN,
                                     st.HIGH,
@@ -212,6 +233,13 @@ class Main_screen:
                         if column == 'v' and self.map_game[row+1][index_column] == '*':
                             pygame.draw.rect(self._screen,
                                     st.RED_SCREEN,
+                                    [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                                    (st.MARGIN+st.LONG) * row + st.MARGIN,
+                                    st.HIGH,
+                                    st.LONG])
+                        elif column == 'v' and self.map_game[row+1][index_column] == 'H':
+                            pygame.draw.rect(self._screen,
+                                    st.GOAL,
                                     [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
                                     (st.MARGIN+st.LONG) * row + st.MARGIN,
                                     st.HIGH,
