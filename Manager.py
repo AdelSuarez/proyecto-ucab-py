@@ -16,9 +16,9 @@ class Manager:
         # if option == 1:
         # hola mufno
         
-        Main_menu()
+        # Main_menu()
         # elif option == 2:
-        # Main_screen()
+        Main_screen()
             # print('grafica')
             #ksjdhgf
 

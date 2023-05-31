@@ -77,138 +77,66 @@ class Main_screen:
                         self._color_position(st.GREEN_ROBOT, index_column, row)
 
                     elif self.map_game[row+1][index_column] == '^' and column == '*' and self.address == 'N':
-                        pygame.draw.rect(self._screen,
-                                st.RED_SCREEN,
-                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                (st.MARGIN+st.LONG) * row + st.MARGIN,
-                                st.HIGH,
-                                st.LONG])
+                        self._color_position(st.RED_SCREEN, index_column, row)
+
                     elif self.map_game[row+1][index_column] == '^' and column == 'H' and self.address == 'N':
-                        pygame.draw.rect(self._screen,
-                                st.GOAL,
-                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                (st.MARGIN+st.LONG) * row + st.MARGIN,
-                                st.HIGH,
-                                st.LONG])
+                        self._color_position(st.GOAL, index_column, row)
                         
                 except Exception:
                     pass
                 
                 if self.map_game[row][index_column-1] == '>' and column == ' ' and self.address == 'E':
-                    pygame.draw.rect(self._screen,
-                                st.GREEN_ROBOT,
-                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                (st.MARGIN+st.LONG) * row + st.MARGIN,
-                                st.HIGH,
-                                st.LONG])
+                    self._color_position(st.GREEN_ROBOT, index_column, row)
+
                     for j in self.map_game[row][-1]:
                         if j =='>':
-                            pygame.draw.rect(self._screen,
-                                st.GREY,
-                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                (st.MARGIN+st.LONG) * row + st.MARGIN,
-                                st.HIGH,
-                                st.LONG])
+                            self._color_position(st.WHITE, index_column, row)
                             break
                     
                 elif self.map_game[row][index_column-1] == '>' and column == '*' and self.address == 'E':
-                    pygame.draw.rect(self._screen,
-                                st.RED_SCREEN,
-                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                (st.MARGIN+st.LONG) * row + st.MARGIN,
-                                st.HIGH,
-                                st.LONG])
+                    self._color_position(st.RED_SCREEN, index_column, row)
+                    for j in self.map_game[row][-1]:
+                        if j =='>':
+                            self._color_position(st.WHITE, index_column, row)
+                            break
+
                 elif self.map_game[row][index_column-1] == '>' and column == 'H' and self.address == 'E':
-                    pygame.draw.rect(self._screen,
-                                st.GOAL,
-                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                (st.MARGIN+st.LONG) * row + st.MARGIN,
-                                st.HIGH,
-                                st.LONG])
+                    self._color_position(st.GOAL, index_column, row)
                     
                 if self.map_game[row-1][index_column] == 'v' and column == ' ' and self.address == 'S':
-                    pygame.draw.rect(self._screen,
-                                st.GREEN_ROBOT,
-                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                (st.MARGIN+st.LONG) * row + st.MARGIN,
-                                st.HIGH,
-                                st.LONG])
+                    self._color_position(st.GREEN_ROBOT, index_column, row)
                     self._collesion('v', index_column, row, -1)
 
                 elif self.map_game[row-1][index_column] == 'v' and column == '*' and self.address == 'S':
-                    pygame.draw.rect(self._screen,
-                                st.RED_SCREEN,
-                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                (st.MARGIN+st.LONG) * row + st.MARGIN,
-                                st.HIGH,
-                                st.LONG])
+                    self._color_position(st.RED_SCREEN, index_column, row)
                     self._collesion('v', index_column, row, -1)
                     
                 elif self.map_game[row-1][index_column] == 'v' and column == 'H' and self.address == 'S':
-                    pygame.draw.rect(self._screen,
-                                st.GOAL,
-                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                (st.MARGIN+st.LONG) * row + st.MARGIN,
-                                st.HIGH,
-                                st.LONG])
-
+                    self._color_position(st.GOAL, index_column, row)
 
                 if column == '>' or column == '<' or column == 'v' or column == '^':
                         
-                    if column == '^' and self.map_game[row-1][index_column] == '*':
-                        pygame.draw.rect(self._screen,
-                                    st.RED_SCREEN,
-                                    [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                    (st.MARGIN+st.LONG) * row + st.MARGIN,
-                                    st.HIGH,
-                                    st.LONG])
+                    if column == '^' and (self.map_game[row-1][index_column] == '*' or row == 0):
+                        self._color_position(st.RED_SCREEN, index_column, row)
+
                     elif column == '^' and self.map_game[row-1][index_column] == 'H':
-                        pygame.draw.rect(self._screen,
-                                    st.GOAL,
-                                    [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                    (st.MARGIN+st.LONG) * row + st.MARGIN,
-                                    st.HIGH,
-                                    st.LONG])
+                        self._color_position(st.GOAL, index_column, row)
                         
                     else:
-                        pygame.draw.rect(self._screen,
-                                st.GREEN_ROBOT,
-                                [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                (st.MARGIN+st.LONG) * row + st.MARGIN,
-                                st.HIGH,
-                                st.LONG])
-                        
-                    if row == 0 and column == '^' and self.address == 'N':
-                        pygame.draw.rect(self._screen,
-                                    st.RED_SCREEN,
-                                    [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                    (st.MARGIN+st.LONG) * row + st.MARGIN,
-                                    st.HIGH,
-                                    st.LONG])
-                        
+                        self._color_position(st.GREEN_ROBOT, index_column, row)
+
                     if index_column-1 == -1 and self.address == 'O':
-                        pygame.draw.rect(self._screen,
-                                    st.RED_SCREEN,
-                                    [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                    (st.MARGIN+st.LONG) * row + st.MARGIN,
-                                    st.HIGH,
-                                    st.LONG])
+                        self._color_position(st.RED_SCREEN, index_column, row)
+
                     elif column == '<' and self.map_game[row][index_column-1] == '*' :
-                        pygame.draw.rect(self._screen,
-                                    st.RED_SCREEN,
-                                    [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                    (st.MARGIN+st.LONG) * row + st.MARGIN,
-                                    st.HIGH,
-                                    st.LONG])
+                        self._color_position(st.RED_SCREEN, index_column, row)
+
                     elif column == '<' and self.map_game[row][index_column-1] == 'H' :
-                        pygame.draw.rect(self._screen,
-                                    st.GOAL,
-                                    [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
-                                    (st.MARGIN+st.LONG) * row + st.MARGIN,
-                                    st.HIGH,
-                                    st.LONG])
+                        self._color_position(st.GOAL, index_column, row)
+
                     try:
                         if column == '>' and self.map_game[row][index_column+1] == '*':
+                            
                             pygame.draw.rect(self._screen,
                                     st.RED_SCREEN,
                                     [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
@@ -229,6 +157,7 @@ class Main_screen:
                                     (st.MARGIN+st.LONG) * row + st.MARGIN,
                                     st.HIGH,
                                     st.LONG])
+                        
                     try:
                         if column == 'v' and self.map_game[row+1][index_column] == '*':
                             pygame.draw.rect(self._screen,
