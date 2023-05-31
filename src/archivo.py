@@ -11,7 +11,8 @@ class Archivo:
         self._counter = counter
         self._movement = movement
         self._event = event
-
+        self.save()
+        
     def save(self): 
         self._arch = open('robotcok.txt', 'w')
         self._arch.write(f'{self._column},{self._row}\n')
