@@ -30,8 +30,35 @@ class Main_screen:
         self._clock = pygame.time.Clock()
 
     def widget_main(self):
+        # self._menu()
+        self._game()
 
-        while not self._game_over:
+    def _game(self):
+         while not self._game_over:
+            
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    self._game_over = True
+                if event.type == pygame.KEYDOWN:
+                    key = pygame.key.name(event.key)
+                    if key == 'a':
+                        Move(self.address, self.map_game).advance()
+                    elif key == 'd':
+                        self.address = Robot_rotation(self.address, self.map_game).right()
+                    elif key == 'i':
+                        self.address = Robot_rotation(self.address, self.map_game).left()
+
+            self._screen.fill(st.BLACK)
+            Create_map_screen(self.map_game, self._screen, self._robot, self.address, self._bomb, self._goal, self._victory, self._over)
+
+
+            self._clock.tick(60)
+            pygame.display.update()
+
+    def _menu(self):
+        #! No funciona
+         while not self._game_over:
             
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -40,14 +67,11 @@ class Main_screen:
                 if event.type == pygame.KEYDOWN:
                     tecla = pygame.key.name(event.key)
                     if tecla == 'a':
-                        Move(self.address, self.map_game).advance()
-                    if tecla == 'd':
-                        self.address = Robot_rotation(self.address, self.map_game).right()
-                    if tecla == 'i':
-                        self.address = Robot_rotation(self.address, self.map_game).left()
+                        self._game_over = True
+                        
+                    
 
             self._screen.fill(st.BLACK)
-            Create_map_screen(self.map_game, self._screen, self._robot, self.address, self._bomb, self._goal, self._victory, self._over)
 
 
             self._clock.tick(60)
