@@ -32,7 +32,8 @@ class Main_menu:
         while True:
             clear()
             position_row_r, position_column_r = Positions(self.map_game).position_robot()
-            Archivo(self._row, self._column, self.map_game, position_row_r, position_column_r, self._position_row_g, self._position_column_g, self.address, Main_menu.order_counter, Main_menu.movement, Collision_checker(self.map_game).checker()).save()
+
+            Archivo(self._row, self._column, self.map_game, position_row_r, position_column_r, self._position_row_g, self._position_column_g, self.address, Main_menu.order_counter, Main_menu.movement, Collision_checker(self.map_game).checker())
 
 
             print(f' C: {self._column} | F: {self._row} '.center((self._column*4)+3,'-'))   
@@ -40,17 +41,10 @@ class Main_menu:
             print('')
             View_map(self._column, self.map_game).view()
             print('')
-            print('Posiciones'.center((self._column*4)+3, '-'))
 
-            print(f'° Robot {st.GREEN}>>{st.RESET} C: {st.BLUE}{position_column_r}{st.RESET} | F: {st.BLUE}{position_row_r}{st.RESET}\n° Meta  {st.GREEN}>>{st.RESET} C: {st.BLUE}{self._position_column_g}{st.RESET} | F: {st.BLUE}{self._position_row_g}{st.RESET} \n{st.CYAN}v1.8.5.9{st.RESET}')
+            self._positions(position_column_r, position_row_r)
+            self._controllers()
 
-            print(f'''
-    N     | Ordenes: {st.BLUE}{Main_menu.order_counter}{st.RESET}
-    ↑     ---------------------------    
-O ← {st.GREEN}{self.address}{st.RESET} → E | A {st.GREEN}>>{st.RESET} Avanzar
-    ↓     | I {st.GREEN}>>{st.RESET} Mover a la Izquierda
-    S     | D {st.GREEN}>>{st.RESET} Mover a la Derecha
-''')
             
             if Main_menu.order_counter > 40:
                 End_game(Main_menu.order_counter, Collision_checker(self.map_game).checker(), self._column, self.map_game)
@@ -59,9 +53,10 @@ O ← {st.GREEN}{self.address}{st.RESET} → E | A {st.GREEN}>>{st.RESET} Avanza
             if Collision_checker(self.map_game).checker() == '#' or Collision_checker(self.map_game).checker() == '@':
                 End_game(Main_menu.order_counter, Collision_checker(self.map_game).checker(), self._column, self.map_game)
                 break
+
+
             try:
                 motion = getche()
-                print(f'Introduce el movimiento {st.GREEN}>>{st.RESET} ', end='')
             except Exception:
                 motion = input(f'Introduce el movimiento {st.GREEN}>>{st.RESET} ')
 
@@ -74,12 +69,25 @@ O ← {st.GREEN}{self.address}{st.RESET} → E | A {st.GREEN}>>{st.RESET} Avanza
             elif motion.lower().strip() == 'd':
                 Main_menu.order_counter +=1
                 Main_menu.movement += 'D'
-
                 self.address = Robot_rotation(self.address, self.map_game).right()
 
 
             elif motion.lower().strip() == 'a':
                 Main_menu.order_counter +=1
                 Main_menu.movement += 'A'
-
                 Move(self.address, self.map_game).advance()
+
+
+
+    def _positions(self, position_column_r, position_row_r):
+        print('Posiciones'.center((self._column*4)+3, '-'))
+        print(f'° Robot {st.GREEN}>>{st.RESET} C: {st.BLUE}{position_column_r}{st.RESET} | F: {st.BLUE}{position_row_r}{st.RESET}\n° Meta  {st.GREEN}>>{st.RESET} C: {st.BLUE}{self._position_column_g}{st.RESET} | F: {st.BLUE}{self._position_row_g}{st.RESET} \n{st.CYAN}v1.9.0.1{st.RESET}')
+
+    def _controllers(self):
+        print(f'''
+    N     | Ordenes: {st.BLUE}{Main_menu.order_counter}{st.RESET}
+    ↑     ---------------------------    
+O ← {st.GREEN}{self.address}{st.RESET} → E | A {st.GREEN}>>{st.RESET} Avanzar
+    ↓     | I {st.GREEN}>>{st.RESET} Mover a la Izquierda
+    S     | D {st.GREEN}>>{st.RESET} Mover a la Derecha
+''')
