@@ -56,8 +56,10 @@ class Main_menu:
 
 
             try:
+                # Linux
                 motion = getche()
             except Exception:
+                # Windows
                 motion = input(f'Introduce el movimiento {st.GREEN}>>{st.RESET} ')
 
 
