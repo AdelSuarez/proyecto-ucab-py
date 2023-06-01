@@ -14,7 +14,7 @@ class Main_screen:
         self._robot= pygame.transform.scale(pygame.image.load("screen/assets/robot1.png"), (50, 50))
 
         self._bomb= pygame.transform.scale(pygame.image.load("screen/assets/bomba.png"), (35, 35))
-        self._goal= pygame.transform.scale(pygame.image.load("screen/assets/meta.png"), (35, 35))
+        self._goal= pygame.transform.scale(pygame.image.load("screen/assets/unavainaloca.png"), (35, 35))
         self._over= pygame.transform.scale(pygame.image.load("screen/assets/explosion.png"), (45, 45))
         self._victory= pygame.transform.scale(pygame.image.load("screen/assets/victory.png"), (50, 50))
 
