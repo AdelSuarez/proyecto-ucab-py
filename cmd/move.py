@@ -102,7 +102,7 @@ class Move:
                         break
 
             if Move._movement_made:
-            # * Este bucle esta para que los movimineto en N y S no se hagan de manera infinita por los bucles internos 
+            # * Este bucle esta para que los movimientos en N y S no se hagan de manera infinita por los bucles internos 
                 break
 
     def _collision(self, fila, row, index_column, robot ):
