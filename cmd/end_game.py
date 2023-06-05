@@ -21,5 +21,3 @@ class End_game:
             print(f'\n{st.GREEN}>>{st.RESET} Perdiste\n{st.GREEN}>>{st.RESET} El robot ha colisionado o tocado una mina\n')
         elif self.checker == '@':
             print(f'\n{st.GREEN}>>{st.RESET} Ganaste\n{st.GREEN}>>{st.RESET} Realizaste {self.count} movimientos para llegar a la meta\n')
-
-
