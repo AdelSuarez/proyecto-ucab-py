@@ -4,7 +4,7 @@ from src.map_checker import Map_checker
 class Create_map():
     robot = True
     goal = True
-    assests= [' ', '*', 'H', '>']
+    assets= [' ', '*', 'H', '>']
 
     def __init__(self, row, column):
         self._row = row
@@ -21,20 +21,20 @@ class Create_map():
             for j in range(self._column):
                 while True:
                     # Selecciona un assest al hazar de la lista para crear mapas aleatorios
-                    assest = random.choice(Create_map.assests)
-                    if assest != '>' and assest != 'H':
+                    asset = random.choice(Create_map.assets)
+                    if asset != '>' and asset != 'H':
                         break
                     elif Create_map.robot :
-                        if assest == '>':
+                        if asset == '>':
                             Create_map.robot = False
                             break
                     elif Create_map.goal:
-                        if assest == 'H':
+                        if asset == 'H':
                             Create_map.goal = False
                             break
 
                     
-                self.map_game[i].append(assest)
+                self.map_game[i].append(asset)
 
         Map_checker(self._column, self.map_game).checker()
         return self.map_game
