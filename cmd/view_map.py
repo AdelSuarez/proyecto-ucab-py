@@ -12,7 +12,7 @@ class View_map:
 
         self._number_up()
         
-        for i in range(len(self.map_game)):
+        for row in range(len(self.map_game)):
             
             view_number = True
             count = 1
@@ -21,7 +21,7 @@ class View_map:
             
 
             # Ciclos que imprime el mapa sin los [] de las listas
-            for j in self.map_game[i]:
+            for column in self.map_game[row]:
 
                 # TODO: optimizar el codigo
                 if view_number:
@@ -32,40 +32,40 @@ class View_map:
                     position+=1
 
                 if count < self._column:
-                    if j ==  '>' or j ==  '<' or j ==  '^' or j ==  'v': 
-                        print(f'| {st.GREEN}{j}{st.RESET} ', end='')
+                    if column ==  '>' or column ==  '<' or column ==  '^' or column ==  'v': 
+                        print(f'| {st.GREEN}{column}{st.RESET} ', end='')
                         view_number=False
                         count+=1
 
-                    elif j == '*' or j=='#':
-                        print(f'| {st.RED}{j}{st.RESET} ', end='')
+                    elif column == '*' or column=='#':
+                        print(f'| {st.RED}{column}{st.RESET} ', end='')
                         view_number=False
                         count+=1
 
-                    elif j == 'H':
-                        print(f'| {st.YELLOW}{j}{st.RESET} ', end='')
+                    elif column == 'H':
+                        print(f'| {st.YELLOW}{column}{st.RESET} ', end='')
                         view_number=False
                         count+=1
 
                     else:
-                        print(f'| {j} ', end='')
+                        print(f'| {column} ', end='')
                         view_number=False
                         count+=1
                 elif count == self._column:
-                    if j ==  '>' or j ==  '<' or j ==  '^' or j ==  'v':
-                        print(f'| {st.GREEN}{j}{st.RESET} |', end='')
+                    if column ==  '>' or column ==  '<' or column ==  '^' or column ==  'v':
+                        print(f'| {st.GREEN}{column}{st.RESET} |', end='')
                         count+=1
 
-                    elif j == '*' or j=='#':
-                        print(f'| {st.RED}{j}{st.RESET} |', end='')
+                    elif column == '*' or column=='#':
+                        print(f'| {st.RED}{column}{st.RESET} |', end='')
                         count+=1
                         
-                    elif j == 'H':
-                        print(f'| {st.YELLOW}{j}{st.RESET} |', end='')
+                    elif column == 'H':
+                        print(f'| {st.YELLOW}{column}{st.RESET} |', end='')
                         count+=1
 
                     else:
-                        print(f'| {j} |', end='')
+                        print(f'| {column} |', end='')
                         count = 1
 
             print('')

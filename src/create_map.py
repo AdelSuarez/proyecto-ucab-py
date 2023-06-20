@@ -15,10 +15,10 @@ class Create_map():
 
     def maker(self):
         # Crear el tamaño del mapa segun los parametros introducidos
-        for i in range(self._row):
+        for row in range(self._row):
             # Ciclo que crea las filas
             self.map_game.append([])
-            for j in range(self._column):
+            for column in range(self._column):
                 while True:
                     # Selecciona un assest al hazar de la lista para crear mapas aleatorios
                     asset = random.choice(Create_map.assets)
@@ -34,7 +34,7 @@ class Create_map():
                             break
 
                     
-                self.map_game[i].append(asset)
+                self.map_game[row].append(asset)
 
         Map_checker(self._column, self.map_game).checker()
         return self.map_game
