@@ -10,7 +10,7 @@ from components.Button import Button
 class Main_screen:
     def __init__(self):
         pygame.init()
-        self._font = pygame.font.SysFont("arialblack", 80)
+        self._font = pygame.font.SysFont("arialblack", 70)
         self._game_over = False
         self._game_pause = False
         self.address = 'E'
@@ -95,7 +95,7 @@ class Main_screen:
                 # screen menu
             else:
                 # Menu
-                self.draw_text('MENU PRINCIPAL', self._font, st.WHITE, 280,50)
+                self.draw_text('MENU PRINCIPAL', self._font, st.WHITE, 200,50)
                 if Button(300,300,self._btn_start,1.5).draw(self._screen):
                     self._game_pause = True
                 elif Button(390,600,self._btn_exit,1).draw(self._screen):
