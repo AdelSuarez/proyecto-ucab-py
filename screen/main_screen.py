@@ -1,9 +1,10 @@
 import pygame
 # from src.create_map import Create_map
-from src.create_map import Create_map
 import style.style as st
+from src.create_map import Create_map
 from src.move import Move
 from src.robot_rotation import Robot_rotation
+from src.collision_checker import Collision_checker
 from screen.create_map_screen import Create_map_screen
 from components.Button import Button
 
@@ -16,20 +17,23 @@ class Main_screen:
         self.address = 'E'
         self.map_game = Create_map(17,23).maker()
 
-        # ------------------------ ASSETS ----------------------------------------------------------- 
+        # ------------------------ ASSETS -----------------------------------------------------
         # self._robot= pygame.transform.scale(pygame.image.load("screen/assets/robot.png"), (40, 40))
-        self._robot = pygame.transform.scale(pygame.image.load("screen/assets/robot1.png"), (50, 50))
-        self._bomb = pygame.transform.scale(pygame.image.load("screen/assets/bomba.png"), (35, 35))
-        self._goal = pygame.transform.scale(pygame.image.load("screen/assets/unavainaloca.png"), (35, 35))
-        self._over = pygame.transform.scale(pygame.image.load("screen/assets/explosion.png"), (45, 45))
-        self._victory = pygame.transform.scale(pygame.image.load("screen/assets/victory.png"), (50, 50))
-        self._btn_start = pygame.image.load("screen/assets/start_btn.png")
-        self._btn_exit = pygame.image.load("screen/assets/exit_btn.png")
+        self._robot = pygame.transform.scale(pygame.image.load("assets/robot1.png"), (50, 50))
+        self._bomb = pygame.transform.scale(pygame.image.load("assets/bomba.png"), (35, 35))
+        self._goal = pygame.transform.scale(pygame.image.load("assets/unavainaloca.png"), (35, 35))
+        self._over = pygame.transform.scale(pygame.image.load("assets/explosion.png"), (45, 45))
+        self._victory = pygame.transform.scale(pygame.image.load("assets/victory.png"), (50, 50))
+        self._btn_start = pygame.image.load("assets/start_btn.png")
+        self._btn_exit = pygame.image.load("assets/exit_btn.png")
+        self._game_over_img =  pygame.transform.scale(pygame.image.load("assets/Background1.png"), (600,400)) 
+        self._victory_img =  pygame.transform.scale(pygame.image.load("assets/victory.png"), (700,500)) 
+
 
 
         self.settings()
+        # self._screen_victory()
         self._menu()
-        # self.widget_main()
 
     def settings(self):
         self._size = (1042, 772)
@@ -43,24 +47,10 @@ class Main_screen:
         img = font.render(text, True, text_col)
         self._screen.blit(img, (x,y))
 
-    # def widget_main(self):
-    #     while not self._game_over:
-    #         for event in pygame.event.get():
-    #             if event.type == pygame.QUIT:
-    #                 pygame.quit()
-    #                 self._game_over = True
-    #             if event.type == pygame.KEYDOWN:
-    #                 key = pygame.key.name(event.key)
-    #                 if key == 'q':
-    #                     self._game()
-
-                
-
-    #         self._menu()
-
 
     def _game(self):
          while not self._game_over:
+
             
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -81,6 +71,10 @@ class Main_screen:
             self._screen.fill(st.BLACK)
             Create_map_screen(self.map_game, self._screen, self._robot, self.address, self._bomb, self._goal, self._victory, self._over)
 
+            if Collision_checker(self.map_game).checker() == '#':
+                self._screen_game_over()
+            elif  Collision_checker(self.map_game).checker() == '@':
+                self._screen_victory()
 
             pygame.display.update()
             self._clock.tick(60)
@@ -92,7 +86,6 @@ class Main_screen:
             if self._game_pause:
                 #game
                 self._game()
-                # screen menu
             else:
                 # Menu
                 self.draw_text('MENU PRINCIPAL', self._font, st.WHITE, 200,50)
@@ -119,3 +112,37 @@ class Main_screen:
             pygame.display.update()
             self._clock.tick(60)
 
+    def _screen_game_over(self):
+        while not self._game_over:
+            self._screen.fill((52,78,91))
+            self._screen.blit(self._game_over_img, (220,180))
+
+
+            
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    self._game_over = True
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        self._game_pause = True
+            pygame.display.update()
+            self._clock.tick(60)
+
+
+    def _screen_victory(self):
+        while not self._game_over:
+            self._screen.fill((60,78,91))
+            self._screen.blit(self._victory_img, (150,120))
+
+
+            
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    self._game_over = True
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        self._game_pause = True
+            pygame.display.update()
+            self._clock.tick(60)
