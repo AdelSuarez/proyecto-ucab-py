@@ -8,7 +8,7 @@ from src.collision_checker import Collision_checker
 from screen.create_map_screen import Create_map_screen
 from components.Button import Button
 from components.Text import Text
-import assets.Assets as ast
+import assets.Assets as asset
 
 class Main_screen:
     def __init__(self):
@@ -18,21 +18,6 @@ class Main_screen:
         self._game_pause = False
         self.address = 'E'
         self.map_game = Create_map(17,23).maker()
-
-        # ------------------------ ASSETS -----------------------------------------------------
-        # self._robot= pygame.transform.scale(pygame.image.load("screen/assets/robot.png"), (40, 40))
-        # self._robot = pygame.transform.scale(pygame.image.load("assets/robot1.png"), (50, 50))
-        # self._bomb = pygame.transform.scale(pygame.image.load("assets/bomba.png"), (35, 35))
-        # self._goal = pygame.transform.scale(pygame.image.load("assets/unavainaloca.png"), (35, 35))
-        # self._over = pygame.transform.scale(pygame.image.load("assets/explosion.png"), (45, 45))
-        # self._victory = pygame.transform.scale(pygame.image.load("assets/victory.png"), (50, 50))
-        # self._btn_start = pygame.image.load("assets/start_btn.png")
-        # self._btn_exit = pygame.image.load("assets/exit_btn.png")
-        # self._game_over_img =  pygame.transform.scale(pygame.image.load("assets/Background1.png"), (600,400)) 
-        # self._victory_img =  pygame.transform.scale(pygame.image.load("assets/victory.png"), (700,500))
-        # self.b = pygame.image.load("assets/b_opacity.png")
-
-
 
         self.settings()
         # self._screen_victory()
@@ -67,7 +52,7 @@ class Main_screen:
                         self._menu()
 
             self._screen.fill(st.BLACK)
-            Create_map_screen(self.map_game, self._screen, ast.robot, self.address, ast.bomb, ast.goal, ast.victory, ast.over)
+            Create_map_screen(self.map_game, self._screen, asset.robot, self.address, asset.bomb, asset.goal, asset.victory, asset.over)
 
             if Collision_checker(self.map_game).checker() == '#':
                 self._screen_game_over()
@@ -87,9 +72,9 @@ class Main_screen:
             else:
                 # Menu
                 Text('MENU PRINCIPAL', self._font, st.WHITE,).draw_text(self._screen, 200,50)
-                if Button(300, 300, ast.btn_start, 1.5).draw(self._screen):
+                if Button(300, 300, asset.btn_start, 1.5).draw(self._screen):
                     self._game_pause = True
-                elif Button(390,600,ast.btn_exit,1).draw(self._screen):
+                elif Button(390,600,asset.btn_exit,1).draw(self._screen):
                     pygame.quit()
                     self._game_over = True
 
@@ -107,9 +92,9 @@ class Main_screen:
 
     def _screen_game_over(self):
         while not self._game_over:
-            self._screen.blit(ast.b, (0,0))
+            self._screen.blit(asset.b, (0,0))
 
-            self._screen.blit(ast.game_over_img, (220,180))
+            self._screen.blit(asset.game_over_img, (220,180))
 
 
             
@@ -126,8 +111,8 @@ class Main_screen:
 
     def _screen_victory(self):
         while not self._game_over:
-            self._screen.blit(ast.b, (0,0))
-            self._screen.blit(ast.victory_img, (150,120))
+            self._screen.blit(asset.b, (0,0))
+            self._screen.blit(asset.victory_img, (150,120))
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
