@@ -7,6 +7,7 @@ class Positions:
         # * Muestra la ubicacion del robot en tiempo real 
         position_row_r = 0
         position_column_r = 0
+        robot = ''
         
         is_position  = False
         for  index_row ,row in enumerate(self.map_game):
@@ -14,12 +15,13 @@ class Positions:
                 if value == '>' or value == '<' or value == 'v' or value == '^':
                     position_row_r = index_row+1
                     position_column_r = index_column+1
+                    robot = value
                     is_position = True
                     break              
             if is_position:
                 break
 
-        return (position_row_r, position_column_r)
+        return (position_row_r, position_column_r, robot)
 
     def position_goal(self):
         # se busca la ubicacion de la meta de forma independiente debido a que esta funcion solo se va llamar una vez
