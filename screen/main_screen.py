@@ -3,8 +3,6 @@ import pygame
 from src.create_map import Create_map
 from screen.Screen_menu import Screen_menu
 
-
-
 class Main_screen:
     def __init__(self):
         pygame.init()
