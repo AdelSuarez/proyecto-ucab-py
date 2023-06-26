@@ -8,8 +8,8 @@ from screen.Screen_game import Screen_game
 
 class Screen_menu:
     def __init__(self, game_over, game_pause, address, map_game) -> None:
-        self._font = pygame.font.Font("assets/font.ttf", 100)
-        self._font_v = pygame.font.Font("assets/font.ttf", 20)
+        self._font = st.font(100)
+        self._font_version = st.font( 20)
 
         self.game_over = game_over
         self.game_pause = game_pause
@@ -26,7 +26,7 @@ class Screen_menu:
             else:
                 # Menu
                 Text('ROBOTcok', self._font, st.WHITE).draw_text(screen, 130,80)
-                Text('v2.4.5.1', self._font_v, st.GREEN_ROBOT).draw_text(screen, 870,780)
+                Text('v2.5.0.1', self._font_version, st.WHITE).draw_text(screen, 870,780)
                 if Button(300, 300, asset.btn_start, 1.5).draw(screen):
                     self.game_pause = True
                 elif Button(390,650,asset.btn_exit,1).draw(screen):
