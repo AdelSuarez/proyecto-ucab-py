@@ -33,7 +33,7 @@ class Screen_state:
             if state == '#':
                 Text('-Robot destruido-', self._font_state, st.WHITE).draw_text(screen, 300,450)
             else:
-                Text('-Movimientos agostados-', self._font_state, st.WHITE).draw_text(screen, 230,450)
+                Text('-Movimientos agotados-', self._font_state, st.WHITE).draw_text(screen, 230,450)
             
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
