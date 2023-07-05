@@ -20,6 +20,8 @@ class Main_screen:
         self.screen = pygame.display.set_mode(self._size)
         
         pygame.display.set_caption('ROBOTcok')
+
+        # En linux no aparece el icono del juego
         pygame.display.set_icon(asset.icon)
 
         
