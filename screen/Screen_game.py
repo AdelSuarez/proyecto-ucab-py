@@ -73,5 +73,5 @@ class Screen_game:
         Text(f'{self._position_row_goal} | {self._position_column_goal}', self._font, st.GREEN_ROBOT).draw_text(screen, 825,780)
 
         # ----------------------Origin Robot----------------------------------
-        Text(f'{self._robot}', self._font, st.RED_SCREEN).draw_text(screen, 1000,780)
+        Text(f'{self._robot}', self._font, st.RED_ROBOT).draw_text(screen, 1000,780)
         

@@ -64,7 +64,7 @@ class Create_map_screen:
                                 st.LONG])
                     
                 elif column == '@':
-                    self._color_position(st.GOAL, index_column, row)
+                    self._color_position(st.YELLOW_GOAL, index_column, row)
                     self._screen.blit(self._victory, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN-7,
                                 (st.MARGIN+st.LONG) * row + st.MARGIN-5,
                                 st.HIGH,
@@ -102,10 +102,10 @@ class Create_map_screen:
                 self._color_position(st.GREEN_ROBOT, index_column, row)
 
             elif self.map_game[row][index_column+1] == '<' and column == '*' and self.address == 'O':
-                self._color_position(st.RED_SCREEN, index_column, row)
+                self._color_position(st.RED_ROBOT, index_column, row)
 
             elif self.map_game[row][index_column+1] == '<' and column == 'H' and self.address == 'O':
-                self._color_position(st.GOAL, index_column, row)
+                self._color_position(st.YELLOW_GOAL, index_column, row)
 
         except Exception:
             pass
@@ -116,11 +116,11 @@ class Create_map_screen:
             self._error_collesion_right(row, index_column)
             
         elif self.map_game[row][index_column-1] == '>' and column == '*' and self.address == 'E':
-            self._color_position(st.RED_SCREEN, index_column, row)
+            self._color_position(st.RED_ROBOT, index_column, row)
             self._error_collesion_right(row, index_column)
 
         elif self.map_game[row][index_column-1] == '>' and column == 'H' and self.address == 'E':
-            self._color_position(st.GOAL, index_column, row)
+            self._color_position(st.YELLOW_GOAL, index_column, row)
 
     def _sensor_top(self, row, index_column, column):
         try:
@@ -128,10 +128,10 @@ class Create_map_screen:
                 self._color_position(st.GREEN_ROBOT, index_column, row)
 
             elif self.map_game[row+1][index_column] == '^' and column == '*' and self.address == 'N':
-                self._color_position(st.RED_SCREEN, index_column, row)
+                self._color_position(st.RED_ROBOT, index_column, row)
 
             elif self.map_game[row+1][index_column] == '^' and column == 'H' and self.address == 'N':
-                self._color_position(st.GOAL, index_column, row)
+                self._color_position(st.YELLOW_GOAL, index_column, row)
                 
         except Exception:
             pass
@@ -142,51 +142,51 @@ class Create_map_screen:
             self._collesion('v', index_column, row, -1)
 
         elif self.map_game[row-1][index_column] == 'v' and column == '*' and self.address == 'S':
-            self._color_position(st.RED_SCREEN, index_column, row)
+            self._color_position(st.RED_ROBOT, index_column, row)
             self._collesion('v', index_column, row, -1)
             
         elif self.map_game[row-1][index_column] == 'v' and column == 'H' and self.address == 'S':
-            self._color_position(st.GOAL, index_column, row)
+            self._color_position(st.YELLOW_GOAL, index_column, row)
 
     def _color_robot_top(self, row, column, index_column):
         if column == '^' and (self.map_game[row-1][index_column] == '*' or row == 0):
-            self._color_position(st.RED_SCREEN, index_column, row)
+            self._color_position(st.RED_ROBOT, index_column, row)
 
         elif column == '^' and self.map_game[row-1][index_column] == 'H':
-            self._color_position(st.GOAL, index_column, row)
+            self._color_position(st.YELLOW_GOAL, index_column, row)
             
         else:
             self._color_position(st.GREEN_ROBOT, index_column, row)
 
     def _color_robot_left(self, row, column, index_column):
         if index_column-1 == -1 and self.address == 'O':
-            self._color_position(st.RED_SCREEN, index_column, row)
+            self._color_position(st.RED_ROBOT, index_column, row)
 
         elif column == '<' and self.map_game[row][index_column-1] == '*' :
-            self._color_position(st.RED_SCREEN, index_column, row)
+            self._color_position(st.RED_ROBOT, index_column, row)
 
         elif column == '<' and self.map_game[row][index_column-1] == 'H' :
-            self._color_position(st.GOAL, index_column, row)
+            self._color_position(st.YELLOW_GOAL, index_column, row)
 
     def _color_robot_right(self, row, column, index_column):
         try:
             if column == '>' and self.map_game[row][index_column+1] == '*':
-                self._color_position(st.RED_SCREEN, index_column, row)
+                self._color_position(st.RED_ROBOT, index_column, row)
 
             elif column == '>' and self.map_game[row][index_column+1] == 'H':
-                self._color_position(st.GOAL, index_column, row)
+                self._color_position(st.YELLOW_GOAL, index_column, row)
                 
         except  IndexError:
-            self._color_position(st.RED_SCREEN, index_column, row)
+            self._color_position(st.RED_ROBOT, index_column, row)
 
 
     def _color_robot_lower(self, row, column, index_column):
         try:
             if column == 'v' and self.map_game[row+1][index_column] == '*':
-                self._color_position(st.RED_SCREEN, index_column, row)
+                self._color_position(st.RED_ROBOT, index_column, row)
 
             elif column == 'v' and self.map_game[row+1][index_column] == 'H':
-                self._color_position(st.GOAL, index_column, row)
+                self._color_position(st.YELLOW_GOAL, index_column, row)
 
         except  IndexError:
-            self._color_position(st.RED_SCREEN, index_column, row)  
+            self._color_position(st.RED_ROBOT, index_column, row)  
