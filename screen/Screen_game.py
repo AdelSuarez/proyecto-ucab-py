@@ -28,15 +28,16 @@ class Screen_game:
                     pygame.quit()
                     self.game_over = True
                 if event.type == pygame.KEYDOWN:
-                    key = pygame.key.name(event.key)
-                    if key == 'a':
+                    
+                    if event.key == pygame.K_a:
                         Move(self.address, self.map_game).advance()
                         Screen_game.counter_move += 1
-                    elif key == 'd':
+
+                    elif event.key == pygame.K_d:
                         self.address = Robot_rotation(self.address, self.map_game).right()
                         Screen_game.counter_move += 1
 
-                    elif key == 'i':
+                    elif event.key == pygame.K_i:
                         self.address = Robot_rotation(self.address, self.map_game).left()
                         Screen_game.counter_move += 1
 
