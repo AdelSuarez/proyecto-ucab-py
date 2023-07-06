@@ -1,5 +1,5 @@
 import pygame
-
+from assets import Assets as asset
 from src.create_map import Create_map
 from screen.Screen_menu import Screen_menu
 
@@ -18,5 +18,8 @@ class Main_screen:
         self._size = (1042, 810)
 
         self.screen = pygame.display.set_mode(self._size)
+        
         pygame.display.set_caption('ROBOTcok')
+        pygame.display.set_icon(asset.icon)
+
         
