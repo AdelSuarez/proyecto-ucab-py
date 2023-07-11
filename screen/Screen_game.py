@@ -7,7 +7,7 @@ from components import Text, Button
 
 
 class Screen_game:
-
+    is_pause = 1
     reset_map = False
     counter_move = 0
     
@@ -17,7 +17,7 @@ class Screen_game:
         self.address = 'E'
         self.game_pause = game_pause
         self.background = asset.BG_opacity
-        self.pause_active = True
+        self.pause_active = False
 
     def game(self, screen):
         while not self.game_over:
@@ -35,30 +35,33 @@ class Screen_game:
                     pygame.quit()
                     self.game_over = True
 
-                if event.type == pygame.KEYDOWN:
-                    
-                    if event.key == pygame.K_a:
-                        move.Move(self.address, self.map_game).advance()
-                        Screen_game.counter_move += 1
+                if not self.pause_active:
 
-                    elif event.key == pygame.K_d:
-                        self.address = robot_rotation.Robot_rotation(self.address, self.map_game).right()
-                        Screen_game.counter_move += 1
-
-                    elif event.key == pygame.K_i:
-                        self.address = robot_rotation.Robot_rotation(self.address, self.map_game).left()
-                        Screen_game.counter_move += 1
+                    if event.type == pygame.KEYDOWN:
                         
-                    elif event.key == pygame.K_q:
-                        Screen_game.reset_map=False
+                        if event.key == pygame.K_a:
+                            move.Move(self.address, self.map_game).advance()
+                            Screen_game.counter_move += 1
 
-                    if event.key == pygame.K_SPACE:
-                        self.pause_active = False
+                        elif event.key == pygame.K_d:
+                            self.address = robot_rotation.Robot_rotation(self.address, self.map_game).right()
+                            Screen_game.counter_move += 1
+
+                        elif event.key == pygame.K_i:
+                            self.address = robot_rotation.Robot_rotation(self.address, self.map_game).left()
+                            Screen_game.counter_move += 1
+                            
+                        elif event.key == pygame.K_q:
+                            Screen_game.reset_map=False
+
+                        if event.key == pygame.K_SPACE or event.key == pygame.K_ESCAPE:
+                            self.pause_active = True
 
                         
 
             screen.fill(st.BLACK)
             create_map_screen.Create_map_screen(self.map_game, screen, asset.robot, self.address, asset.bomb, asset.goal, asset.victory, asset.over)
+            self.bar_state(screen)
 
             if collision_checker.Collision_checker(self.map_game).checker() == '#' or Screen_game.counter_move == 60:
                 if Screen_game.reset_map:
@@ -67,11 +70,11 @@ class Screen_game:
             elif  collision_checker.Collision_checker(self.map_game).checker() == '@':
                 Screen_state.Screen_state(self.background, self.game_over).screen_victory(screen, Screen_game.counter_move)
             
-            if not self.pause_active:
+            if self.pause_active:
                 self.screen_pause(screen)
 
 
-            self.bar_state(screen)
+
 
             pygame.display.update()
                 
@@ -108,11 +111,12 @@ class Screen_game:
                     self.game_over = True
             
             if Button.Button(300, 300, asset.btn_start, 1.5).draw(screen):
-                    # self.game_pause = True
-                    self.pause_active = True
+
+                    self.pause_active = False
+                    
             elif Button.Button(300, 500, asset.btn_exit, 1.5).draw(screen):
-                    # self.game_pause = True
-                    self.pause_active = True
+
+                    self.pause_active = False
                     Screen_game.reset_map = False
 
         
