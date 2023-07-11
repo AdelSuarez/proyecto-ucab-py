@@ -12,10 +12,15 @@ class Positions:
         is_position  = False
         for  index_row ,row in enumerate(self.map_game):
             for index_column , value in enumerate(row):
-                if value == '>' or value == '<' or value == 'v' or value == '^':
+                if value == '>' or value == '<' or value == 'v' or value == '^' or value == '#':
                     position_row_r = index_row+1
                     position_column_r = index_column+1
-                    robot = value
+
+                    if value == '#':
+                        robot = 'X'
+                    else:
+                        robot = value
+
                     is_position = True
                     break              
             if is_position:
