@@ -1,14 +1,9 @@
 import pygame
 import style.style as st
 import assets.Assets as asset
-from src.move import Move
-from src.robot_rotation import Robot_rotation
-from src.collision_checker import Collision_checker
-from src.positions import Positions
-from screen.create_map_screen import Create_map_screen
-from screen.Screen_state import Screen_state
+from src import move, robot_rotation, collision_checker, positions, create_map
+from screen import create_map_screen, Screen_state
 from components import Text, Button
-from src.create_map import Create_map
 
 
 class Screen_game:
@@ -28,11 +23,11 @@ class Screen_game:
         while not self.game_over:
             if not Screen_game.reset_map:
 
-                self.map_game = Create_map(17,23).maker()
+                self.map_game = create_map.Create_map(17,23).maker()
                 Screen_game.reset_map=True
                 self.address = 'E'
 
-            (self._position_row_goal, self._position_column_goal) = Positions(self.map_game).position_goal()
+            (self._position_row_goal, self._position_column_goal) = positions.Positions(self.map_game).position_goal()
             
             for event in pygame.event.get():
 
@@ -43,15 +38,15 @@ class Screen_game:
                 if event.type == pygame.KEYDOWN:
                     
                     if event.key == pygame.K_a:
-                        Move(self.address, self.map_game).advance()
+                        move.Move(self.address, self.map_game).advance()
                         Screen_game.counter_move += 1
 
                     elif event.key == pygame.K_d:
-                        self.address = Robot_rotation(self.address, self.map_game).right()
+                        self.address = robot_rotation.Robot_rotation(self.address, self.map_game).right()
                         Screen_game.counter_move += 1
 
                     elif event.key == pygame.K_i:
-                        self.address = Robot_rotation(self.address, self.map_game).left()
+                        self.address = robot_rotation.Robot_rotation(self.address, self.map_game).left()
                         Screen_game.counter_move += 1
                         
                     elif event.key == pygame.K_q:
@@ -63,14 +58,14 @@ class Screen_game:
                         
 
             screen.fill(st.BLACK)
-            Create_map_screen(self.map_game, screen, asset.robot, self.address, asset.bomb, asset.goal, asset.victory, asset.over)
+            create_map_screen.Create_map_screen(self.map_game, screen, asset.robot, self.address, asset.bomb, asset.goal, asset.victory, asset.over)
 
-            if Collision_checker(self.map_game).checker() == '#' or Screen_game.counter_move == 60:
+            if collision_checker.Collision_checker(self.map_game).checker() == '#' or Screen_game.counter_move == 60:
                 if Screen_game.reset_map:
-                    Screen_state(self.background, self.game_over).screen_game_over(screen, Collision_checker(self.map_game).checker())
+                    Screen_state.Screen_state(self.background, self.game_over).screen_game_over(screen, collision_checker.Collision_checker(self.map_game).checker())
 
-            elif  Collision_checker(self.map_game).checker() == '@':
-                Screen_state(self.background, self.game_over).screen_victory(screen, Screen_game.counter_move)
+            elif  collision_checker.Collision_checker(self.map_game).checker() == '@':
+                Screen_state.Screen_state(self.background, self.game_over).screen_victory(screen, Screen_game.counter_move)
             
             if not self.pause_active:
                 self.screen_pause(screen)
@@ -83,7 +78,7 @@ class Screen_game:
 
     def bar_state(self,screen):
         # ----------------------Movements----------------------------------
-        (self._position_row_robot, self._position_column_robot, self._robot) = Positions(self.map_game).position_robot()
+        (self._position_row_robot, self._position_column_robot, self._robot) = positions.Positions(self.map_game).position_robot()
         Text.Text('Movements: ', self._font, st.WHITE).draw_text(screen, 60,780)
         Text.Text(f'{Screen_game.counter_move} ', self._font, st.GREEN_ROBOT).draw_text(screen, 215,780)
 

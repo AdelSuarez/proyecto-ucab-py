@@ -1,8 +1,7 @@
 import pygame
 import assets.Assets as asset
 import style.style as st
-from components.Button import Button
-from components.Text import Text
+from components import Text, Button
 from screen.Screen_game import Screen_game
 
 
@@ -29,9 +28,9 @@ class Screen_menu:
                 Text('ROBOTcok', self._font, st.WHITE).draw_text(screen, 130,80)
                 Text('BETA', self._font_version, st.RED).draw_text(screen, 850,170)
                 Text('v2.7.5.2', self._font_version, st.WHITE).draw_text(screen, 870,780)
-                if Button(300, 300, asset.btn_start, 1.5).draw(screen):
+                if Button.Button(300, 300, asset.btn_start, 1.5).draw(screen):
                     self.game_pause = True
-                elif Button(390,650,asset.btn_exit,1).draw(screen):
+                elif Button.Button(390,650,asset.btn_exit,1).draw(screen):
                     pygame.quit()
 
                     self.game_over = True
