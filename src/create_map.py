@@ -37,5 +37,9 @@ class Create_map():
                 self.map_game[row].append(asset)
 
         Map_checker(self._column, self.map_game).checker()
+
+        Create_map.robot = True
+        Create_map.goal = True
+
         return self.map_game
                 
