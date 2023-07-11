@@ -25,9 +25,9 @@ class Screen_menu:
 
                 screen.fill((52,78,91))
                 # Menu
-                Text('ROBOTcok', self._font, st.WHITE).draw_text(screen, 130,80)
-                Text('BETA', self._font_version, st.RED).draw_text(screen, 850,170)
-                Text('v2.7.5.2', self._font_version, st.WHITE).draw_text(screen, 870,780)
+                Text.Text('ROBOTcok', self._font, st.WHITE).draw_text(screen, 130,80)
+                Text.Text('BETA', self._font_version, st.RED).draw_text(screen, 850,170)
+                Text.Text('v2.7.5.2', self._font_version, st.WHITE).draw_text(screen, 870,780)
                 if Button.Button(300, 300, asset.btn_start, 1.5).draw(screen):
                     self.game_pause = True
                 elif Button.Button(390,650,asset.btn_exit,1).draw(screen):
