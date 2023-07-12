@@ -1,15 +1,15 @@
 import pygame
+import style.style as st
 
 class Button:
-    def __init__(self, x, y , image, scale):
+    def __init__(self, image, scale):
         width = image.get_width()
         height = image.get_height()
         self._imagen = pygame.transform.scale(image, (int(width *scale), int(height * scale)))
-        self._rect = self._imagen.get_rect()
-        self._rect.topleft = (x, y)
         self._clicked = False
 
-    def draw(self, screen):
+    def btn_center(self, screen, x):
+        self._rect = self._imagen.get_rect(center=(st.SCREEN_WIDTH/2, x))
         action = False
         # pisicion del mause 
         position = pygame.mouse.get_pos()
@@ -23,5 +23,5 @@ class Button:
             self._clicked = False
 
 
-        screen.blit(self._imagen, (self._rect.x, self._rect.y))
+        screen.blit(self._imagen, self._rect)
         return action

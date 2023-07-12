@@ -5,6 +5,9 @@ LONG  = 40
 HIGH = 40
 MARGIN = 5
 
+SCREEN_WIDTH = 1042
+SCREEN_HEIGHT = 810
+
 
 # Colors
 GREY =( 229, 231, 233 )
@@ -20,6 +23,7 @@ YELLOW_GOAL = (247, 220, 111)
 RED_ROBOT = ( 236, 112, 99 )
 
 RED = (192, 57, 43 )
+
 def font(size):
     # retorna el estilo del texto
     return pygame.font.Font("assets/font.ttf", size)

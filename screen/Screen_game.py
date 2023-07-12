@@ -3,7 +3,7 @@ import style.style as st
 import assets.Assets as asset
 from src import move, robot_rotation, collision_checker, positions, create_map
 from screen import create_map_screen, Screen_state
-from components import Text, Button
+from components import Text, Button, Status_bar
 
 
 class Screen_game:
@@ -12,7 +12,9 @@ class Screen_game:
     counter_move = 0
     
     def __init__(self, game_over, game_pause) -> None:
-        self._font = st.font(15)
+        self._font = st.font(80)
+
+        self._font_bar = st.font(15)
         self.game_over = game_over
         self.address = 'E'
         self.game_pause = game_pause
@@ -60,8 +62,12 @@ class Screen_game:
                         
 
             screen.fill(st.BLACK)
+
+            
             create_map_screen.Create_map_screen(self.map_game, screen, asset.robot, self.address, asset.bomb, asset.goal, asset.victory, asset.over)
-            self.bar_state(screen)
+
+            # barra de esta inferior
+            Status_bar.Status_bar(self.map_game, Screen_game.counter_move, self.address).bottom_status_bar(screen)
 
             if collision_checker.Collision_checker(self.map_game).checker() == '#' or Screen_game.counter_move == 60:
                 if Screen_game.reset_map:
@@ -73,48 +79,23 @@ class Screen_game:
             if self.pause_active:
                 self.screen_pause(screen)
 
-
-
-
             pygame.display.update()
                 
-
-    def bar_state(self,screen):
-        # ----------------------Movements----------------------------------
-        (self._position_row_robot, self._position_column_robot, self._robot) = positions.Positions(self.map_game).position_robot()
-        Text.Text('Movements: ', self._font, st.WHITE).draw_text(screen, 60,780)
-        Text.Text(f'{Screen_game.counter_move} ', self._font, st.GREEN_ROBOT).draw_text(screen, 215,780)
-
-        # ----------------------Address----------------------------------
-        Text.Text('Address: ', self._font, st.WHITE).draw_text(screen, 300,780)
-        Text.Text(f'{self.address} ', self._font, st.GREEN_ROBOT).draw_text(screen, 427,780)
-
-        # ----------------------Robot----------------------------------
-        Text.Text('Robot:', self._font, st.WHITE).draw_text(screen, 520,780)
-        Text.Text(f'{self._position_row_robot} | {self._position_column_robot}', self._font, st.GREEN_ROBOT).draw_text(screen, 610,780)
-
-        # ----------------------Goal----------------------------------
-        Text.Text('Goal:', self._font, st.WHITE).draw_text(screen, 750,780)
-        Text.Text(f'{self._position_row_goal} | {self._position_column_goal}', self._font, st.GREEN_ROBOT).draw_text(screen, 825,780)
-
-        # ----------------------Origin Robot----------------------------------
-        Text.Text(f'{self._robot}', self._font, st.RED_ROBOT).draw_text(screen, 1000,780)
 
     def screen_pause(self, screen):
             screen.blit(self.background, (0,0))
             
-            # screen.fill(st.BLACK)
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     self.game_over = True
-            
-            if Button.Button(300, 300, asset.btn_start, 1.5).draw(screen):
+
+            Text.Text('Pause menu', self._font, st.WHITE).draw_text_center(screen, 100)
+            if Button.Button( asset.btn_start, 1.5).btn_center(screen, 300):
 
                     self.pause_active = False
                     
-            elif Button.Button(300, 500, asset.btn_exit, 1.5).draw(screen):
+            elif Button.Button( asset.btn_exit, 1.5).btn_center(screen, 500):
 
                     self.pause_active = False
                     Screen_game.reset_map = False
