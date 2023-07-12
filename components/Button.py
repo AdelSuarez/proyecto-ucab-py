@@ -11,6 +11,7 @@ class Button:
     def btn_center(self, screen, x):
         self._rect = self._imagen.get_rect(center=(st.SCREEN_WIDTH/2, x))
         action = False
+        
         # pisicion del mause 
         position = pygame.mouse.get_pos()
 
