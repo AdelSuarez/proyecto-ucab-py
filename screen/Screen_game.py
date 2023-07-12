@@ -95,7 +95,7 @@ class Screen_game:
 
                     self.pause_active = False
                     
-            elif Button.Button( asset.btn_exit, 1.5).btn_center(screen, 500):
+            elif Button.Button( asset.btn_reset, 1).btn_center(screen, 500):
 
                     self.pause_active = False
                     Screen_game.reset_map = False
