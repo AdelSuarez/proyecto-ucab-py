@@ -11,7 +11,6 @@ class Map_checker:
         list = random.randint(1,3)
         value = random.randint(1,(self._column-1))
 
-        # TODO verificar cuando el mapa es pequeño, por ejempo 9x3 que se crean bloqueos, de igual formar, verificar la meta que no se bloquee con minas
         # ! Seguir mejorando el verificador del mapa
         for index_row, row in enumerate(self.map_game):
             for index_column, column in enumerate(row):
