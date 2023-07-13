@@ -70,11 +70,16 @@ class Screen_game:
             Status_bar.Status_bar(self.map_game, Screen_game.counter_move, self.address).bottom_status_bar(screen)
 
             if collision_checker.Collision_checker(self.map_game).checker() == '#' or Screen_game.counter_move == 60:
-                if Screen_game.reset_map:
-                    Screen_state.Screen_state(self.background, self.game_over).screen_game_over(screen, collision_checker.Collision_checker(self.map_game).checker())
+                if Screen_state.Screen_state(self.background, self.game_over).screen_game_over(screen, collision_checker.Collision_checker(self.map_game).checker()):
+                    
+                    Screen_game.reset_map = False
+                    Screen_game.counter_move = 0
+                       
 
             elif  collision_checker.Collision_checker(self.map_game).checker() == '@':
-                Screen_state.Screen_state(self.background, self.game_over).screen_victory(screen, Screen_game.counter_move)
+               if Screen_state.Screen_state(self.background, self.game_over).screen_victory(screen, Screen_game.counter_move):
+                    Screen_game.reset_map = False
+                    Screen_game.counter_move = 0
             
             if self.pause_active:
                 self.screen_pause(screen)
@@ -91,7 +96,7 @@ class Screen_game:
                     self.game_over = True
 
             Text.Text('Pause menu', self._font, st.WHITE).draw_text_center(screen, 100)
-            if Button.Button( asset.btn_start, 1.5).btn_center(screen, 300):
+            if Button.Button( asset.btn_pause, 1.3).btn_center(screen, 300):
 
                     self.pause_active = False
                     

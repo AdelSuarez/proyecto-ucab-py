@@ -8,6 +8,8 @@ victory = pygame.transform.scale(pygame.image.load("assets/victory.png"), (50, 5
 btn_start = pygame.image.load("assets/start_btn.png")
 btn_exit = pygame.image.load("assets/exit_btn.png")
 btn_reset = pygame.image.load("assets/reset.png")
+btn_pause = pygame.image.load("assets/pause.png")
+
 victory_img =  pygame.transform.scale(pygame.image.load("assets/victory.png"), (700,500))
 BG_opacity = pygame.image.load("assets/BG_opacity2.png")
 icon = pygame.image.load("assets/robot.png")
