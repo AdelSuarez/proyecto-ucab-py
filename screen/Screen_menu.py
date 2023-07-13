@@ -17,13 +17,23 @@ class Screen_menu:
 
     def menu(self, screen):
         while not self.game_over:
+            screen.fill((52,78,91))
 
             if self.game_pause:
+                Text.Text('Controllers', self._font, st.WHITE).draw_text_center(screen,120)
+                if Button.Button( asset.btn_start, 1).btn_center(screen, 400):
+
+                    Screen_game(self.game_over, self.game_pause, True).game(screen)
+                    
+                elif Button.Button( asset.btn_exit,1).btn_center(screen, 700):
+
+                    Screen_game(self.game_over, self.game_pause, False).game(screen)
+                    
+
+                    
                 # Map
-                Screen_game(self.game_over, self.game_pause).game(screen)
             else:
 
-                screen.fill((52,78,91))
                 # Menu
                 Text.Text('ROBOTcok', self._font, st.WHITE).draw_text_center(screen,120)
                 Text.Text('BETA', self._font_version, st.RED).draw_text(screen, 850,170)
