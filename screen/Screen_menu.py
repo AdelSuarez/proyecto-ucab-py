@@ -21,43 +21,10 @@ class Screen_menu:
             screen.fill((52,78,91))
 
             if self.game_pause:
-                Text.Text('Controllers', self._font_controller, st.WHITE).draw_text_center(screen,100)
-
-
-                Text.Text('SENSOR', self._font_version, st.WHITE).draw_text(screen, 192,200)
-                screen.blit(asset.sensor_img, (80,230))
-                Text.Text('A D I', self._font_version, st.WHITE).draw_text(screen, 200,590)
-
-
-                Text.Text('KEYS', self._font_version, st.WHITE).draw_text(screen, 758,200)
-                screen.blit(asset.keys_img, (620,230))
-                Text.Text('A W D S', self._font_version, st.WHITE).draw_text(screen, 725,590)
-
-
-                if Button.Button( asset.btn_start, 1).btn_center(screen, 700, 250):
-
-                    Screen_game(self.game_over, self.game_pause, True).game(screen)
+                self.screen_controllers(screen)
                     
-                elif Button.Button( asset.btn_start,1).btn_center(screen, 700, 800):
-
-                    Screen_game(self.game_over, self.game_pause, False).game(screen)
-                    
-
-                    
-                # Map
             else:
-
-                # Menu
-                Text.Text('ROBOTcok', self._font, st.WHITE).draw_text_center(screen,120)
-                Text.Text('BETA', self._font_version, st.RED).draw_text(screen, 850,170)
-                Text.Text('v2.7.5.4', self._font_version, st.WHITE).draw_text(screen, 870,780)
-                if Button.Button( asset.btn_start, 1.5).btn_center(screen, 400):
-                    self.game_pause = True
-                elif Button.Button( asset.btn_exit,1).btn_center(screen, 700):
-                    pygame.quit()
-
-                    self.game_over = True
-
+                self.screen_start(screen)
             
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -68,3 +35,37 @@ class Screen_menu:
                         self.game_pause = False
                     
             pygame.display.update()
+
+
+    def screen_start(self, screen):
+        Text.Text('ROBOTcok', self._font, st.WHITE).draw_text_center(screen,120)
+        Text.Text('BETA', self._font_version, st.RED).draw_text(screen, 850,170)
+        Text.Text('v2.7.5.4', self._font_version, st.WHITE).draw_text(screen, 870,780)
+        if Button.Button( asset.btn_start, 1.5).btn_center(screen, 400):
+            self.game_pause = True
+        elif Button.Button( asset.btn_exit,1).btn_center(screen, 700):
+            pygame.quit()
+
+            self.game_over = True
+
+    def screen_controllers(self, screen):
+        Text.Text('Controllers', self._font_controller, st.WHITE).draw_text_center(screen,100)
+
+
+        Text.Text('SENSOR', self._font_version, st.WHITE).draw_text(screen, 192,200)
+        screen.blit(asset.sensor_img, (80,230))
+        Text.Text('A D I', self._font_version, st.WHITE).draw_text(screen, 200,590)
+
+
+        Text.Text('KEYS', self._font_version, st.WHITE).draw_text(screen, 758,200)
+        screen.blit(asset.keys_img, (620,230))
+        Text.Text('A W D S', self._font_version, st.WHITE).draw_text(screen, 725,590)
+
+
+        if Button.Button( asset.btn_start, 1).btn_center(screen, 700, 250):
+
+            Screen_game(self.game_over, self.game_pause, True).game(screen)
+            
+        elif Button.Button( asset.btn_start,1).btn_center(screen, 700, 800):
+
+            Screen_game(self.game_over, self.game_pause, False).game(screen)

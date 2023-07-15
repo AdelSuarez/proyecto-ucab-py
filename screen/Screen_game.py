@@ -21,6 +21,7 @@ class Screen_game:
         self.game_pause = game_pause
         self.background = asset.BG_opacity
         self.pause_active = False
+        self.state_active = True
 
     def game(self, screen):
         while not self.game_over:
@@ -104,13 +105,15 @@ class Screen_game:
             self.check_events(screen)
 
             # activa los eventos del menu de pausa
-            if self.pause_active:
+            if self.pause_active and self.state_active:
                 value = Screen_state.Screen_state(self.background, self.game_over).screen_pause(screen) 
                 if value == 'pause':
                     self.pause_active = False
                 elif value == 'reset':
                     self.pause_active = False
                     Screen_game.reset_map = False
+                    Screen_game.counter_move = 0
+
                      
 
             pygame.display.update()
@@ -119,18 +122,26 @@ class Screen_game:
     def check_events(self,screen):
         if collision_checker.Collision_checker(self.map_game).checker() == '#' or Screen_game.counter_move == 60:
 
+            self.state_active = False
+
             if Screen_state.Screen_state(self.background, self.game_over).screen_game_over(screen, collision_checker.Collision_checker(self.map_game).checker()):
                 
                 Screen_game.reset_map = False
                 Screen_game.counter_move = 0
+                self.state_active = True
+
                     
 
         elif  collision_checker.Collision_checker(self.map_game).checker() == '@':
+            
+            self.state_active = False
             
             if Screen_state.Screen_state(self.background, self.game_over).screen_victory(screen, Screen_game.counter_move):
                 
                 Screen_game.reset_map = False
                 Screen_game.counter_move = 0
+                self.state_active = True
+
                 
 
         
