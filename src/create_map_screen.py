@@ -1,14 +1,10 @@
 import pygame
 import style.style as st
+import assets.Assets as asset
 
 class Create_map_screen:
-    def __init__(self, map_game, screen, robot, address, bomb, goal, victory, game_over, sensor_active):
-        self._over = game_over
-        self._victory = victory
-        self._goal = goal
-        self._bomb = bomb
+    def __init__(self, map_game, screen, address, sensor_active):
         self.address = address
-        self._robot = robot
         self._screen = screen
         self.map_game = map_game
         self.sensor_active = sensor_active
@@ -39,7 +35,7 @@ class Create_map_screen:
 
                         self._color_robot_lower( row, column, index_column)
                                             
-                    self._screen.blit(self._robot, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN-5,
+                    self._screen.blit(asset.robot, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN-5,
                                 (st.MARGIN+st.LONG) * row + st.MARGIN-8,
                                 st.HIGH,
                                 st.LONG])
@@ -47,7 +43,7 @@ class Create_map_screen:
 
                 elif column == '*':
                     
-                    self._screen.blit(self._bomb, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN+2,
+                    self._screen.blit(asset.bomb, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN+2,
                                 (st.MARGIN+st.LONG) * row + st.MARGIN+5,
                                 st.HIGH,
                                 st.LONG])
@@ -55,20 +51,20 @@ class Create_map_screen:
 
 
                 elif column == 'H':
-                    self._screen.blit(self._goal, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN+2,
+                    self._screen.blit(asset.goal, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN+2,
                                 (st.MARGIN+st.LONG) * row + st.MARGIN+2,
                                 st.HIGH,
                                 st.LONG])
                     
                 elif column == '#':
-                    self._screen.blit(self._over, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                    self._screen.blit(asset.over, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
                                 (st.MARGIN+st.LONG) * row + st.MARGIN-3,
                                 st.HIGH,
                                 st.LONG])
                     
                 elif column == '@':
                     self._color_position(st.YELLOW_GOAL, index_column, row)
-                    self._screen.blit(self._victory, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN-7,
+                    self._screen.blit(asset.victory, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN-7,
                                 (st.MARGIN+st.LONG) * row + st.MARGIN-5,
                                 st.HIGH,
                                 st.LONG])

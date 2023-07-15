@@ -95,7 +95,7 @@ class Screen_game:
             screen.fill(st.BLACK)
 
             
-            create_map_screen.Create_map_screen(self.map_game, screen, asset.robot, self.address, asset.bomb, asset.goal, asset.victory, asset.over, self.controller)
+            create_map_screen.Create_map_screen(self.map_game, screen, self.address, self.controller)
 
             # barra de esta inferior
             Status_bar.Status_bar(self.map_game, Screen_game.counter_move, self.address).bottom_status_bar(screen)

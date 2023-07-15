@@ -8,8 +8,8 @@ class Button:
         self._imagen = pygame.transform.scale(image, (int(width *scale), int(height * scale)))
         self._clicked = False
 
-    def btn_center(self, screen, x):
-        self._rect = self._imagen.get_rect(center=(st.SCREEN_WIDTH/2, x))
+    def btn_center(self, screen, x = st.SCREEN_HEIGHT/2 , y= st.SCREEN_WIDTH/2 ):
+        self._rect = self._imagen.get_rect(center=(y, x))
         action = False
         
         # pisicion del mause 

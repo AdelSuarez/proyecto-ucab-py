@@ -11,5 +11,9 @@ btn_reset = pygame.image.load("assets/reset.png")
 btn_pause = pygame.image.load("assets/pause.png")
 
 victory_img =  pygame.transform.scale(pygame.image.load("assets/victory.png"), (700,500))
+sensor_img =  pygame.transform.scale(pygame.image.load("assets/sensor.png"), (350,350))
+keys_img =  pygame.transform.scale(pygame.image.load("assets/key2.png"), (350,350))
+
+
 BG_opacity = pygame.image.load("assets/BG_opacity2.png")
 icon = pygame.image.load("assets/robot.png")
