@@ -133,7 +133,7 @@ class Screen_game:
                     
 
         elif  collision_checker.Collision_checker(self.map_game).checker() == '@':
-            
+
             self.state_active = False
             
             if Screen_state.Screen_state(self.background, self.game_over).screen_victory(screen, Screen_game.counter_move):
@@ -141,7 +141,3 @@ class Screen_game:
                 Screen_game.reset_map = False
                 Screen_game.counter_move = 0
                 self.state_active = True
-
-                
-
-        
