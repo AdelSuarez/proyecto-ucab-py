@@ -10,7 +10,7 @@ class Screen_menu:
     def __init__(self, game_over) -> None:
         self._font = st.font(100)
         self._font_controller = st.font(80)
-        self._font_version = st.font( 20)
+        self._font_text = st.font( 20)
 
         self.game_over = game_over
         self.game_pause = False
@@ -18,7 +18,7 @@ class Screen_menu:
 
     def menu(self, screen):
         while not self.game_over:
-            screen.fill((52,78,91))
+            screen.fill(st.BACKGROUND_COLOR)
 
             if self.game_pause:
                 self.screen_controllers(screen)
@@ -39,8 +39,8 @@ class Screen_menu:
 
     def screen_start(self, screen):
         Text.Text('ROBOTcok', self._font, st.WHITE).draw_text_center(screen,120)
-        Text.Text('BETA', self._font_version, st.RED).draw_text(screen, 850,170)
-        Text.Text('v2.8.0.1', self._font_version, st.WHITE).draw_text(screen, 870,780)
+        Text.Text('BETA', self._font_text, st.RED).draw_text(screen, 850,170)
+        Text.Text('v2.8.0.1', self._font_text, st.WHITE).draw_text(screen, 870,780)
         if Button.Button( asset.btn_start, 1.5).btn_center(screen, 400):
             self.game_pause = True
         elif Button.Button( asset.btn_exit,1).btn_center(screen, 700):
@@ -52,14 +52,14 @@ class Screen_menu:
         Text.Text('Controllers', self._font_controller, st.WHITE).draw_text_center(screen,100)
 
 
-        Text.Text('SENSOR', self._font_version, st.WHITE).draw_text(screen, 192,200)
+        Text.Text('SENSOR', self._font_text, st.WHITE).draw_text(screen, 192,200)
         screen.blit(asset.sensor_img, (80,230))
-        Text.Text('A D I', self._font_version, st.WHITE).draw_text(screen, 200,590)
+        Text.Text('A D I', self._font_text, st.WHITE).draw_text(screen, 200,590)
 
 
-        Text.Text('KEYS', self._font_version, st.WHITE).draw_text(screen, 758,200)
+        Text.Text('KEYS', self._font_text, st.WHITE).draw_text(screen, 758,200)
         screen.blit(asset.keys_img, (620,230))
-        Text.Text('A W D S', self._font_version, st.WHITE).draw_text(screen, 725,590)
+        Text.Text('A W D S', self._font_text, st.WHITE).draw_text(screen, 725,590)
 
 
         if Button.Button( asset.btn_start, 1).btn_center(screen, 700, 250):

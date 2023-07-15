@@ -22,6 +22,8 @@ GREEN_ROBOT = (72, 201, 176)
 YELLOW_GOAL = (247, 220, 111)
 RED_ROBOT = ( 236, 112, 99 )
 
+BACKGROUND_COLOR = (52,78,91)
+
 RED = (192, 57, 43 )
 
 def font(size):

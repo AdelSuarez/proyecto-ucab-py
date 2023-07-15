@@ -56,7 +56,7 @@ class Screen_state:
             
             Text.Text('Pause menu', self._font_pause_menu, st.WHITE).draw_text_center(screen, 100)
             
-            if Button.Button( asset.btn_pause, 1.3).btn_center(screen, 300):
+            if Button.Button( asset.btn_continue, 1.3).btn_center(screen, 300):
                 return 'pause'
                     
             elif Button.Button( asset.btn_reset, 1).btn_center(screen, 500):

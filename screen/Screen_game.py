@@ -42,53 +42,15 @@ class Screen_game:
                 if not self.pause_active:
 
                     if event.type == pygame.KEYDOWN:
-
+                        
+                        # seleccion del tipo de control
                         if self.controller:    
-                            if event.key == pygame.K_a:
-                                move.Move(self.address, self.map_game).advance()
-                                Screen_game.counter_move += 1
-
-                            elif event.key == pygame.K_d:
-                                self.address = robot_rotation.Robot_rotation(self.address, self.map_game).right()
-                                Screen_game.counter_move += 1
-
-                            elif event.key == pygame.K_i:
-                                self.address = robot_rotation.Robot_rotation(self.address, self.map_game).left()
-                                Screen_game.counter_move += 1
-                                
-                            elif event.key == pygame.K_q:
-                                Screen_game.reset_map=False
-
-                            if event.key == pygame.K_SPACE or event.key == pygame.K_ESCAPE:
-                                self.pause_active = True
+                            self.controller_sensor(event)
                         
                         else:
+                            self.controller_keys(event)
                             
-                            if event.key == pygame.K_w or event.key == pygame.K_UP:
-                                self.address = 'N'
-                                Robot_direction.Robot_direction(self.address, self.map_game)
-                                move.Move(self.address, self.map_game).advance()
-                                Screen_game.counter_move += 1
-
-                            elif event.key == pygame.K_s or event.key == pygame.K_DOWN:
-                                self.address = 'S'
-                                Robot_direction.Robot_direction(self.address, self.map_game)
-                                move.Move(self.address, self.map_game).advance()
-                                Screen_game.counter_move += 1
-
-                            elif event.key == pygame.K_a or event.key == pygame.K_LEFT:
-                                self.address = 'O'
-                                Robot_direction.Robot_direction(self.address, self.map_game)
-                                move.Move(self.address, self.map_game).advance()
-                                Screen_game.counter_move += 1
-                                
-                            elif event.key == pygame.K_d or event.key == pygame.K_RIGHT:
-                                self.address = 'E'
-                                Robot_direction.Robot_direction(self.address, self.map_game)
-                                move.Move(self.address, self.map_game).advance()
-                                Screen_game.counter_move += 1
-
-                            if event.key == pygame.K_SPACE or event.key == pygame.K_ESCAPE:
+                        if event.key == pygame.K_SPACE or event.key == pygame.K_ESCAPE:
                                 self.pause_active = True
                             
                         
@@ -130,8 +92,6 @@ class Screen_game:
                 Screen_game.counter_move = 0
                 self.state_active = True
 
-                    
-
         elif  collision_checker.Collision_checker(self.map_game).checker() == '@':
 
             self.state_active = False
@@ -141,3 +101,49 @@ class Screen_game:
                 Screen_game.reset_map = False
                 Screen_game.counter_move = 0
                 self.state_active = True
+    
+    def controller_sensor(self, event):
+        if event.key == pygame.K_a:
+            move.Move(self.address, self.map_game).advance()
+            Screen_game.counter_move += 1
+
+        elif event.key == pygame.K_d:
+            self.address = robot_rotation.Robot_rotation(self.address, self.map_game).right()
+            Screen_game.counter_move += 1
+
+        elif event.key == pygame.K_i:
+            self.address = robot_rotation.Robot_rotation(self.address, self.map_game).left()
+            Screen_game.counter_move += 1
+            
+        elif event.key == pygame.K_q:
+            Screen_game.reset_map=False
+
+        if event.key == pygame.K_SPACE or event.key == pygame.K_ESCAPE:
+            self.pause_active = True
+
+
+
+    def controller_keys(self, event):
+        if event.key == pygame.K_w or event.key == pygame.K_UP:
+            self.address = 'N'
+            self.avance_keys(self.address)
+
+        elif event.key == pygame.K_s or event.key == pygame.K_DOWN:
+            self.address = 'S'
+            self.avance_keys(self.address)
+
+
+        elif event.key == pygame.K_a or event.key == pygame.K_LEFT:
+            self.address = 'O'
+            self.avance_keys(self.address)
+
+            
+        elif event.key == pygame.K_d or event.key == pygame.K_RIGHT:
+            self.address = 'E'
+            self.avance_keys(self.address)
+
+
+    def avance_keys(self, address):
+        Robot_direction.Robot_direction(address, self.map_game)
+        move.Move(address, self.map_game).advance()
+        Screen_game.counter_move += 1
