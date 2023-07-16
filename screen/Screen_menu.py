@@ -13,15 +13,20 @@ class Screen_menu:
         self._font_text = st.font( 20)
 
         self.game_over = game_over
-        self.game_pause = False
+        self.screen_controller_active = False
+        self.screen_select_map_active = False
 
 
     def menu(self, screen):
         while not self.game_over:
             screen.fill(st.BACKGROUND_COLOR)
 
-            if self.game_pause:
+            if self.screen_controller_active:
                 self.screen_controllers(screen)
+
+            elif self.screen_select_map_active:
+                self.select_map(screen)
+
                     
             else:
                 self.screen_start(screen)
@@ -32,7 +37,7 @@ class Screen_menu:
                     self.game_over = True
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
-                        self.game_pause = False
+                        self.screen_controller_active = False
                     
             pygame.display.update()
 
@@ -42,7 +47,7 @@ class Screen_menu:
         Text.Text('BETA', self._font_text, st.RED).draw_text(screen, 850,170)
         Text.Text('v2.8.0.1', self._font_text, st.WHITE).draw_text(screen, 870,780)
         if Button.Button( asset.btn_start, 1.5).btn_center(screen, 400):
-            self.game_pause = True
+            self.screen_controller_active = True
         elif Button.Button( asset.btn_exit,1).btn_center(screen, 700):
             pygame.quit()
 
@@ -63,9 +68,13 @@ class Screen_menu:
 
 
         if Button.Button( asset.btn_start, 1).btn_center(screen, 700, 250):
-
-            Screen_game(self.game_over, self.game_pause, True).game(screen)
+            self.screen_controller_active = False
+            self.screen_select_map_active = True
+            # Screen_game(self.game_over, self.game_pause, True).game(screen)
             
         elif Button.Button( asset.btn_start,1).btn_center(screen, 700, 800):
 
-            Screen_game(self.game_over, self.game_pause, False).game(screen)
+            Screen_game(self.game_over, self.screen_controller_active, False).game(screen)
+
+    def select_map(self, screen):
+        Text.Text('Map', self._font_controller, st.WHITE).draw_text_center(screen,100)
