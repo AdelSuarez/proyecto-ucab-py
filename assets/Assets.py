@@ -11,6 +11,8 @@ btn_exit = pygame.image.load("assets/exit_btn.png")
 btn_reset = pygame.image.load("assets/reset.png")
 btn_pause = pygame.image.load("assets/pause.png")
 btn_continue = pygame.image.load("assets/continue2.png")
+btn_return = pygame.image.load("assets/return.png")
+
 
 
 victory_img =  pygame.transform.scale(pygame.image.load("assets/victory.png"), (700,500))

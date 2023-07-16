@@ -11,14 +11,13 @@ class Screen_game:
     reset_map = False
     counter_move = 0
     
-    def __init__(self, game_over, game_pause, controller) -> None:
+    def __init__(self, game_over, controller) -> None:
         self._font = st.font(80)
 
         self._font_bar = st.font(15)
         self.controller = controller
         self.game_over = game_over
         self.address = 'E'
-        self.game_pause = game_pause
         self.background = asset.BG_opacity
         self.pause_active = False
         self.state_active = True
@@ -39,7 +38,7 @@ class Screen_game:
                     pygame.quit()
                     self.game_over = True
 
-                if not self.pause_active:
+                if not self.pause_active and Screen_game.counter_move <= 60:
 
                     if event.type == pygame.KEYDOWN:
                         
@@ -82,7 +81,7 @@ class Screen_game:
 
     
     def check_events(self,screen):
-        if collision_checker.Collision_checker(self.map_game).checker() == '#' or Screen_game.counter_move == 60:
+        if collision_checker.Collision_checker(self.map_game).checker() == '#' or Screen_game.counter_move > 60:
 
             self.state_active = False
 
