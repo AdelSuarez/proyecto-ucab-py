@@ -10,7 +10,7 @@ btn_start = pygame.image.load("assets/start_btn.png")
 btn_exit = pygame.image.load("assets/exit_btn.png")
 btn_reset = pygame.image.load("assets/reset.png")
 btn_pause = pygame.image.load("assets/pause.png")
-btn_continue = pygame.image.load("assets/continue2.png")
+btn_continue = pygame.image.load("assets/continue3.png")
 btn_return = pygame.image.load("assets/return.png")
 
 

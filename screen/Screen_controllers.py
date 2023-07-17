@@ -23,11 +23,11 @@ class Screen_controllers:
 
 
         # btn Mode sensor
-        if Button.Button( asset.btn_continue, 1).btn_center(screen, 700, 250):
+        if Button.Button( asset.btn_continue, 0.6).btn_center(screen, 700, 250):
             return 'sensor'
             
 
         # btn Mode keys    
-        elif Button.Button( asset.btn_continue, 1).btn_center(screen, 700, 800):
+        elif Button.Button( asset.btn_continue, 0.6).btn_center(screen, 700, 800):
             return 'keys'
             
