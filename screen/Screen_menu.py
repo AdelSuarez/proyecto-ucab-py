@@ -15,9 +15,7 @@ class Screen_menu:
         self.game_over = game_over
         self.screen_controller_active = False
         self.screen_map_selection_active = False
-        self.mode_controller = None
         self.mode_map = None
-        self.map_select = None
 
 
     def menu(self, screen):
@@ -36,13 +34,15 @@ class Screen_menu:
 
                 if mode == 'sensor':
                     self.screen_map_selection_active = False
-                    self.mode_controller = True
-                    Screen_game.Screen_game(self.game_over, self.mode_controller).game(screen)
+                    Screen_game.Screen_game(self.game_over, True).game(screen)
 
                 elif mode == 'keys':
                     self.screen_map_selection_active = False
-                    self.mode_controller = False
-                    Screen_game.Screen_game(self.game_over, self.mode_controller).game(screen)
+                    Screen_game.Screen_game(self.game_over, False).game(screen)
+                
+                elif mode == 'back':
+                    self.screen_map_selection_active = True
+                    self.screen_controller_active = False
           
             else:
                 if Screen_start.Screen_start().screen_start(screen):
@@ -52,10 +52,6 @@ class Screen_menu:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     self.game_over = True
-
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
-                        self.screen_controller_active = False
                     
             pygame.display.update()
 

@@ -13,8 +13,8 @@ class Screen_game:
     
     def __init__(self, game_over, controller) -> None:
         self._font = st.font(80)
-
         self._font_bar = st.font(15)
+        
         self.controller = controller
         self.game_over = game_over
         self.address = 'E'

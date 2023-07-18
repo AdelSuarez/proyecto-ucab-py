@@ -19,7 +19,7 @@ class Screen_state:
     def screen_victory(self, screen, moves):
             screen.blit(self.background, (0,0))
             screen.blit(victory_img, victory_img.get_rect(center=(st.SCREEN_WIDTH/2, 250)))
-            # Text(f'-Movimientos realizados: {moves}-', self._font_state, st.WHITE).draw_text(screen, 180,530)
+            Text.Text(f'-Movimientos realizados: {moves}-', self._font_state, st.WHITE).draw_text_center(screen,750)
             
             if Button.Button(asset.btn_reset, 1).btn_center(screen, 550):
                 return True
@@ -35,12 +35,12 @@ class Screen_state:
     def screen_game_over(self, screen, state = None):
             screen.blit(self.background, (0,0))
 
-            Text.Text('Game Over', self._font_game_over, st.WHITE,).draw_text(screen, 80,200)
+            Text.Text('Game Over', self._font_game_over, st.WHITE,).draw_text_center(screen, 200)
 
             if state == '#':
-                Text.Text('-Robot destruido-', self._font_state, st.WHITE).draw_text(screen, 300,350)
+                Text.Text('-Robot destruido-', self._font_state, st.WHITE).draw_text_center(screen, 350)
             else:
-                Text.Text('-Movimientos agotados-', self._font_state, st.WHITE).draw_text(screen, 230,350)
+                Text.Text('-Movimientos agotados-', self._font_state, st.WHITE).draw_text_center(screen,350)
             
             if Button.Button(asset.btn_reset, 1).btn_center(screen, 500):
                 return True
@@ -54,12 +54,12 @@ class Screen_state:
     def screen_pause(self, screen):
             screen.blit(self.background, (0,0))
             
-            Text.Text('Pause menu', self._font_pause_menu, st.WHITE).draw_text_center(screen, 100)
+            Text.Text('Pause menu', self._font_pause_menu, st.WHITE).draw_text_center(screen, 120)
             
-            if Button.Button( asset.btn_continue, 1).btn_center(screen, 300):
+            if Button.Button( asset.btn_continue, 1).btn_center(screen, 380):
                 return 'pause'
                     
-            elif Button.Button( asset.btn_reset, 1).btn_center(screen, 500):
+            elif Button.Button( asset.btn_reset, 1).btn_center(screen, 580):
                 return 'reset'
 
             for event in pygame.event.get():

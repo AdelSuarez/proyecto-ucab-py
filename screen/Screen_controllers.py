@@ -11,6 +11,9 @@ class Screen_controllers:
 
     def screen_controllers(self, screen):
 
+        if Button.Button( asset.btn_return, 0.4).btn_center(screen, 100, 120):
+            return 'back'
+
         Text.Text('Controllers', self._font_controller, st.WHITE).draw_text_center(screen,100)
 
         Text.Text('SENSOR', self._font_text, st.WHITE).draw_text(screen, 192,200)
