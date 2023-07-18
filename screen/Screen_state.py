@@ -17,6 +17,7 @@ class Screen_state:
 
 
     def screen_victory(self, screen, moves):
+            
             screen.blit(self.background, (0,0))
             screen.blit(victory_img, victory_img.get_rect(center=(st.SCREEN_WIDTH/2, 250)))
             Text.Text(f'-Movimientos realizados: {moves}-', self._font_state, st.WHITE).draw_text_center(screen,750)
@@ -33,6 +34,7 @@ class Screen_state:
 
 
     def screen_game_over(self, screen, state = None):
+            
             screen.blit(self.background, (0,0))
 
             Text.Text('Game Over', self._font_game_over, st.WHITE,).draw_text_center(screen, 200)

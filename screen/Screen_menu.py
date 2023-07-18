@@ -15,7 +15,6 @@ class Screen_menu:
         self.game_over = game_over
         self.screen_controller_active = False
         self.screen_map_selection_active = False
-        self.mode_map = None
 
 
     def menu(self, screen):

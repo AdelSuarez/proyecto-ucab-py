@@ -7,7 +7,6 @@ from components import Status_bar
 
 
 class Screen_game:
-    is_pause = 1
     reset_map = False
     counter_move = 0
     
@@ -68,8 +67,10 @@ class Screen_game:
             # activa los eventos del menu de pausa
             if self.pause_active and self.state_active:
                 value = Screen_state.Screen_state(self.background, self.game_over).screen_pause(screen) 
+
                 if value == 'pause':
                     self.pause_active = False
+                    
                 elif value == 'reset':
                     self.pause_active = False
                     Screen_game.reset_map = False
@@ -116,10 +117,6 @@ class Screen_game:
             
         elif event.key == pygame.K_q:
             Screen_game.reset_map=False
-
-        if event.key == pygame.K_SPACE or event.key == pygame.K_ESCAPE:
-            self.pause_active = True
-
 
 
     def controller_keys(self, event):
