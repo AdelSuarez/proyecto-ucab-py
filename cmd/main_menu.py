@@ -2,13 +2,13 @@ try:
     from getch import getche
 except ModuleNotFoundError:
     pass
+import style.style as st
 
 from src.archivo import Archivo
-from cmd.welcome import Data_map
 from src.create_map import Create_map
-from cmd.view_map import View_map
-import style.style as st
 from src.clear_terminal import clear
+from cmd.welcome import Data_map
+from cmd.view_map import View_map
 from cmd.positions import Positions
 from cmd.robot_rotation import Robot_rotation
 from cmd.move import Move
