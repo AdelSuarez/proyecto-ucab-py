@@ -1,10 +1,13 @@
 import pygame
 
 # ----------- SCREEN -----------------
+
+# Size box map
 LONG  = 40
 HIGH = 40
 MARGIN = 5
 
+# Size screen
 SCREEN_WIDTH = 1042
 SCREEN_HEIGHT = 810
 
@@ -25,6 +28,12 @@ RED_ROBOT = ( 236, 112, 99 )
 BACKGROUND_COLOR = (52,78,91)
 
 RED = (192, 57, 43 )
+
+
+# Size btn
+BTN_CONTINUE_SIZE = 0.6
+
+
 
 def font(size):
     # retorna el estilo del texto

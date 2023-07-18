@@ -15,51 +15,44 @@ class Screen_menu:
         self.game_over = game_over
         self.screen_controller_active = False
         self.screen_map_selection_active = False
-        self.is_controller = ''
         self.mode_controller = None
+        self.mode_map = None
+        self.map_select = None
 
 
     def menu(self, screen):
         while not self.game_over:
             screen.fill(st.BACKGROUND_COLOR)
 
-            if self.screen_controller_active:
+            if self.screen_map_selection_active:
+                self.mode_map = Screen_map_selection.Screen_map_selection().screen_selection_map(screen)
+                if self.mode_map:
+                    self.screen_map_selection_active = False
+                    self.screen_controller_active = True
 
+
+            elif self.screen_controller_active:
                 mode = Screen_controllers.Screen_controllers().screen_controllers(screen)
 
                 if mode == 'sensor':
-                    self.screen_controller_active = False
-                    self.screen_map_selection_active = True
-                    self.is_controller = 'sensor'
+                    self.screen_map_selection_active = False
                     self.mode_controller = True
+                    Screen_game.Screen_game(self.game_over, self.mode_controller).game(screen)
 
                 elif mode == 'keys':
-                    self.screen_controller_active = False
-                    self.screen_map_selection_active = True
-                    self.is_controller = 'keys'
-                    self.mode_controller = False
-
-                # self.screen_controllers(screen)
-
-            elif self.screen_map_selection_active:
-                back = Screen_map_selection.Screen_map_selection(self.game_over, self.mode_controller, self.is_controller).screen_selection_map(screen)
-                
-                if back:
-                    self.screen_controller_active = True
                     self.screen_map_selection_active = False
-                
-                    
+                    self.mode_controller = False
+                    Screen_game.Screen_game(self.game_over, self.mode_controller).game(screen)
+          
             else:
-                if Screen_start.Screen_start( self.screen_controller_active).screen_start(screen):
-                    self.screen_controller_active= True
+                if Screen_start.Screen_start().screen_start(screen):
+                    self.screen_map_selection_active= True
             
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     self.game_over = True
 
-                # if event.type == MOUSEBUTTONDOWN and event.button == 1:
-                    # pass
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         self.screen_controller_active = False

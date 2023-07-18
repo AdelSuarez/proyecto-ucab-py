@@ -6,10 +6,9 @@ from components import Text,Button
 
 
 class Screen_start:
-    def __init__(self , controller_active) -> None:
+    def __init__(self ) -> None:
         self._font = st.font(100)
         self._font_text = st.font( 20)
-        self.screen_controller_active = controller_active
 
 
     def screen_start(self, screen):
