@@ -1,8 +1,8 @@
 import pygame
 import assets.Assets as asset
 import style.style as st
-from screen import Screen_game
 from components import Text,Button
+from src import Read_text
 
 
 class Screen_map_selection:
@@ -24,6 +24,7 @@ class Screen_map_selection:
         # btn mapa del txt
         elif Button.Button( asset.btn_start, 0.8).btn_center(screen, 400, 800):
             print('En desarrollo')
+            Read_text.Read_text()
             
 
         Text.Text('the txt map can not be used the keys, it is only to show the result of the data', self._font_text, st.WHITE).draw_text_center(screen,700)

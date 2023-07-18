@@ -1,7 +1,5 @@
 import pygame
-import assets.Assets as asset
 import style.style as st
-from components import Text, Button
 from screen import Screen_game, Screen_start, Screen_controllers, Screen_map_selection
 
 
