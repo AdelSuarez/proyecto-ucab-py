@@ -4,9 +4,7 @@ except ModuleNotFoundError:
     pass
 import style.style as st
 
-from src.archivo import Archivo
-from src.create_map import Create_map
-from src.clear_terminal import clear
+from src import archivo, create_map, clear_terminal
 from cmd.welcome import Data_map
 from cmd.view_map import View_map
 from cmd.positions import Positions
@@ -21,7 +19,7 @@ class Main_menu:
 
     def __init__(self):
         self._row, self._column = Data_map().welcome()
-        self.map_game = Create_map(self._row, self._column).maker()
+        self.map_game = create_map.Create_map(self._row, self._column).maker()
         self._position_row_g, self._position_column_g = Positions(self.map_game).position_goal()
         self.address = 'E'
         self._menu()
@@ -30,10 +28,10 @@ class Main_menu:
 
     def _menu(self):
         while True:
-            clear()
+            clear_terminal.clear()
             position_row_r, position_column_r = Positions(self.map_game).position_robot()
 
-            Archivo(self._row, self._column, self.map_game, position_row_r, position_column_r, self._position_row_g, self._position_column_g, self.address, Main_menu.order_counter, Main_menu.movement, Collision_checker(self.map_game).checker())
+            archivo.Archivo(self._row, self._column, self.map_game, position_row_r, position_column_r, self._position_row_g, self._position_column_g, self.address, Main_menu.order_counter, Main_menu.movement, Collision_checker(self.map_game).checker())
 
 
             print(f' C: {self._column} | F: {self._row} '.center((self._column*4)+3,'-'))   
