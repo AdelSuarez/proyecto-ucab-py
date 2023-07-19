@@ -1,7 +1,7 @@
 import pygame
 import style.style as st
 import assets.Assets as asset
-from src import create_map_screen, move, robot_rotation, collision_checker, positions, create_map, Robot_direction, Read_text
+from src import create_map_screen, move, robot_rotation, collision_checker, positions, create_map, Robot_direction, Read_text, State_txt
 from screen import Screen_state
 from components import Status_bar
 
@@ -100,20 +100,23 @@ class Screen_game:
     
     def check_events(self,screen):
         # Funcion que verifica si el jugador gana o pierde, y reset o continue en la screen
-        if collision_checker.Collision_checker(self.map_game).checker() == '#' or Screen_game.counter_move > 60:
+        value = collision_checker.Collision_checker(self.map_game).checker()
+        if value == '#' or Screen_game.counter_move > 60:
 
             self.state_active = False
 
-            reset_game_over = Screen_state.Screen_state(self.background, self.game_over).screen_game_over(screen, collision_checker.Collision_checker(self.map_game).checker())
+            reset_game_over = Screen_state.Screen_state(self.background, self.game_over).screen_game_over(screen, value)
 
             if reset_game_over and self.mode_map_txt is None:
                 self.reset_screen_victory()
 
             elif reset_game_over and self.mode_map_txt == 'txt':
                 self.reset_map_text(True)   
+
+            State_txt.State_text(value)
             
 
-        elif  collision_checker.Collision_checker(self.map_game).checker() == '@':
+        elif  value == '@':
 
             self.state_active = False
 
