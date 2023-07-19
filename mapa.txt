@@ -20,4 +20,4 @@
 16,3
 N
 0
-S S S S S S S S A S S S S S S S S A A A A A W A
+S S S S S S S S A S S S S S S S S A A A A A W s 
