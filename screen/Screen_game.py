@@ -159,6 +159,7 @@ class Screen_game:
         Screen_game.counter_move += 1
 
     def automatic_movements(self):
+        print(self.moves)
         for move in self.moves:
             if move == 'A':
                 self.address = 'O'
