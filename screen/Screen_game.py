@@ -7,10 +7,11 @@ from components import Status_bar
 
 
 class Screen_game:
+    automatic = 0
     reset_map = False
     counter_move = 0
     
-    def __init__(self, game_over, controller) -> None:
+    def __init__(self, game_over, controller, game_map_txt=None, moves = None) -> None:
         self._font = st.font(80)
         self._font_bar = st.font(15)
         
@@ -20,16 +21,20 @@ class Screen_game:
         self.background = asset.BG_opacity
         self.pause_active = False
         self.state_active = True
+        self.game_map_txt = game_map_txt
+        self.moves = moves
 
     def game(self, screen):
         while not self.game_over:
-            if not Screen_game.reset_map:
 
-                self.map_game = create_map.Create_map(17,23).maker()
-                Screen_game.reset_map=True
-                self.address = 'E'
+            if self.game_map_txt is None:
+                if not Screen_game.reset_map:
+                    self.map_game = create_map.Create_map(17,23).maker()
+                    Screen_game.reset_map=True
+                    self.address = 'E'
+            else:
+                self.map_game = self.game_map_txt
 
-            (self._position_row_goal, self._position_column_goal) = positions.Positions(self.map_game).position_goal()
             
             for event in pygame.event.get():
 
@@ -40,18 +45,27 @@ class Screen_game:
                 if not self.pause_active and Screen_game.counter_move <= 60:
 
                     if event.type == pygame.KEYDOWN:
+                        if self.game_map_txt is None:
                         
                         # seleccion del tipo de control
-                        if self.controller:    
-                            self.controller_sensor(event)
-                        
-                        else:
-                            self.controller_keys(event)
+                            if self.controller:    
+                                self.controller_sensor(event)
                             
-                        if event.key == pygame.K_SPACE or event.key == pygame.K_ESCAPE:
+                            else:
+                                self.controller_keys(event)
+
+                            if event.key == pygame.K_SPACE or event.key == pygame.K_ESCAPE:
                                 self.pause_active = True
+
+                        elif self.game_map_txt != None:
+                            if Screen_game.automatic == 0:
+                                if event.key == pygame.K_SPACE:
+                                    
+                                    self.automatic_movements()
+                                    Screen_game.automatic += 1
                             
-                        
+            # posiciones en tiempo real de la meta y el robot            
+            (self._position_row_goal, self._position_column_goal) = positions.Positions(self.map_game).position_goal()
 
             screen.fill(st.BLACK)
 
@@ -66,7 +80,7 @@ class Screen_game:
 
             # activa los eventos del menu de pausa
             if self.pause_active and self.state_active:
-                value = Screen_state.Screen_state(self.background, self.game_over).screen_pause(screen) 
+                value = Screen_state.Screen_state(self.background, self.game_over, self.game_map_txt).screen_pause(screen) 
 
                 if value == 'pause':
                     self.pause_active = False
@@ -86,7 +100,7 @@ class Screen_game:
 
             self.state_active = False
 
-            if Screen_state.Screen_state(self.background, self.game_over).screen_game_over(screen, collision_checker.Collision_checker(self.map_game).checker()):
+            if Screen_state.Screen_state(self.background, self.game_over, self.game_map_txt).screen_game_over(screen, collision_checker.Collision_checker(self.map_game).checker()):
                 
                 Screen_game.reset_map = False
                 Screen_game.counter_move = 0
@@ -96,7 +110,7 @@ class Screen_game:
 
             self.state_active = False
             
-            if Screen_state.Screen_state(self.background, self.game_over).screen_victory(screen, Screen_game.counter_move):
+            if Screen_state.Screen_state(self.background, self.game_over, self.game_map_txt).screen_victory(screen, Screen_game.counter_move):
                 
                 Screen_game.reset_map = False
                 Screen_game.counter_move = 0
@@ -143,3 +157,18 @@ class Screen_game:
         Robot_direction.Robot_direction(address, self.map_game)
         move.Move(address, self.map_game).advance()
         Screen_game.counter_move += 1
+
+    def automatic_movements(self):
+        for move in self.moves:
+            if move == 'A':
+                self.address = 'O'
+                self.avance_keys(self.address)
+            elif move == 'D':
+                self.address = 'E'
+                self.avance_keys(self.address)
+            elif move == 'S':
+                self.address = 'S'
+                self.avance_keys(self.address)
+            elif move == 'W':
+                self.address = 'N'
+                self.avance_keys(self.address)

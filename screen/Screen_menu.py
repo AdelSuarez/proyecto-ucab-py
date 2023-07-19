@@ -1,6 +1,8 @@
 import pygame
 import style.style as st
 from screen import Screen_game, Screen_start, Screen_controllers, Screen_map_selection
+from src import Read_text
+
 
 
 
@@ -21,9 +23,14 @@ class Screen_menu:
 
             if self.screen_map_selection_active:
                 self.mode_map = Screen_map_selection.Screen_map_selection().screen_selection_map(screen)
-                if self.mode_map:
+                if self.mode_map == 'random':
                     self.screen_map_selection_active = False
                     self.screen_controller_active = True
+                elif self.mode_map == 'txt':
+                    (self.game_map_text, self.moves) = Read_text.Read_text().convert_map()
+                    Screen_game.Screen_game(self.game_over, False, self.game_map_text, self.moves).game(screen)
+
+
 
 
             elif self.screen_controller_active:
