@@ -1,7 +1,7 @@
 import pygame
 import style.style as st
 import assets.Assets as asset
-from src import create_map_screen, move, robot_rotation, collision_checker, positions, create_map, Robot_direction, Read_text, State_txt
+from src import create_map_screen, move, robot_rotation, collision_checker, positions, create_map, Robot_direction, State_txt, Read_txt
 from screen import Screen_state
 from components import Status_bar
 
@@ -23,7 +23,7 @@ class Screen_game:
         self.pause_active = False
         self.state_active = True
         self.mode_map_txt = mode_map_txt
-        (self.map_game_txt, self.moves) = Read_text.Read_text().convert_map()
+        (self.map_game_txt, self.moves) = Read_txt.Read_text().convert_map()
 
     def game(self, screen):
         while not self.game_over:
@@ -198,7 +198,7 @@ class Screen_game:
         self.state_active = True
     
     def reset_map_text(self, state=None):
-        (self.map_game_txt, self.moves) = Read_text.Read_text().convert_map()
+        (self.map_game_txt, self.moves) = Read_txt.Read_text().convert_map()
         Screen_game.counter_move = 0
 
         if state:
