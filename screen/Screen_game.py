@@ -129,6 +129,7 @@ class Screen_game:
             elif reset_victory and self.mode_map_txt == 'txt':
                 self.reset_map_text(True)
 
+            State_txt.State_text(value)
     
     def controller_sensor(self, event):
         # Controles a d i que se usan con el sensor 
