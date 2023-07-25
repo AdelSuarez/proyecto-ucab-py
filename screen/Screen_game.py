@@ -1,4 +1,5 @@
 import pygame
+import time
 import style.style as st
 import assets.Assets as asset
 from src import create_map_screen, move, robot_rotation, collision_checker, positions, create_map, Robot_direction, Read_text, State_txt
@@ -23,6 +24,7 @@ class Screen_game:
         self.pause_active = False
         self.state_active = True
         self.mode_map_txt = mode_map_txt
+        self.counter_move = 0
         (self.map_game_txt, self.moves) = Read_text.Read_text().convert_map()
 
     def game(self, screen):
@@ -62,8 +64,8 @@ class Screen_game:
                             if Screen_game.automatic == 0:
                                 if event.key == pygame.K_a:
                                     
-                                    self.automatic_movements()
                                     Screen_game.automatic += 1
+                                    
                             
             # posiciones en tiempo real de la meta y el robot            
             (self._position_row_goal, self._position_column_goal) = positions.Positions(self.map_game).position_goal()
@@ -93,6 +95,10 @@ class Screen_game:
                 elif value == 'reset' and self.mode_map_txt == 'txt':
                     self.reset_map_text()
                     self.pause_active = False
+
+            if Screen_game.automatic:
+                self.automatic_movements()
+                time.sleep(0.5)
 
 
             pygame.display.update() # Actualiza la ventana
@@ -177,25 +183,32 @@ class Screen_game:
         Screen_game.counter_move += 1
 
     def automatic_movements(self):
-        for move in self.moves:
-            if move.upper() == 'A':
-                self.address = 'O'
-                self.avance_keys(self.address)
-            elif move.upper() == 'D':
-                self.address = 'E'
-                self.avance_keys(self.address)
-            elif move.upper() == 'S':
-                self.address = 'S'
-                self.avance_keys(self.address)
-            elif move.upper() == 'W':
-                self.address = 'N'
-                self.avance_keys(self.address)
+            try:
+                move = self.moves[self.counter_move]
+                if move.upper() == 'A':
+                    self.address = 'O'
+                    self.avance_keys(self.address)
+                elif move.upper() == 'D':
+                    self.address = 'E'
+                    self.avance_keys(self.address)
+                elif move.upper() == 'S':
+                    self.address = 'S'
+                    self.avance_keys(self.address)
+                elif move.upper() == 'W':
+                    self.address = 'N'
+                    self.avance_keys(self.address)
+                self.counter_move += 1
+            except Exception:
+                self.counter_move = 0
+                Screen_game.automatic = 0
+
 
 
     def reset_screen_victory(self):
         Screen_game.reset_map = False
         Screen_game.counter_move = 0
         self.state_active = True
+
     
     def reset_map_text(self, state=None):
         (self.map_game_txt, self.moves) = Read_text.Read_text().convert_map()
