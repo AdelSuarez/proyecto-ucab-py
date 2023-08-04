@@ -1,4 +1,4 @@
-class Collision_checker:
+class CollisionChecker:
     def __init__(self, map_game):
         self.map_game =map_game
 

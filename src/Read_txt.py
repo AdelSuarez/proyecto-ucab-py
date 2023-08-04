@@ -1,4 +1,4 @@
-class Read_text:
+class ReadText:
     def __init__(self) -> None:
         count = 1
         self.map_game = []
@@ -44,8 +44,6 @@ class Read_text:
     def all_moves(self):
         return [i for i in self.moves[0].split(' ')]
         
-
-    
     def selection_address(self):
         if self.address.strip('\n').upper() == 'E':
             self.map_game[self.robot[0]-1][self.robot[1]-1] = '>'
@@ -57,10 +55,5 @@ class Read_text:
             self.map_game[self.robot[0]-1][self.robot[1]-1] = '^'
                       
 
-
-
-
-
 if __name__ == '__main__':
-    print('hola')
-    Read_text().all_moves()
+    ReadText().all_moves()

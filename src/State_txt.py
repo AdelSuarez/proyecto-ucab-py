@@ -1,4 +1,4 @@
-class State_text:
+class StateText:
     def __init__(self, state) -> None:
         self.state = state
 

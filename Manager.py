@@ -22,33 +22,33 @@ class Manager:
             self.screen.fill(st.BACKGROUND_COLOR)
 
             if self.screen_map_selection_active:
-                self.mode_map = Screen_map_selection.Screen_map_selection().screen_selection_map(self.screen)
+                self.mode_map = Screen_map_selection.ScreenMapSelection().screen_selection_map(self.screen)
 
                 if self.mode_map == 'random':
                     self.screen_map_selection_active = False
                     self.screen_controller_active = True
 
                 elif self.mode_map == 'txt':
-                    Screen_game.Screen_game(self.game_over, False, self.mode_map).game(self.screen)
+                    Screen_game.ScreenGame(self.game_over, False, self.mode_map).game(self.screen)
 
 
             elif self.screen_controller_active:
-                mode = Screen_controllers.Screen_controllers().screen_controllers(self.screen)
+                mode = Screen_controllers.ScreenControllers().screen_controllers(self.screen)
 
                 if mode == 'sensor':
                     self.screen_map_selection_active = False
-                    Screen_game.Screen_game(self.game_over, True).game(self.screen)
+                    Screen_game.ScreenGame(self.game_over, True).game(self.screen)
 
                 elif mode == 'keys':
                     self.screen_map_selection_active = False
-                    Screen_game.Screen_game(self.game_over, False).game(self.screen)
+                    Screen_game.ScreenGame(self.game_over, False).game(self.screen)
                 
                 elif mode == 'back':
                     self.screen_map_selection_active = True
                     self.screen_controller_active = False
         
             else:
-                if Screen_start.Screen_start().screen_start(self.screen):
+                if Screen_start.ScreenStart().screen_start(self.screen):
                     self.screen_map_selection_active= True
 
 

@@ -1,4 +1,4 @@
-class Robot_direction:
+class RobotDirection:
     movement_made = False
 
     def __init__(self, address, map_game):
@@ -7,7 +7,7 @@ class Robot_direction:
         self.direction()
 
     def direction(self):
-        Robot_direction.movement_made = False
+        RobotDirection.movement_made = False
         for row in self.map_game:
             for index_column, column in enumerate(row):
                 if self.address == 'E':
@@ -30,14 +30,14 @@ class Robot_direction:
                         self.check_direction_robot( column, row, index_column, '^')
                         break
 
-            if Robot_direction.movement_made:
+            if RobotDirection.movement_made:
                 break
             
         return self.address
 
     def address_robot(self,row, index_column, robot):
         row[index_column] = robot
-        Robot_direction.movement_made = True
+        RobotDirection.movement_made = True
     
     def check_direction_robot(self, column, row, index_column, robot):
         if column == '>' or column == '^' or column == '<' or column == 'v':

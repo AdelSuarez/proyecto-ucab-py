@@ -2,10 +2,10 @@ import pygame
 import style.style as st
 import assets.Assets as asset
 
-class Create_map_screen:
+class CreateMapScreen:
     def __init__(self, map_game, screen, address, sensor_active):
         self.address = address
-        self._screen = screen
+        self.screen = screen
         self.map_game = map_game
         self.sensor_active = sensor_active
         self.create_map()
@@ -35,7 +35,7 @@ class Create_map_screen:
 
                         self._color_robot_lower( row, column, index_column)
                                             
-                    self._screen.blit(asset.robot, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN-5,
+                    self.screen.blit(asset.robot, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN-5,
                                 (st.MARGIN+st.LONG) * row + st.MARGIN-8,
                                 st.HIGH,
                                 st.LONG])
@@ -43,7 +43,7 @@ class Create_map_screen:
 
                 elif column == '*':
                     
-                    self._screen.blit(asset.bomb, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN+2,
+                    self.screen.blit(asset.bomb, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN+2,
                                 (st.MARGIN+st.LONG) * row + st.MARGIN+5,
                                 st.HIGH,
                                 st.LONG])
@@ -51,26 +51,26 @@ class Create_map_screen:
 
 
                 elif column == 'H':
-                    self._screen.blit(asset.goal, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN+2,
+                    self.screen.blit(asset.goal, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN+2,
                                 (st.MARGIN+st.LONG) * row + st.MARGIN+2,
                                 st.HIGH,
                                 st.LONG])
                     
                 elif column == '#':
-                    self._screen.blit(asset.over, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
+                    self.screen.blit(asset.over, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
                                 (st.MARGIN+st.LONG) * row + st.MARGIN-3,
                                 st.HIGH,
                                 st.LONG])
                     
                 elif column == '@':
                     self._color_position(st.YELLOW_GOAL, index_column, row)
-                    self._screen.blit(asset.victory, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN-7,
+                    self.screen.blit(asset.victory, [(st.MARGIN+st.HIGH) * index_column + st.MARGIN-7,
                                 (st.MARGIN+st.LONG) * row + st.MARGIN-5,
                                 st.HIGH,
                                 st.LONG])
 
     def _color_position(self, color, index_column, row):
-        pygame.draw.rect(self._screen,
+        pygame.draw.rect(self.screen,
                                 color,
                                 [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
                                 (st.MARGIN+st.LONG) * row + st.MARGIN,
@@ -81,7 +81,7 @@ class Create_map_screen:
     def _collesion(self, robot, index_column, row, fila):
         for j in self.map_game[fila]:
             if j == robot:
-                pygame.draw.rect(self._screen,
+                pygame.draw.rect(self.screen,
                     st.GREY,
                     [(st.MARGIN+st.HIGH) * index_column + st.MARGIN,
                     (st.MARGIN+st.LONG) * row + st.MARGIN,

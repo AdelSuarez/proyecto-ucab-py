@@ -1,6 +1,6 @@
 import random
 
-class Map_checker:
+class MapChecker:
 
     def __init__(self, column, map_game):
         self._column = column

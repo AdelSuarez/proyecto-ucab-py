@@ -1,4 +1,4 @@
-class Robot_rotation:
+class RobotRotation:
     movement_made = False
 
     def __init__(self, address, map_game):
@@ -6,7 +6,7 @@ class Robot_rotation:
         self.map_game = map_game
 
     def left(self):
-        Robot_rotation.movement_made = False
+        RobotRotation.movement_made = False
         for row in self.map_game:
             for index_column, column in enumerate(row):
                 if column == '>':
@@ -25,7 +25,7 @@ class Robot_rotation:
                     self.address_robot(row, index_column, 'E', '>')
                     break
 
-            if Robot_rotation.movement_made:
+            if RobotRotation.movement_made:
                 break
             
         return self.address
@@ -34,7 +34,7 @@ class Robot_rotation:
 
     def right(self):
         # Cambia la direccion del robot, solo direccion derecha
-        Robot_rotation.movement_made = False
+        RobotRotation.movement_made = False
         for row in self.map_game:
             for index_column, column in enumerate(row):
                 if column == '>':
@@ -53,7 +53,7 @@ class Robot_rotation:
                     self.address_robot(row, index_column, 'E', '>')
                     break
                 
-            if Robot_rotation.movement_made:
+            if RobotRotation.movement_made:
                 break
 
         return self.address
@@ -62,4 +62,4 @@ class Robot_rotation:
     def address_robot(self,row, index_column, address, robot):
         self.address = address
         row[index_column] = robot
-        Robot_rotation.movement_made = True
+        RobotRotation.movement_made = True
