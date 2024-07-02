@@ -27,10 +27,8 @@ class Robot_rotation:
 
             if Robot_rotation.movement_made:
                 break
-            
+
         return self.address
-
-
 
     def right(self):
         # Cambia la direccion del robot, solo direccion derecha
@@ -52,14 +50,13 @@ class Robot_rotation:
                 elif column == '^':
                     self.address_robot(row, index_column, 'E', '>')
                     break
-                
+
             if Robot_rotation.movement_made:
                 break
 
         return self.address
 
-
-    def address_robot(self,row, index_column, address, robot):
+    def address_robot(self, row, index_column, address, robot):
         self.address = address
         row[index_column] = robot
         Robot_rotation.movement_made = True

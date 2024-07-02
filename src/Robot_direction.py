@@ -12,35 +12,37 @@ class Robot_direction:
             for index_column, column in enumerate(row):
                 if self.address == 'E':
                     if column == '>' or column == '^' or column == '<' or column == 'v':
-                        self.check_direction_robot( column, row, index_column, '>')
+                        self.check_direction_robot(
+                            column, row, index_column, '>')
                         break
 
                 elif self.address == 'S':
                     if column == '>' or column == '^' or column == '<' or column == 'v':
-                        self.check_direction_robot( column, row, index_column, 'v')
+                        self.check_direction_robot(
+                            column, row, index_column, 'v')
                         break
 
                 elif self.address == 'O':
                     if column == '>' or column == '^' or column == '<' or column == 'v':
-                        self.check_direction_robot( column, row, index_column, '<')
+                        self.check_direction_robot(
+                            column, row, index_column, '<')
                         break
 
                 elif self.address == 'N':
                     if column == '>' or column == '^' or column == '<' or column == 'v':
-                        self.check_direction_robot( column, row, index_column, '^')
+                        self.check_direction_robot(
+                            column, row, index_column, '^')
                         break
 
             if Robot_direction.movement_made:
                 break
-            
+
         return self.address
 
-    def address_robot(self,row, index_column, robot):
+    def address_robot(self, row, index_column, robot):
         row[index_column] = robot
         Robot_direction.movement_made = True
-    
+
     def check_direction_robot(self, column, row, index_column, robot):
         if column == '>' or column == '^' or column == '<' or column == 'v':
             self.address_robot(row, index_column, robot)
-
-    

@@ -1,6 +1,7 @@
 import pygame
 import style.style as st
 
+
 class Text:
     def __init__(self, text, font, text_col) -> None:
         self._text = text
@@ -9,7 +10,7 @@ class Text:
 
     def draw_text(self, screen, x, y):
         img = self._font.render(self._text, True, self._text_col)
-        screen.blit(img, (x,y))
+        screen.blit(img, (x, y))
 
     def draw_text_center(self, screen, x):
         img = self._font.render(self._text, True, self._text_col)

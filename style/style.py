@@ -3,7 +3,7 @@ import pygame
 # ----------- SCREEN -----------------
 
 # Size box map
-LONG  = 40
+LONG = 40
 HIGH = 40
 MARGIN = 5
 
@@ -13,26 +13,25 @@ SCREEN_HEIGHT = 810
 
 
 # Colors
-GREY =( 229, 231, 233 )
-WHITE = (225,225,225)
-BLACK = (0,0,0)
+GREY = (229, 231, 233)
+WHITE = (225, 225, 225)
+BLACK = (0, 0, 0)
 LIGHT_BLUE = (220, 241, 255)
 # 93, 173, 226
 # GREEN_SCREEN = (118, 215, 196)
-# GREEN_ROBOT = (183,255,102) 
+# GREEN_ROBOT = (183,255,102)
 
 GREEN_ROBOT = (72, 201, 176)
 YELLOW_GOAL = (247, 220, 111)
-RED_ROBOT = ( 236, 112, 99 )
+RED_ROBOT = (236, 112, 99)
 
-BACKGROUND_COLOR = (52,78,91)
+BACKGROUND_COLOR = (52, 78, 91)
 
-RED = (192, 57, 43 )
+RED = (192, 57, 43)
 
 
 # Size btn
 BTN_CONTINUE_SIZE = 0.6
-
 
 
 def font(size):
