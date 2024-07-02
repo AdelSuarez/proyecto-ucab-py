@@ -1,32 +1,55 @@
-# Proyecto de Programacion I UCAB
-# Primera entrega CMD
-    Creacion de un juego que se ejecuta en la terminal, donde el objetivo principal es hacer
-    que un robot llegue a su destino,evitando colisionar con minas que se encuentran
-    en el mapa, y contra las paredes del mismo
+# Juego de Navegación de Robot con Pygame
 
-    Se implementa un algoritmo que crea los mapas de forma aleatoria y otro que los verfica
-    para que se creen de manera adecuada
+Este proyecto es un juego desarrollado en Python utilizando la biblioteca Pygame. El objetivo del juego es navegar un robot a través de un mapa lleno de minas hasta llegar a la meta, evitando tocar las minas en el proceso.
 
-    Se estrutura el codigo de manera modular y POO
+## Características
 
-* Utilizacion de matrices
-    - Se crean segun los datos propocionados por el usuario
-* Utilizacion de colores para mejor estética
-* Detección de colisiones con la minas y las paredes
-* Implementacion de guardado en un archivo Txt
-    - Se actualiza en tiempo real 
-* Se implemento una función que limpia la terminal
+- **Navegación de Robot:** Controla un robot a través de un mapa para alcanzar la meta.
+- **Mapa lleno de Minas:** Evita las minas esparcidas por todo el mapa para sobrevivir.
+- **Interfaz Gráfica:** Utiliza Pygame para una experiencia de juego interactiva y visualmente atractiva.
+- **Gestión de Dependencias:** Usa Pipenv para manejar las dependencias y el entorno virtual, asegurando una configuración fácil y consistente.
 
+## Requisitos Previos
 
-### Imports
-* Random
-* os
-* getch
+Para ejecutar este proyecto, necesitarás tener Python instalado en tu sistema. Este proyecto utiliza Pipenv para la gestión de dependencias, por lo que también necesitarás tener Pipenv instalado.
 
+## Instalación
 
-# Segunda entrega UX-UI
-    Se implementa interfaz al juego de terminal, usando la libreria de pygame, donde se reutiliza 
-    el mismo codigo de la version de cmd, se toma la creacion del mapa, las colisiones y los mivimientos
+1. **Clona el repositorio:**
 
-### Import
-*Pygame
+   ```bash
+   git clone https://tu-repositorio-aqui.git
+   cd tu-repositorio-clonado
+   ```
+
+2. **Instala las dependencias:** Utiliza Pipenv para instalar todas las dependencias necesarias para el proyecto.
+
+   ```bash
+   pipenv install
+   ```
+
+3. **Activa el entorno virtual:**
+
+   ```bash
+   pipenv shell
+   ```
+
+4. **Ejecuta el requirements.txt:**
+
+   ```bash
+    pipenv install -r requirements.txt
+   ```
+
+5. **Ejecuta el juego:** Una vez que todas las dependencias estén instaladas y el entorno virtual esté activo, puedes ejecutar el juego con el siguiente comando:
+   ```bash
+   pytho main.py
+   ```
+
+## Dependencias
+
+Pygame: Para la interfaz gráfica y la lógica del juego.
+Otras dependencias pueden ser encontradas en el archivo requirements.txt.
+
+## Contribuir
+
+Las contribuciones son bienvenidas. Si tienes alguna sugerencia para mejorar el juego, no dudes en crear un pull request o abrir un issue.
