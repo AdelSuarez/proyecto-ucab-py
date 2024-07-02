@@ -18,7 +18,7 @@ Para ejecutar este proyecto, necesitarás tener Python instalado en tu sistema. 
 1. **Clona el repositorio:**
 
    ```bash
-   git clone https://tu-repositorio-aqui.git
+   git clone https://github.com/AdelSuarez/proyecto-ucab-py
    cd tu-repositorio-clonado
    ```
 
@@ -42,7 +42,7 @@ Para ejecutar este proyecto, necesitarás tener Python instalado en tu sistema. 
 
 5. **Ejecuta el juego:** Una vez que todas las dependencias estén instaladas y el entorno virtual esté activo, puedes ejecutar el juego con el siguiente comando:
    ```bash
-   pytho main.py
+   python main.py
    ```
 
 ## Dependencias
